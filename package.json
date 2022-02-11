@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win --x64",
+    "start": "set NODE_ENV=development && electron app",
+    "test": "set NODE_ENV=development && set DEBUG=* && electron app"
+  },
+  "build": {
+    "appId": "com.barrycarlyon.twitch_extension_tools",
+    "productName": "BarryCarlyon Extension Tools",
+    "copyright": "Copyright © 2022 ${author}",
+    "icon": "app/assets/eLgNUAVE.ico",
+    "win": {
+      "target": "nsis",
+      "publish": [
+        {
+          "provider": "github",
+          "owner": "barrycarlyon",
+          "repo": "twitch_extension_tools"
+        }
+      ]
+    },
+    "nsis": {
+      "installerIcon": "app/assets/eLgNUAVE.ico",
+      "uninstallerIcon": "app/assets/eLgNUAVE.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "menuCategory": true
+    }
+  },
+  "dependencies": {
+    "electron": "^17.0.0",
+    "electron-builder": "^22.14.13"
+  }
+}

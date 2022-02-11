@@ -1,0 +1,48 @@
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('electron', {
+    ready: () => {
+        console.log('Relay ready');
+        ipcRenderer.send('ready');
+    },
+
+    config: {
+        create: (extension) => {
+            ipcRenderer.send('config_create', extension);
+        },
+        extensions: (fn) => {
+            ipcRenderer.on('config_extensions', (event, ...args) => fn(...args));
+        },
+        select: (client_id) => {
+            ipcRenderer.send('config_select', client_id);
+        },
+
+        requestVersion: (fn) => {
+            ipcRenderer.on('extension_request_version', (event, ...args) => fn(...args));
+        },
+        selectVersion: (version) => {
+            ipcRenderer.send('select_version', version);
+        },
+        extensionDetails: (fn) => {
+            ipcRenderer.on('extension_details', (event, ...args) => fn(...args));
+        }
+    },
+
+    extensionAPI: (route, details) => {
+        ipcRenderer.send('extensionAPI', {
+            route,
+            details
+        });
+    },
+    extensionAPIResult: (fn) =>{
+        ipcRenderer.on('extensionAPIResult', (event, ...args) => fn(...args));
+    },
+
+    errorMsg: (fn) => {
+        ipcRenderer.on('errorMsg', (event, ...args) => fn(...args));
+    },
+
+    openWeb: (url) => {
+        ipcRenderer.send('openWeb', url);
+    }
+});

@@ -1,0 +1,16 @@
+{
+  "name": "BarryCarlyonTwitchExtensionTools",
+  "description": "BarryCarlyon Twitch Extension Tools",
+  "author": "Barry Carlyon",
+  "version": "1.0.0",
+  "main": "main.js",
+  "keywords": [],
+  "license": "ISC",
+  "scripts": {},
+  "dependencies": {
+    "electron-fetch": "^1.7.4",
+    "electron-store": "^8.0.1",
+    "electron-updater": "^4.6.5",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
