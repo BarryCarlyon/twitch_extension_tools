@@ -16,6 +16,17 @@ module.exports = function(lib) {
             config.relay();
         },
 
+        ready: () => {
+            config.relay();
+
+            let active = store.get('active');
+            if (active) {
+                if (active.client_id && active.version) {
+                    console.log('Presetup', active);
+                    getExtensionDetails(active.client_id, active.version);
+                }
+            }
+        },
         relay: () => {
             console.log('Extensions Punt');
             win.webContents.send('config_extensions', store.get('extensions'));
@@ -37,10 +48,13 @@ module.exports = function(lib) {
         },
 
         version: (event, version) => {
+            console.log('Change Version to', version);
             let active = store.get('active');
+            // @Todo error catch
+            console.log('active', typeof active, active);
             //store.set('active_extension', version);
             console.log('set Version', active.client_id, version);
-            getExtensionDetails(client_id, version);
+            getExtensionDetails(active.client_id, version);
         }
     }
 
@@ -110,7 +124,7 @@ module.exports = function(lib) {
     ipcMain.on('config_create', config.create);
     ipcMain.on('config_select', config.select);
     ipcMain.on('select_version', config.version);
-    ipcMain.on('ready', config.relay);
+    ipcMain.on('ready', config.ready);
 
     function sign(config) {
         const sigConfigPayload = {

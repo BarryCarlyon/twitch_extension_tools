@@ -28,6 +28,11 @@ function errorMsg(words) {
 }
 
 
+document.getElementById('change_version_form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    window.electron.config.selectVersion(document.getElementById('change_version').value);
+});
+
 document.getElementById('send_extension_chat_message').addEventListener('submit', (e) => {
     e.preventDefault();
 
