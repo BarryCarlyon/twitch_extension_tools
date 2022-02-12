@@ -15,6 +15,21 @@ It is Code Signed with the Publisher `Barry Carlyon`
 
 You can download the latest version from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
 
+## Supported Features
+
+- [Get Extension Configuration Segment](https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment)
+- [Set Extension Configuration Segment](https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment)
+- [Set Extension Required Configuration](https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration)
+- [Send Extension PubSub Message](https://dev.twitch.tv/docs/api/reference#send-extension-pubsub-message)
+- [Send Extension Chat Message](https://dev.twitch.tv/docs/api/reference#send-extension-chat-message)
+- [Get Extensions](https://dev.twitch.tv/docs/api/reference#get-extensions)
+- Simulation of the Extension Details page for the selected version of an Extension
+- Test different Versions of an Extension against the API.
+
+## Not Supported Featured
+
+- Extension View simulation, this might get explored but it's not gonna be as effective as actually testing on the Twitch Website itself (when in localtest).
+
 ## Notes
 
 - Uses Electron to provide as a Desktop App
@@ -22,11 +37,9 @@ You can download the latest version from here on GitHub under [releases](https:/
 - Uses GitHub for update delivery
 - JWT tokens are generated _inside_ the App via [auth0/node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken), as apposed to "ClientSide" like [this example](https://barrycarlyon.github.io/twitch_misc/examples/extension_config/)
 
-## orly?
-
-Yeah, basically it's just a "save my Extension configs" Insomnia-esque Rest Client. That wraps the main Extension functions in a handy Application.
-
 ## Insomnia?
+
+Basically this app is a "save my Extension configs" Insomnia-esque Rest Client. That wraps the main Extension functions in a handy Application. With some extra features!
 
 [Insomnia](https://insomnia.rest/) is a Rest client. I have written a Plugin for Insomnia to aid with JWT generating inside Insomnia itself. You can find that [here on Github](https://github.com/BarryCarlyon/insomnia-plugin-twitch-extension-barrycarlyon)
 
