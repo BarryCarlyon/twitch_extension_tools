@@ -6,6 +6,15 @@ The Twitch Developer Rig is great.
 
 But the Twitch Developer Rig might not get updated in time for the upcoming Kraken/v5 shutdown. This app serves to replace the Rig in a Helix only world.
 
+## Installation
+
+This is an Electron App, so it maybe installed from GitHub.
+It should also update from GitHub as new versions are released on GitHub. (Needs testing as I've never done Electron updates via GitHub)
+
+It is Code Signed with the publusher `Barry Carlyon`
+
+https://github.com/BarryCarlyon/twitch_extension_tools/releases
+
 ## orly?
 
 Yeah, basically it's just a "save my Extension configs" Insomnia-esque Rest Client. That wraps the main Extension functions in a handy Application.
