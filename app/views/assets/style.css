@@ -56,8 +56,10 @@ a.website:before {
 }
 #layout_title {
     width: 500px;
+    display: inline-block;
 }
 #layout_icon {
+    display: inline-block;
     width: 60px;
     height: 60px;
     background-size: contain;
