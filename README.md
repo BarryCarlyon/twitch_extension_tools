@@ -13,7 +13,7 @@ It should also update from GitHub as new versions are released on GitHub. (Needs
 
 It is Code Signed with the Publisher `Barry Carlyon`
 
-https://github.com/BarryCarlyon/twitch_extension_tools/releases
+You can download the latest version from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
 
 ## Notes
 
