@@ -64,7 +64,7 @@
         </div>
         <div class="tab-pane p-3" id="run" role="tabpanel" aria-labelledby="run-tab">
             <div class="float-end">
-                <form action="" method="post" id="change_version_form">
+                <form action="" method="post" id="change_version_form" class="m-0">
                     <fieldset>
                         <div class="input-group p-1">
                             <input type="text" name="change_version" id="change_version" value="" class="form-control active_version" />
@@ -73,7 +73,7 @@
                     </fieldset>
                 </form>
             </div>
-            <h3>Run Requests</h3>
+            <h3 class="mb-2">Run Requests</h3>
 
             <div class="accordion" id="run_accordion">
                 <div class="accordion-item">
@@ -82,7 +82,55 @@
                     </h2>
                     <div id="extension_config_service" class="accordion-collapse collapse show" aria-labelledby="extension_config_service_header" data-bs-parent="#run_accordion">
                         <div class="accordion-body">
-                            <p>Here is where config stuff goes</p>
+                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment">Get Extension Configuration Segment</a> and <a href="https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment">Set Extension Configuration Segment</a> API</p>
+
+                            <form action="" method="post">
+                                <fieldset>
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="config_extension_id">extension_id</label>
+                                        <input type="text" name="config_extension_id" id="config_extension_id" class="form-control active_extension_id" />
+                                    </div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="config_segment">segment</label>
+                                        <select name="config_segment" id="config_segment" class="form-select">
+                                            <option>global</option>
+                                            <option>broadcaster</option>
+                                            <option>developer</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="config_broadcaster_id">broadcaster_id</label>
+                                        <input type="text" name="config_broadcaster_id" id="config_broadcaster_id" class="form-control" />
+                                    </div>
+                                    <div class="help-text">Broadcaster ID only needed for broadcaster and developer segements</div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="config_content">content</label>
+                                        <textarea rows="10" cols="50" name="config_content" id="config_content" class="form-control"></textarea>
+                                    </div>
+                                    <div class="help-text">
+                                        <div class="form-check float-end">
+                                            <input class="form-check-input" type="checkbox" name="config_content_json" id="config_content_json"/>
+                                            <label class="form-check-label" for="config_content_json">Is JSON</label>
+                                        </div>
+                                        Content is limited to 5kb per segment
+                                    </div>
+
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="config_version">version</label>
+                                        <input type="text" name="config_version" id="config_version" class="form-control" />
+                                    </div>
+                                    <div class="help-text">Optional Version field. Used with <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> to block activation until (re)configured</div>
+
+                                    <div class="btn-group p-1 float-end">
+                                        <input type="button" class="btn btn-outline-primary" id="config_fetch" value="Fetch Config" />
+                                        <input type="button" class="btn btn-outline-danger" id="config_write" value="Write Config" />
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -117,8 +165,8 @@
                                         <label class="input-group-text" for="chat_extension_version">extension_version</label>
                                         <input type="text" name="chat_extension_version" id="chat_extension_version" value="" class="form-control active_version" />
                                     </div>
-                                    <div class="input-group p-1">
-                                        <input type="submit" class="d-flex btn btn-primary" value="Send Extension Chat Message" />
+                                    <div class="btn-group p-1 float-end">
+                                        <input type="submit" class="btn btn-primary" value="Send Extension Chat Message" />
                                     </div>
                                 </fieldset>
                             </form>

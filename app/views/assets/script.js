@@ -10,10 +10,12 @@ function processExtension(extension_details) {
     let active_extension_id = document.getElementsByClassName('active_extension_id');
     for (let x=0;x<active_extension_id.length;x++) {
         active_extension_id[x].value = extension_details.id;
+        active_extension_id[x].setAttribute('readonly', 'readonly');
     }
     let active_version = document.getElementsByClassName('active_version');
     for (let x=0;x<active_version.length;x++) {
         active_version[x].value = extension_details.version;
+        active_version[x].setAttribute('readonly', 'readonly');
     }
 
     let extension_chat_service_header = document.getElementById('extension_chat_service_header');

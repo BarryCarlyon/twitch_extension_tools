@@ -2,4 +2,12 @@
     position: fixed;
     bottom: 0px;
     right: 0px;
+
+    z-index: 9001;
+}
+
+.accordion-item .input-group .input-group-text:first-child {
+    text-align: right;
+    min-width: 175px;
+    display: inline-block;
 }

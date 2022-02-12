@@ -12,6 +12,12 @@ module.exports = function(lib) {
             case 'chat':
                 sendChat(details);
                 return;
+            case 'getconfiguration':
+                getConfiguration(details);
+                return;
+            case 'setconfiguration':
+                setConfiguration(details);
+                return;
         }
     });
 
@@ -49,12 +55,128 @@ module.exports = function(lib) {
                 win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
                 return;
             }
-            console.log(resp.status, resp.headers['ratelimit-remaining'], resp.headers['ratelimit-limit']);
+            console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
             win.webContents.send('extensionAPIResult', {
                 status: resp.status,
                 ratelimitRemain: resp.headers.get('ratelimit-remaining'),
                 ratelimitLimit: resp.headers.get('ratelimit-limit')
             });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    function getConfiguration(details) {
+        let extensions = store.get('extensions');
+        let active = store.get('active');
+        let config = extensions[active.client_id];
+
+        const sigConfigPayload = {
+            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "user_id": config.user_id,
+            "role": "external",
+        }
+        const token = jwt.sign(sigConfigPayload, Buffer.from(config.extension_secret, 'base64'));
+
+        let url = new URL('https://api.twitch.tv/helix/extensions/configurations');
+        let params = [
+            [ 'extension_id', details.extension_id ],
+            [ 'segment', details.segment ]
+        ];
+        if (details.segment != 'global') {
+            params.push([ 'broadcaster_id', details.broadcaster_id ]);
+        }
+        url.search = new URLSearchParams(params).toString();
+
+        console.log('Attempting to get', details, params);
+
+        fetch(
+            url,
+            {
+                headers: {
+                    'Client-ID': config.client_id,
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        .then(async resp => {
+            let body = await resp.json();
+            if (resp.status != 200) {
+                win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+                return;
+            }
+
+            let config = '';
+            let version = '';
+            if (body.data && body.data.length == 1) {
+                config = body.data[0].content;
+                version = body.data[0].version;
+            }
+
+            console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+            win.webContents.send('extensionAPIResult', {
+                config,
+                version,
+                status: resp.status,
+                ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                ratelimitLimit: resp.headers.get('ratelimit-limit')
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+    function setConfiguration(details) {
+        let extensions = store.get('extensions');
+        let active = store.get('active');
+        let config = extensions[active.client_id];
+
+        const sigConfigPayload = {
+            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "user_id": config.user_id,
+            "role": "external",
+        }
+        const token = jwt.sign(sigConfigPayload, Buffer.from(config.extension_secret, 'base64'));
+
+        let url = new URL('https://api.twitch.tv/helix/extensions/configurations');
+
+        if (details.segment == 'global') {
+            delete details.broadcaster_id;
+        }
+
+        console.log('setConfiguration Putting', details);
+
+        fetch(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Client-ID': config.client_id,
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(details)
+            }
+        )
+        .then(async resp => {
+            if (resp.status == 204) {
+                console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                // yay
+                return;
+            }
+
+            let body = await resp.json();
+            win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+            win.webContents.send('extensionAPIResult', {
+                status: resp.status,
+                ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                ratelimitLimit: resp.headers.get('ratelimit-limit')
+            });
+
+            getConfiguration(details);
         })
         .catch(err => {
             console.log(err);
