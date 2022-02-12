@@ -29,8 +29,8 @@
                     <tr>
                         <th>Name</th>
                         <th>ClientID</th>
-                        <th>Dev Console</th>
-                        <th></th>
+                        <th>OwnerID</th>
+                        <th>DevConsole Links/Controls</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -39,6 +39,9 @@
             <form action="" method="post" id="config_form">
                 <fieldset>
                     <legend>Add New Extension</legend>
+
+                    <p>If the ClientID already exists in the local configuration, the configuration will be overwritten</p>
+
                     <div class="input-group p-1">
                         <label class="input-group-text" for="name">Name</label>
                         <input type="text" name="name" id="name" value="" class="form-control" />
@@ -158,7 +161,7 @@
                                         <label class="input-group-text" for="configreq_broadcaster_id">broadcaster_id</label>
                                         <input type="text" name="configreq_broadcaster_id" id="configreq_broadcaster_id" class="form-control" />
                                     </div>
-                                    <div class="help-text">Enable activation of a specified Extension, after any required broadcaster configuration is correct.<br /><a href="" class="version_link">Dashboard - Version - Capabilities</a> Tab to define the Version String required for activation.</div>
+                                    <div class="help-text">Enable activation of a specified Extension, after any required broadcaster configuration is correct.<br /><a href="https://dev.twitch.tv/console/extensions/CLIENTID/VERSIONID/capabilities" class="version_link">Dashboard - Version - Capabilities</a> Tab to define the Version String required for activation.</div>
 
                                     <div class="input-group p-1">
                                         <label class="input-group-text" for="configreq_required_configuration">required_configuration</label>
@@ -302,6 +305,8 @@
             </div>
         </div>
     </div>
+
+    <div id="updater" class="btn btn-outline-primary">Check for Update</div>
 
     <script type="text/javascript" src="assets/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="assets/script.js"></script>

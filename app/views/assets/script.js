@@ -1,3 +1,38 @@
+window.electron.onUpdater((data) => {
+    var u = document.getElementById('updater');
+
+    switch (data.event) {
+        case 'update-error':
+            u.innerHTML = 'Update Error';
+            break;
+        case 'checking-for-update':
+            u.innerHTML = 'Checking';
+            break;
+        case 'update-available':
+            u.innerHTML = 'Update Available';
+            break;
+        case 'update-not-available':
+            u.innerHTML = 'Up to Date';
+            break;
+        case 'download-progress':
+            u.innerHTML = 'DL: ' + data.data.percent.toFixed(1) + '%';
+            break;
+        case 'update-downloaded':
+            u.innerHTML = 'Downloaded Restarting';
+            break;
+    }
+});
+window.electron.ready();
+document.getElementById('updater').addEventListener('click', window.electron.updateCheck);
+
+// so lazy
+let links = document.getElementsByTagName('a');
+for (let x=0;x<links.length;x++) {
+    if (links[x].getAttribute('href').startsWith('https://')) {
+        links[x].classList.add('website');
+    }
+}
+
 function tab(id) {
     let el = document.getElementById(id);
     if (el) {

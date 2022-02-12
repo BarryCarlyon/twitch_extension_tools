@@ -1,6 +1,5 @@
 const { app, BrowserWindow, ipcMain, shell } = require('electron');
 
-const fs = require('fs');
 const path = require('path');
 
 const Store = require('electron-store');
@@ -81,7 +80,6 @@ app.on('ready', () => {
     win.once('ready-to-show', () => {
         win.show();
         win.setTitle('BarryCarlyon Twitch Extension Tools: ' + app.getVersion());
-        //win.webContents.send('title', 'BarryCarlyon Twitch Extension Tools: ' + app.getVersion());
     });
     //win.webContents.openDevTools();
 

@@ -27,28 +27,40 @@ window.electron.config.extensions((extensions) => {
         cell.textContent = extensions[ref].client_id;
 
         var cell = row.insertCell();
+        cell.textContent = extensions[ref].user_id;
+
+        var cell = row.insertCell();
         let grp = document.createElement('div');
         cell.append(grp);
 
         grp.classList.add('btn-group');
 
         let a_settings = document.createElement('a');
+        a_settings.classList.add('btn');
         a_settings.classList.add('btn-sm');
-        a_settings.classList.add('btn-primary')
+        a_settings.classList.add('btn-outline-primary');
+        a_settings.classList.add('website');
         a_settings.setAttribute('href', `https://dev.twitch.tv/console/extensions/${extensions[ref].client_id}/settings`);
         a_settings.textContent = 'Settings';
         grp.append(a_settings);
 
         let a_versions = document.createElement('a');
+        a_versions.classList.add('btn');
         a_versions.classList.add('btn-sm');
-        a_versions.classList.add('btn-primary')
+        a_versions.classList.add('btn-outline-primary');
+        a_versions.classList.add('website');
         a_versions.setAttribute('href', `https://dev.twitch.tv/console/extensions/${extensions[ref].client_id}`);
         a_versions.textContent = 'Versions';
 
         grp.append(a_versions);
 
-        var cell = row.insertCell();
+        let a_remove = document.createElement('div');
+        a_remove.classList.add('btn');
+        a_remove.classList.add('btn-sm');
+        a_remove.classList.add('btn-outline-danger');
+        a_remove.textContent = 'Remove';
 
+        grp.append(a_remove);
 
         let li = document.createElement('li');
         dropdown.append(li);
@@ -60,8 +72,6 @@ window.electron.config.extensions((extensions) => {
         li_a.textContent = extensions[ref].name;
     }
 });
-
-window.electron.ready();
 
 document.addEventListener('click', (e) => {
     if (e.target.tagName == 'A') {

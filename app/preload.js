@@ -6,6 +6,13 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.send('ready');
     },
 
+    onUpdater: (fn) => {
+        ipcRenderer.on('updater', (event, ...args) => fn(...args));
+    },
+    updateCheck: () => {
+        ipcRenderer.send('updateCheck');
+    },
+
     config: {
         create: (extension) => {
             ipcRenderer.send('config_create', extension);

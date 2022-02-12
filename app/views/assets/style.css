@@ -1,3 +1,16 @@
+a.website:before {
+    content: '';
+    position: relative;
+    top: 0;
+    left: -2px;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(../assets/pop.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 #alert {
     position: fixed;
     bottom: 0px;
@@ -10,4 +23,10 @@
     text-align: right;
     min-width: 200px;
     display: inline-block;
+}
+
+#updater {
+    position: fixed;
+    top: 0px;
+    right: 0px;
 }
