@@ -21,6 +21,9 @@ module.exports = function(lib) {
             case 'setconfigurationreq':
                 setConfigurationReq(details);
                 return;
+            case 'sendpubsub':
+                sendPubSub(details);
+                return;
         }
     });
 
@@ -218,6 +221,81 @@ module.exports = function(lib) {
         )
         .then(async resp => {
             console.log('PUT', url, resp.status);
+
+            if (resp.status == 204) {
+                console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                win.webContents.send('extensionAPIResult', {
+                    status: resp.status,
+                    ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                    ratelimitLimit: resp.headers.get('ratelimit-limit')
+                });
+
+                return;
+            }
+
+            let body = await resp.json();
+            console.log('Fail', resp.status, body);
+            win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    function sendPubSub(details) {
+        let extensions = store.get('extensions');
+        let active = store.get('active');
+        let config = extensions[active.client_id];
+
+        const sigConfigPayload = {
+            "exp":          Math.floor(new Date().getTime() / 1000) + 4,
+            "user_id":      config.user_id,
+            "role":         "external",
+            "channel_id":   "all",
+            "pubsub_perms": {
+                "send": []
+            }
+        }
+
+        switch (details.target[0]) {
+            case 'global':
+                sigConfigPayload.pubsub_perms.send.push('global');
+                delete details.broadcaster_id;
+                break;
+            case 'broadcast':
+                sigConfigPayload.channel_id = details.broadcaster_id;
+                sigConfigPayload.pubsub_perms.send.push('broadcast');
+                break;
+            case 'whisper':
+                details.target[0] = `whisper-${details.target_whisper}`
+                sigConfigPayload.channel_id = details.broadcaster_id;
+                sigConfigPayload.pubsub_perms.send.push(`whisper-${details.target_whisper}`);
+                break;
+        }
+
+        delete details.target_whisper;
+
+        console.log('Sig', sigConfigPayload);
+        const token = jwt.sign(sigConfigPayload, Buffer.from(config.extension_secret, 'base64'));
+
+        let url = new URL('https://api.twitch.tv/helix/extensions/pubsub');
+
+        console.log('sendPubSub POSTing', details);
+
+        fetch(
+            url,
+            {
+                method: 'POST',
+                headers: {
+                    'Client-ID': config.client_id,
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(details)
+            }
+        )
+        .then(async resp => {
+            console.log('POST', url, resp.status);
 
             if (resp.status == 204) {
                 console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));

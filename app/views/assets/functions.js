@@ -1,33 +1,3 @@
-window.electron.errorMsg(words => {
-    errorMsg(words);
-});
-function errorMsg(words) {
-    let alert = document.getElementById('alert');
-
-    if (!alert) {
-        alert = document.createElement('div');
-        alert.setAttribute('id', 'alert');
-
-        alert.classList.add('alert');
-        alert.classList.add('alert-warning');
-        alert.classList.add('alert-dismissable');
-        alert.classList.add('fade');
-        alert.classList.add('show');
-        //alert.classList.add('bg-warning');
-
-        let b = document.createElement('button');
-        b.classList.add('btn-close');
-        b.setAttribute('data-bs-dismiss', 'alert');
-        alert.append(b);
-        document.body.append(alert);
-    }
-
-    let sp = document.createElement('p');
-    sp.textContent = words;
-    alert.append(sp);
-}
-
-
 document.getElementById('change_version_form').addEventListener('submit', (e) => {
     e.preventDefault();
     window.electron.config.selectVersion(document.getElementById('change_version').value);
@@ -94,6 +64,9 @@ document.getElementById('config_segment').addEventListener('change', (e) => {
 });
 document.getElementById('config_broadcaster_id').setAttribute('readonly', 'readonly');
 
+document.getElementById('config_form').addEventListener('submit', (e) => {
+    e.preventDefault();
+});
 document.getElementById('config_fetch').addEventListener('click', (e) => {
     window.electron.extensionAPI(
         'getconfiguration',
@@ -135,6 +108,42 @@ document.getElementById('configreq_form').addEventListener('submit', (e) => {
 
             broadcaster_id: document.getElementById('configreq_broadcaster_id').value,
             required_configuration: document.getElementById('configreq_required_configuration').value
+        }
+    );
+});
+
+document.getElementById('pubsub_target').addEventListener('change', (e) => {
+    document.getElementById('pubsub_is_global_broadcast').value = 'yes';
+    document.getElementById('pubsub_target_whisper').setAttribute('disabled','disabled');
+    document.getElementById('pubsub_broadcaster_id').setAttribute('disabled','disabled');
+
+    if (e.target.value == 'whisper') {
+        document.getElementById('pubsub_target_whisper').removeAttribute('disabled');
+    }
+
+    if (e.target.value == 'broadcast' || e.target.value == 'whisper') {
+        document.getElementById('pubsub_broadcaster_id').removeAttribute('disabled');
+        document.getElementById('pubsub_is_global_broadcast').value = 'no';
+    }
+});
+
+document.getElementById('pubsub_form').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let message = document.getElementById('pubsub_message').value;
+    if (document.getElementById('pubsub_content_json').checked) {
+        // tidy up
+        message = JSON.stringify(JSON.parse(message));
+    }
+
+    window.electron.extensionAPI(
+        'sendpubsub',
+        {
+            target: [ document.getElementById('pubsub_target').value ],
+            target_whisper: document.getElementById('pubsub_target_whisper').value,
+            broadcaster_id: document.getElementById('pubsub_broadcaster_id').value,
+            is_global_broadcast: (document.getElementById('pubsub_is_global_broadcast').value == 'yes' ? true : false),
+            message
         }
     );
 });

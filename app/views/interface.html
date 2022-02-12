@@ -78,13 +78,13 @@
             <div class="accordion" id="run_accordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="extension_config_service_header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service" aria-expanded="true" aria-controls="extension_config_service">Configuration Service</button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service" aria-expanded="false" aria-controls="extension_config_service">Configuration Service</button>
                     </h2>
-                    <div id="extension_config_service" class="accordion-collapse collapse show" aria-labelledby="extension_config_service_header" data-bs-parent="#run_accordion">
+                    <div id="extension_config_service" class="accordion-collapse collapse collapse" aria-labelledby="extension_config_service_header" data-bs-parent="#run_accordion">
                         <div class="accordion-body">
                             <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment">Get Extension Configuration Segment</a> and <a href="https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment">Set Extension Configuration Segment</a> API</p>
 
-                            <form action="" method="post">
+                            <form action="" method="post" id="config_form">
                                 <fieldset>
                                     <div class="input-group p-1">
                                         <label class="input-group-text" for="config_extension_id">extension_id</label>
@@ -113,9 +113,9 @@
                                     <div class="help-text">
                                         <div class="form-check float-end">
                                             <input class="form-check-input" type="checkbox" name="config_content_json" id="config_content_json"/>
-                                            <label class="form-check-label" for="config_content_json">Is JSON</label>
+                                            <label class="form-check-label" for="config_content_json">Please JSON stringify for me</label>
                                         </div>
-                                        Content is limited to 5kb per segment
+                                        Content is limited to 5kb per segment and 20 requests per minute (per segment)
                                     </div>
 
                                     <div class="input-group p-1">
@@ -195,7 +195,7 @@
                                         <label class="input-group-text" for="chat_text">text</label>
                                         <input type="text" name="chat_text" id="chat_text" value="" class="form-control" />
                                     </div>
-                                    <div class="help-text">Text to send: <span class="char_count" data-of="chat_text">0</span>/280 characters</div>
+                                    <div class="help-text">Text to send: <span class="char_count" data-of="chat_text">0</span>/280 characters and 12 requests per minute</div>
                                     <div class="input-group p-1">
                                         <label class="input-group-text" for="chat_extension_id">extension_id</label>
                                         <input type="text" name="chat_extension_id" id="chat_extension_id" value="" class="form-control active_extension_id" />
@@ -206,6 +206,68 @@
                                     </div>
                                     <div class="btn-group p-1 float-end">
                                         <input type="submit" class="btn btn-primary" value="Send Extension Chat Message" />
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="extension_pubsub_service_header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_pubsub_service" aria-expanded="false" aria-controls="extension_pubsub_service">PubSub Service</button>
+                    </h2>
+                    <div id="extension_pubsub_service" class="accordion-collapse collapse collapse" aria-labelledby="extension_pubsub_service_header" data-bs-parent="#run_accordion">
+                        <div class="accordion-body">
+                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#send-extension-pubsub-message">Send Extension PubSub Message</a> API</p>
+
+                            <form action="" method="post" id="pubsub_form">
+                                <fieldset>
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="pubsub_target">target (an array)</label>
+                                        <select name="pubsub_target" id="pubsub_target" class="form-select">
+                                            <option>global</option>
+                                            <option>broadcast</option>
+                                            <option value="whisper">whisper-USERID</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="pubsub_target_whisper">target</label>
+                                        <div class="input-group-text">whisper-</div>
+                                        <input type="text" name="pubsub_target_whisper" id="pubsub_target_whisper" placeholder="opaqueUserId" class="form-control" disabled />
+                                    </div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="pubsub_broadcaster_id">broadcaster_id</label>
+                                        <input type="text" name="pubsub_broadcaster_id" id="pubsub_broadcaster_id" value="" class="form-control" disabled />
+                                    </div>
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="pubsub_is_global_broadcast">is_global_broadcast</label>
+                                        <select name="pubsub_is_global_broadcast" id="pubsub_is_global_broadcast" class="form-select" disabled="disabled">
+                                            <option value="yes">yes - true</option>
+                                            <option value="no">no - false</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="pubsub_message">message</label>
+                                        <textarea rows="10" cols="50" name="pubsub_message" id="pubsub_message" class="form-control">{
+    "example": "message",
+    "text": "The App will auto JSON stringify based on the switch"
+}</textarea>
+                                    </div>
+                                    <div class="help-text pb-1">
+                                        <div class="form-check form-switch float-end">
+                                            <input class="form-check-input" type="checkbox" name="pubsub_content_json" id="pubsub_content_json" checked/>
+                                            <label class="form-check-label" for="pubsub_content_json">Please JSON stringify for me</label>
+                                        </div>
+
+                                        Content is a string is limited to 5kb and 100 requests per minute.<br />Two pools: 100 global AND 100 per brodacasterID with whispers use the broadcasterID pool.
+                                    </div>
+
+                                    <div class="btn-group p-1 float-end">
+                                        <input type="submit" class="btn btn-primary" value="Send Extension PubSub Message" />
                                     </div>
                                 </fieldset>
                             </form>

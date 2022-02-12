@@ -43,3 +43,32 @@ function processExtension(extension_details) {
     //    configreq_configuration_version_value = extension_details
     //}
 }
+
+window.electron.errorMsg(words => {
+    errorMsg(words);
+});
+function errorMsg(words) {
+    let alert = document.getElementById('alert');
+
+    if (!alert) {
+        alert = document.createElement('div');
+        alert.setAttribute('id', 'alert');
+
+        alert.classList.add('alert');
+        alert.classList.add('alert-warning');
+        alert.classList.add('alert-dismissable');
+        alert.classList.add('fade');
+        alert.classList.add('show');
+        //alert.classList.add('bg-warning');
+
+        let b = document.createElement('button');
+        b.classList.add('btn-close');
+        b.setAttribute('data-bs-dismiss', 'alert');
+        alert.append(b);
+        document.body.append(alert);
+    }
+
+    let sp = document.createElement('p');
+    sp.textContent = words;
+    alert.append(sp);
+}
