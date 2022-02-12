@@ -15,6 +15,14 @@ module.exports = function(lib) {
 
             config.relay();
         },
+        remove: (event, client_id) => {
+            let extensions = store.get('extensions');
+            extensions = extensions ? extensions : {};
+            delete extensions[client_id];
+            store.set('extensions', extensions);
+
+            config.relay();
+        },
 
         ready: () => {
             config.relay();
@@ -122,6 +130,7 @@ module.exports = function(lib) {
     }
 
     ipcMain.on('config_create', config.create);
+    ipcMain.on('config_remove', config.remove);
     ipcMain.on('config_select', config.select);
     ipcMain.on('select_version', config.version);
     ipcMain.on('ready', config.ready);

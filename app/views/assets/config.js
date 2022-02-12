@@ -60,6 +60,8 @@ window.electron.config.extensions((extensions) => {
         a_remove.classList.add('btn-outline-danger');
         a_remove.textContent = 'Remove';
 
+        bindRemove(a_remove, extensions[ref])
+
         grp.append(a_remove);
 
         let li = document.createElement('li');
@@ -71,6 +73,18 @@ window.electron.config.extensions((extensions) => {
         li_a.setAttribute('client_id', extensions[ref].client_id);
         li_a.textContent = extensions[ref].name;
     }
+});
+
+function bindRemove(el, ext) {
+    el.addEventListener('click', (e) => {
+        document.getElementById('remove_name').textContent = ext.name;
+        document.getElementById('actuallyRemove').setAttribute('data-client_id', ext.client_id);
+        let modal = new bootstrap.Modal(document.getElementById('rusure_modal'));
+        modal.show();
+    });
+}
+document.getElementById('actuallyRemove').addEventListener('click', (e) => {
+    window.electron.config.remove(e.target.getAttribute('data-client_id'));
 });
 
 document.addEventListener('click', (e) => {

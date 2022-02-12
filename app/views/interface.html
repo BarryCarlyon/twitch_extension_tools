@@ -76,7 +76,7 @@
                     </fieldset>
                 </form>
             </div>
-            <h3 class="mb-2">Run Requests</h3>
+            <h3 class="mb-2" id="run_requests_title"></h3>
 
             <div class="accordion" id="run_accordion">
                 <div class="accordion-item">
@@ -281,8 +281,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="rusure_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Are you sure you wish to remove:</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="select_version">
+                        <fieldset>
+                            <legend id="remove_name"></legend>
+
+                            <div class="btn-group d-flex">
+                                <input type="button" value="Remove" class="btn btn-outline-danger" data-bs-dismiss="modal" id="actuallyRemove" />
+                                <input type="button" value="KeepIt" class="btn btn-outline-primary" data-bs-dismiss="modal" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="version_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Provide Version Numbers</h5>

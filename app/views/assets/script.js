@@ -42,6 +42,7 @@ function tab(id) {
 }
 
 function processExtension(extension_details) {
+    document.getElementById('run_requests_title').textContent = `${extension_details.name}/${extension_details.id}`;
     let active_extension_id = document.getElementsByClassName('active_extension_id');
     for (let x=0;x<active_extension_id.length;x++) {
         active_extension_id[x].value = extension_details.id;

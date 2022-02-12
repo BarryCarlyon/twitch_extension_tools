@@ -17,6 +17,9 @@ contextBridge.exposeInMainWorld('electron', {
         create: (extension) => {
             ipcRenderer.send('config_create', extension);
         },
+        remove: (client_id) => {
+            ipcRenderer.send('config_remove', client_id);
+        },
         extensions: (fn) => {
             ipcRenderer.on('config_extensions', (event, ...args) => fn(...args));
         },
