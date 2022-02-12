@@ -13,8 +13,8 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
     // settings migration
     let options = {
-        width: 600,
-        height: 400,
+        width: 1000,
+        height: 600,
         x: 0,
         y: 0,
 
@@ -83,7 +83,7 @@ app.on('ready', () => {
         win.setTitle('BarryCarlyon Twitch Extension Tools: ' + app.getVersion());
         //win.webContents.send('title', 'BarryCarlyon Twitch Extension Tools: ' + app.getVersion());
     });
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     ipcMain.on('openWeb', (e,url) => {
         shell.openExternal(url);
