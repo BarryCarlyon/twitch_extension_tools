@@ -118,7 +118,6 @@
                                         Content is limited to 5kb per segment
                                     </div>
 
-
                                     <div class="input-group p-1">
                                         <label class="input-group-text" for="config_version">version</label>
                                         <input type="text" name="config_version" id="config_version" class="form-control" />
@@ -128,6 +127,40 @@
                                     <div class="btn-group p-1 float-end">
                                         <input type="button" class="btn btn-outline-primary" id="config_fetch" value="Fetch Config" />
                                         <input type="button" class="btn btn-outline-danger" id="config_write" value="Write Config" />
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="extension_config_service_required_header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service_required" aria-expanded="false" aria-controls="extension_config_service_required">Configuration Service - Required Configuration</button>
+                    </h2>
+                    <div id="extension_config_service_required" class="accordion-collapse collapse" aria-labelledby="extension_config_service_required_header" data-bs-parent="#run_accordion">
+                        <div class="accordion-body">
+                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> API</p>
+
+                            <form action="" method="post" id="configreq_form">
+                                <fieldset>
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="configreq_extension_id">extension_id</label>
+                                        <input type="text" name="configreq_extension_id" id="configreq_extension_id" class="form-control active_extension_id" />
+                                    </div>
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="configreq_extension_version">extension_version</label>
+                                        <input type="text" name="configreq_extension_version" id="configreq_extension_version" class="form-control active_version" />
+                                    </div>
+
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="configreq_configuration_version">configuration_version</label>
+                                        <input type="text" name="configreq_configuration_version" id="configreq_configuration_version" class="form-control" />
+                                    </div>
+
+                                    <div class="btn-group p-1 float-end">
+                                        <input type="submit" class="btn btn-outline-primary" value="Set Extension Required Configuration" />
                                     </div>
                                 </fieldset>
                             </form>
