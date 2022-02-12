@@ -22,6 +22,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane p-3 show active" id="config" role="tabpanel" aria-labelledby="config-tab">
+            <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary float-end">Dev Console</a>
             <h3>Configuration</h3>
 
             <table id="existing_extensions" class="table">
@@ -277,6 +278,22 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="extension_details_header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_details" aria-expanded="false" aria-controls="extension_details">Extension Details</button>
+                    </h2>
+                    <div id="extension_details" class="accordion-collapse collapse" aria-labelledby="extension_details_header" data-bs-parent="#run_accordion">
+                        <div class="accordion-body">
+                            <p>The data from <a href="https://dev.twitch.tv/docs/api/reference#get-extensions">Get Extensions</a> API which this program used to get data about the Extension for use</p>
+
+                            <pre id="extension_details_data"></pre>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

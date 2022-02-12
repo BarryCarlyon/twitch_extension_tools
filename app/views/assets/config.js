@@ -12,6 +12,15 @@ document.getElementById('config_form').addEventListener('submit', (e) => {
 window.electron.config.extensions((extensions) => {
     console.log('extensions', extensions);
 
+    // reset entry form
+    let inputs = document.getElementById('config_form').getElementsByTagName('input');
+    for (let x=0;x<inputs.length;x++) {
+        if (inputs[x].getAttribute('type') != 'submit') {
+            inputs[x].value = '';
+        }
+    }
+
+    // draw
     let dropdown = document.getElementById('extension_select');
     dropdown.textContent = '';
     let el = document.getElementById('existing_extensions').getElementsByTagName('tbody')[0];
@@ -113,4 +122,6 @@ window.electron.config.extensionDetails((extension_details) => {
     }
 
     processExtension(extension_details);
+
+    document.getElementById('extension_details_data').textContent = JSON.stringify(extension_details, null, 4);
 });
