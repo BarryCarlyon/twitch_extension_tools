@@ -70,7 +70,7 @@ window.electron.config.extensions((extensions) => {
         li.append(li_a);
         li_a.classList.add('dropdown-item');
         li_a.setAttribute('href', '#extension');
-        li_a.setAttribute('client_id', extensions[ref].client_id);
+        li_a.setAttribute('data-client_id', extensions[ref].client_id);
         li_a.textContent = extensions[ref].name;
     }
 });
@@ -87,22 +87,6 @@ document.getElementById('actuallyRemove').addEventListener('click', (e) => {
     window.electron.config.remove(e.target.getAttribute('data-client_id'));
 });
 
-document.addEventListener('click', (e) => {
-    if (e.target.tagName == 'A') {
-        if (e.target.getAttribute('href').startsWith('#')) {
-            if (e.target.hasAttribute('client_id')) {
-                window.electron.config.select(e.target.getAttribute('client_id'));
-                // change to extension tag
-                tab('config-tab');
-                document.getElementById('run-tab').classList.add('disabled');
-            }
-            return;
-        }
-        e.preventDefault();
-        window.electron.openWeb(e.target.getAttribute('href'));
-    }
-});
-
 let version_modal = new bootstrap.Modal(document.getElementById('version_modal'));
 window.electron.config.requestVersion(() => {
     version_modal.show();
@@ -115,9 +99,18 @@ document.getElementById('select_version').addEventListener('submit', (e) => {
 });
 
 window.electron.config.extensionDetails((extension_details) => {
+    // API response so differing
     document.getElementById('run-tab').classList.remove('disabled');
     // change to run requests
     tab('run-tab');
+
+    let items = document.getElementsByClassName('dropdown-item');
+    for (let x=0;x<items.length;x++) {
+        items[x].classList.remove('bg-primary');
+        if (items[x].getAttribute('data-client_id') == extension_details.id) {
+            items[x].classList.add('bg-primary');
+        }
+    }
 
     processExtension(extension_details);
 });

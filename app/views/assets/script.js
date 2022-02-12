@@ -33,6 +33,22 @@ for (let x=0;x<links.length;x++) {
     }
 }
 
+document.addEventListener('click', (e) => {
+    if (e.target.tagName == 'A') {
+        if (e.target.getAttribute('href').startsWith('#')) {
+            if (e.target.hasAttribute('data-client_id')) {
+                window.electron.config.select(e.target.getAttribute('data-client_id'));
+                // change to extension tag
+                tab('config-tab');
+                document.getElementById('run-tab').classList.add('disabled');
+            }
+            return;
+        }
+        e.preventDefault();
+        window.electron.openWeb(e.target.getAttribute('href'));
+    }
+});
+
 function tab(id) {
     let el = document.getElementById(id);
     if (el) {

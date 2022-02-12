@@ -19,6 +19,11 @@ a.website:before {
     z-index: 9001;
 }
 
+#config_form .input-group .input-group-text:first-child {
+    text-align: right;
+    min-width: 300px;
+    display: inline-block;
+}
 .accordion-item .input-group .input-group-text:first-child {
     text-align: right;
     min-width: 200px;
