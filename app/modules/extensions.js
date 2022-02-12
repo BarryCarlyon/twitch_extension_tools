@@ -18,6 +18,9 @@ module.exports = function(lib) {
             case 'setconfiguration':
                 setConfiguration(details);
                 return;
+            case 'setconfigurationreq':
+                setConfigurationReq(details);
+                return;
         }
     });
 
@@ -102,6 +105,8 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
+            console.log('GET', url, resp.status);
+
             let body = await resp.json();
             if (resp.status != 200) {
                 win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
@@ -161,22 +166,73 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
+            console.log('PUT', url, resp.status);
             if (resp.status == 204) {
-                console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                console.log('ok', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 // yay
+                win.webContents.send('extensionAPIResult', {
+                    status: resp.status,
+                    ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                    ratelimitLimit: resp.headers.get('ratelimit-limit')
+                });
+
                 return;
             }
 
             let body = await resp.json();
             win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
-            console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
-            win.webContents.send('extensionAPIResult', {
-                status: resp.status,
-                ratelimitRemain: resp.headers.get('ratelimit-remaining'),
-                ratelimitLimit: resp.headers.get('ratelimit-limit')
-            });
+            console.log('fail', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
 
-            getConfiguration(details);
+    function setConfigurationReq(details) {
+        let extensions = store.get('extensions');
+        let active = store.get('active');
+        let config = extensions[active.client_id];
+
+        const sigConfigPayload = {
+            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "user_id": config.user_id,
+            "role": "external",
+        }
+        const token = jwt.sign(sigConfigPayload, Buffer.from(config.extension_secret, 'base64'));
+
+        let url = new URL('https://api.twitch.tv/helix/extensions/required_configuration');
+
+        console.log('setConfigurationReq Putting', details);
+
+        fetch(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Client-ID': config.client_id,
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(details)
+            }
+        )
+        .then(async resp => {
+            console.log('PUT', url, resp.status);
+
+            if (resp.status == 204) {
+                console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                win.webContents.send('extensionAPIResult', {
+                    status: resp.status,
+                    ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                    ratelimitLimit: resp.headers.get('ratelimit-limit')
+                });
+
+                return;
+            }
+
+            let body = await resp.json();
+            console.log('Fail', resp.status, body);
+            win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
         })
         .catch(err => {
             console.log(err);

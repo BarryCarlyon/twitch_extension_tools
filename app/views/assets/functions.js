@@ -133,7 +133,8 @@ document.getElementById('configreq_form').addEventListener('submit', (e) => {
             extension_id: document.getElementById('configreq_extension_id').value,
             extension_version: document.getElementById('configreq_extension_version').value,
 
-            configuration_version: document.getElementById('configreq_configuration_version').value
+            broadcaster_id: document.getElementById('configreq_broadcaster_id').value,
+            required_configuration: document.getElementById('configreq_required_configuration').value
         }
     );
 });
