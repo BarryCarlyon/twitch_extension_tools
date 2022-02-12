@@ -4,7 +4,8 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder --win --x64",
     "start": "set NODE_ENV=development && electron app",
-    "test": "set NODE_ENV=development && set DEBUG=* && electron app"
+    "test": "set NODE_ENV=development && set DEBUG=* && electron app",
+    "publish": "electron-builder -p always"
   },
   "build": {
     "appId": "com.barrycarlyon.twitch_extension_tools",
