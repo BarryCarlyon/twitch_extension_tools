@@ -122,6 +122,7 @@ window.electron.config.extensionDetails((extension_details) => {
     }
 
     processExtension(extension_details);
+    buildLayout(extension_details);
 
     document.getElementById('extension_details_data').textContent = JSON.stringify(extension_details, null, 4);
 });

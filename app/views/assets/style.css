@@ -50,3 +50,16 @@ a.website:before {
     background: rgba(0,0,0,0.5);
     z-index: 5;
 }
+
+#extension_details_view .card {
+    font-size: 12px;
+}
+#layout_title {
+    width: 500px;
+}
+#layout_icon {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+}
+#layout_additional p { margin: 0px; }

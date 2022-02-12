@@ -75,6 +75,10 @@ function processExtension(extension_details) {
     for (let x=0;x<version_links.length;x++) {
         version_links[x].setAttribute('href', `https://dev.twitch.tv/console/extensions/${extension_details.id}/${extension_details.version}/capabilities`);
     }
+    let install_link = document.getElementsByClassName('install_link');
+    for (let x=0;x<install_link.length;x++) {
+        install_link[x].setAttribute('href', `https://dashboard.twitch.tv/extensions/${extension_details.id}-${extension_details.version}`);
+    }
 
     let extension_config_service_header = document.getElementById('extension_config_service_header');
     let extension_config_service_required_header = document.getElementById('extension_config_service_required_header');
@@ -100,6 +104,98 @@ function processExtension(extension_details) {
     //if (configreq_configuration_version_value) {
     //    configreq_configuration_version_value = extension_details
     //}
+}
+function buildLayout(details) {
+    document.getElementById('layout_icon').style.backgroundImage = `url(${details.icon_urls['100x100']})`;
+
+    document.getElementById('layout_name').textContent = details.name;
+    document.getElementById('layout_author_name').textContent = details.author_name;
+
+    //document.getElementById('layout_description').textContent = details.description;
+    document.getElementById('layout_description').textContent = '';
+    let ps = details.description.split("\n");
+    ps.forEach(txt => {
+        let p = document.createElement('p');
+        document.getElementById('layout_description').append(p);
+        p.textContent = txt;
+    });
+
+    // images
+    let screenshots = document.getElementById('layout_screenshots_slides');
+    screenshots.textContent = '';
+    details.screenshot_urls.forEach(url => {
+        let item = document.createElement('div');
+        screenshots.append(item);
+        item.classList.add('carousel-item');
+
+        let img = document.createElement('img');
+        item.append(img);
+        img.classList.add('d-block');
+        img.classList.add('w-100');
+        img.setAttribute('src', url);
+    });
+    document.getElementsByClassName('carousel-item')[0].classList.add('active');
+
+    // additional
+    let additional = document.getElementById('layout_additional');
+    additional.textContent = '';
+
+    var ap = document.createElement('p');
+    additional.append(ap);
+    ap.textContent = `Version: ${details.version}`;
+
+    //var ap = document.createElement('p');
+    //additional.append(ap);
+    //ap.textContent = `Category: ${details.category}`;
+    var ap = document.createElement('p');
+    additional.append(ap);
+    ap.textContent = `Category: NOT IN THE API`;
+
+    var ap = document.createElement('p');
+    additional.append(ap);
+    ap.textContent = `Support: ${details.support_email}`;
+
+    var ap = document.createElement('p');
+    additional.append(ap);
+
+    let words = {
+        'component': 'Component',
+        'panel': 'Panel',
+        'overlay': 'Overlay',
+        'mobile': 'Mobile'
+    }
+    let types = [];
+    for (let slot in details.views) {
+        if (details.views[slot].viewer_url) {
+            if (words.hasOwnProperty(slot)) {
+                types.push(words[slot]);
+            }
+        }
+    }
+
+    ap.textContent = `Types: ${types.join(', ')}`;
+
+    if (details.privacy_policy_url != '') {
+        var ap = document.createElement('p');
+        additional.append(ap);
+        ap.textContent = 'Privacy Policy: ';
+        var a = document.createElement('a');
+        a.classList.add('website');
+        a.setAttribute('href', details.privacy_policy_url);
+        a.textContent = details.privacy_policy_url;
+        ap.append(a);
+    }
+
+    if (details.eula_tos_url != '') {
+        var ap = document.createElement('p');
+        additional.append(ap);
+        ap.textContent = 'EULA: ';
+        var a = document.createElement('a');
+        a.classList.add('website');
+        a.setAttribute('href', details.eula_tos_url);
+        a.textContent = details.eula_tos_url;
+        ap.append(a);
+    }
 }
 
 window.electron.errorMsg(words => {
