@@ -8,11 +8,11 @@ But the Twitch Developer Rig might not get updated in time for the upcoming Krak
 
 ## orly?
 
-Yeah, basically it's just a "save my Extension configs" Insomnia-esque Rest Client.
+Yeah, basically it's just a "save my Extension configs" Insomnia-esque Rest Client. That wraps the main Extension functions in a handy Application.
 
-# Insomnie?
+# Insomnia?
 
-Insomnia is a Rest client. I have written a Plugin for Insomnia to aid with JWT generating inside Insomnia itself. You can find that [here on Github](https://github.com/BarryCarlyon/insomnia-plugin-twitch-extension-barrycarlyon)
+[Insomnia](https://insomnia.rest/) is a Rest client. I have written a Plugin for Insomnia to aid with JWT generating inside Insomnia itself. You can find that [here on Github](https://github.com/BarryCarlyon/insomnia-plugin-twitch-extension-barrycarlyon)
 
 ## Further Help
 
