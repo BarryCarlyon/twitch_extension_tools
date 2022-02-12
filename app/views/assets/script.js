@@ -1,7 +1,7 @@
 function tab(id) {
     let el = document.getElementById(id);
     if (el) {
-        let tab = new bootstrap.Tab(el)
+        let tab = new bootstrap.Tab(el);
         tab.show();
     }
 }
@@ -19,6 +19,10 @@ function processExtension(extension_details) {
             active_version[x].setAttribute('readonly', 'readonly');
         }
     }
+    let version_links = document.getElementsByClassName('version_link');
+    for (let x=0;x<version_links.length;x++) {
+        version_links[x].setAttribute('href', `https://dev.twitch.tv/console/extensions/${extension_details.id}/${extension_details.version}/capabilities`);
+    }
 
     let extension_chat_service_header = document.getElementById('extension_chat_service_header');
     if (extension_details.has_chat_support) {
@@ -33,4 +37,9 @@ function processExtension(extension_details) {
     } else {
         extension_config_service_header.classList.remove('disabled');
     }
+
+    //let configreq_configuration_version_value = document.getElementById('configreq_configuration_version_value');
+    //if (configreq_configuration_version_value) {
+    //    configreq_configuration_version_value = extension_details
+    //}
 }

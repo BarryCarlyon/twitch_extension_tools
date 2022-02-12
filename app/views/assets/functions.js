@@ -123,3 +123,17 @@ document.getElementById('config_write').addEventListener('click', (e) => {
         }
     );
 });
+
+document.getElementById('configreq_form').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    window.electron.extensionAPI(
+        'setconfigurationreq',
+        {
+            extension_id: document.getElementById('configreq_extension_id').value,
+            extension_version: document.getElementById('configreq_extension_version').value,
+
+            configuration_version: document.getElementById('configreq_configuration_version').value
+        }
+    );
+});
