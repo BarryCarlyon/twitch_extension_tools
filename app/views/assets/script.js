@@ -76,18 +76,24 @@ function processExtension(extension_details) {
         version_links[x].setAttribute('href', `https://dev.twitch.tv/console/extensions/${extension_details.id}/${extension_details.version}/capabilities`);
     }
 
+    let extension_config_service_header = document.getElementById('extension_config_service_header');
+    let extension_config_service_required_header = document.getElementById('extension_config_service_required_header');
+    if (extension_details.configuration_location == 'hosted') {
+        console.log('Config is Hosted');
+        extension_config_service_header.closest('.accordion-item').classList.remove('disabled');
+        extension_config_service_required_header.closest('.accordion-item').classList.remove('disabled');
+    } else {
+        console.log('Config is NOT Hosted');
+        extension_config_service_header.closest('.accordion-item').classList.add('disabled');
+        extension_config_service_required_header.closest('.accordion-item').classList.add('disabled');
+    }
     let extension_chat_service_header = document.getElementById('extension_chat_service_header');
     if (extension_details.has_chat_support) {
-        extension_chat_service_header.classList.remove('disabled');
+        console.log('Has chat support');
+        extension_chat_service_header.closest('.accordion-item').classList.remove('disabled');
     } else {
-        extension_chat_service_header.classList.remove('disabled');
-    }
-
-    let extension_config_service_header = document.getElementById('extension_config_service_header');
-    if (extension_details.extension_config_service_header == 'hosted') {
-        extension_config_service_header.classList.remove('disabled');
-    } else {
-        extension_config_service_header.classList.remove('disabled');
+        console.log('No chat support');
+        extension_chat_service_header.closest('.accordion-item').classList.add('disabled');
     }
 
     //let configreq_configuration_version_value = document.getElementById('configreq_configuration_version_value');

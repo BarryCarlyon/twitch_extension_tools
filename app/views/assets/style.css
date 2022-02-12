@@ -35,3 +35,18 @@ a.website:before {
     top: 0px;
     right: 0px;
 }
+
+.accordion-item {
+    position: relative;
+}
+.accordion-item.disabled:before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    cursor: not-allowed;
+    content: '';
+    background: rgba(0,0,0,0.5);
+    z-index: 5;
+}
