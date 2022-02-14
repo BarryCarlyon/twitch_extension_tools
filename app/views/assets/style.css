@@ -31,9 +31,12 @@ a.website:before {
 }
 
 #updater {
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
+}
+#updater.updating {
+    position: fixed;
 }
 
 .accordion-item {

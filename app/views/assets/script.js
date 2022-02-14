@@ -1,5 +1,12 @@
+let updater_reset = false;
 window.electron.onUpdater((data) => {
     var u = document.getElementById('updater');
+
+    u.classList.add('updating');
+    clearTimeout(updater_reset);
+    updater_reset = setTimeout(() => {
+        u.classList.remove('updating');
+    }, 10000);
 
     switch (data.event) {
         case 'update-error':
