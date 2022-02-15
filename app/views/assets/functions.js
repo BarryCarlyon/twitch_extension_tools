@@ -4,6 +4,7 @@ document.getElementById('change_version_form').addEventListener('submit', (e) =>
 });
 
 window.electron.extensionAPIResult((data) => {
+    resetLoadings();
     errorMsg(`HTTP: ${data.status} Ratelimit: ${data.ratelimitRemain}/${data.ratelimitLimit}`);
 
     if (data.hasOwnProperty('config')) {

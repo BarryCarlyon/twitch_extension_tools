@@ -1,3 +1,6 @@
+/**
+ * Houses all the functions for CRUD of configuration sets
+**/
 module.exports = function(lib) {
     let { ipcMain, win, store } = lib;
 
@@ -6,12 +9,13 @@ module.exports = function(lib) {
 
     let config = {
         create: (event, args) => {
-            console.log(args);
-
-            let extensions = store.get('extensions');
-            extensions = extensions ? extensions : {};
-            extensions[args.client_id] = args;
-            store.set('extensions', extensions);
+            //console.log(args);
+            let { client_id } = args;
+            store.set(`extensions.${client_id}.name`, args.name);
+            store.set(`extensions.${client_id}.client_id`, client_id);
+            store.set(`extensions.${client_id}.extension_secret`, args.extension_secret);
+            store.set(`extensions.${client_id}.client_secret`, args.client_secret);
+            store.set(`extensions.${client_id}.user_id`, args.user_id);
 
             config.relay();
         },

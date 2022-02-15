@@ -63,6 +63,21 @@ contextBridge.exposeInMainWorld('electron', {
     extensionAPIResult: (fn) =>{
         ipcRenderer.on('extensionAPIResult', (event, ...args) => fn(...args));
     },
+    bits: {
+        getProducts: (should_include_all) => {
+            ipcRenderer.send('bits.getProducts', should_include_all);
+        },
+        gotProducts: (fn) =>{
+            ipcRenderer.on('bits.gotProducts', (event, ...args) => fn(...args));
+        },
+
+        createProduct: (data) => {
+            ipcRenderer.send('bits.createProduct', data);
+        },
+        createdProduct: (fn) =>{
+            ipcRenderer.on('bits.createdProduct', (event, ...args) => fn(...args));
+        }
+    },
 
     errorMsg: (fn) => {
         ipcRenderer.on('errorMsg', (event, ...args) => fn(...args));

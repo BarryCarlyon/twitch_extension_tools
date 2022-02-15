@@ -130,10 +130,14 @@ function processExtension(extension_details) {
         extension_chat_service_header.closest('.accordion-item').classList.add('disabled');
     }
 
-    //let configreq_configuration_version_value = document.getElementById('configreq_configuration_version_value');
-    //if (configreq_configuration_version_value) {
-    //    configreq_configuration_version_value = extension_details
-    //}
+    let extension_bitsproducts_header = document.getElementById('extension_bitsproducts_header');
+    if (extension_details.bits_enabled) {
+        console.log('Has bits support');
+        extension_bitsproducts_header.closest('.accordion-item').classList.remove('disabled');
+    } else {
+        console.log('No bits support');
+        extension_bitsproducts_header.closest('.accordion-item').classList.add('disabled');
+    }
 }
 function buildLayout(details) {
     document.getElementById('layout_icon').style.backgroundImage = `url(${details.icon_urls['100x100']})`;
@@ -230,12 +234,15 @@ function buildLayout(details) {
     }
 }
 
-window.electron.errorMsg(words => {
-    // reset loadings
+function resetLoadings() {
     let loadings = document.getElementsByClassName('loading');
     for (var x=0;x<loadings.length;x++) {
         loadings[x].classList.remove('loading');
     }
+}
+window.electron.errorMsg(words => {
+    // reset all loadings
+    resetLoadings();
     // draw
     errorMsg(words);
 });

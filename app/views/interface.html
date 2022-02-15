@@ -294,6 +294,94 @@
                     </div>
                 </div>
 
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="extension_bitsproducts_header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_bitsproducts" aria-expanded="false" aria-controls="extension_bitsproducts">Bits Products</button>
+                    </h2>
+                    <div id="extension_bitsproducts" class="accordion-collapse collapse collapse" aria-labelledby="extension_bitsproducts_header" data-bs-parent="#run_accordion">
+                        <div class="accordion-body">
+                            <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-bits-products">Get/Update Extension Bits Products</a> API</p>
+
+                            <form action="" method="post" id="bits_fetch">
+                                <fieldset>
+                                    <div class="input-group p-1">
+                                        <label class="input-group-text" for="bits_fetch_should_include_all">should_include_all</label>
+                                        <select name="bits_fetch_should_include_all" id="bits_fetch_should_include_all" class="form-select">
+                                            <option>yes</option>
+                                            <option>no</option>
+                                        </select>
+                                        <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
+                                    </div>
+                                    <div class="help-text pb-1">Whether Bits products that are disabled/expired should be included in the response.</div>
+                                </fieldset>
+                            </form>
+
+                            <form action="" method="post" id="bits_products">
+                                <fieldset>
+                                    <ul>
+                                        <li>Skus are limited to 255 characters, no white spaces.</li>
+                                        <li>coust is limited to between 1 nad 10,000 bits</li>
+                                        <li>Display Names are limited to 255 characters</li>
+                                    </ul>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>sku</th>
+                                                <th>cost</th>
+                                                <th>InDev</th>
+                                                <th>Display</th>
+                                                <th>Expire</th>
+                                                <th colspan="2">Broadcast</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bits_products_table">
+                                            <tr>
+                                                <th colspan="7">Fetch Products First</th>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot id="bits_products_new">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="bits_product_new_sku" id="bits_product_new_sku" placeholder="New Product Sku" class="form-control"/>
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="bits_product_new_cost" id="bits_product_new_cost" min="1" max="10000" length="5" value="1" class="form-control"/>
+                                                </td>
+                                                <td>
+                                                    <select name="bits_product_new_in_development" id="bits_product_new_in_development" class="form-select">
+                                                        <option>true</option>
+                                                        <option>false</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="bits_product_new_display_name" id="bits_product_new_display_name" class="form-control" placeholder="New Name" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="bits_product_new_expiration" id="bits_product_new_expiration" class="form-control" value="" />
+                                                </td>
+                                                <td>
+                                                    <select name="bits_product_new_is_broadcast" id="bits_product_new_is_broadcast" class="form-select">
+                                                        <option>true</option>
+                                                        <option selected="selected">false</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div id="bits_product_new_create" class="btn btn-sm btn-outline-primary form-control">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                        </svg>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="alert alert-danger">Caution: if you create a Bits Product using an existing sku, the existing product will be updated, instead of an error occuring</div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="extension_details_header">
@@ -431,5 +519,6 @@
     <script type="text/javascript" src="assets/script.js"></script>
     <script type="text/javascript" src="assets/config.js"></script>
     <script type="text/javascript" src="assets/functions.js"></script>
+    <script type="text/javascript" src="assets/bits.js"></script>
 </body>
 </html>
