@@ -217,6 +217,12 @@ function buildLayout(details) {
 }
 
 window.electron.errorMsg(words => {
+    // reset loadings
+    let loadings = document.getElementsByClassName('loading');
+    for (var x=0;x<loadings.length;x++) {
+        loadings[x].classList.remove('loading');
+    }
+    // draw
     errorMsg(words);
 });
 function errorMsg(words) {

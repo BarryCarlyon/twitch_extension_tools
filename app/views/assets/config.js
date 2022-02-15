@@ -1,5 +1,17 @@
-
 document.getElementById('id_convert_owner').addEventListener('click', (e) => {
+    document.getElementById('client_secret').classList.remove('is-invalid');
+    document.getElementById('user_id').classList.remove('is-invalid');
+
+    if (document.getElementById('client_secret').value == '') {
+        // empty
+        document.getElementById('client_secret').classList.add('is-invalid');
+        return;
+    }
+    if (document.getElementById('user_id').value == '') {
+        document.getElementById('user_id').classList.add('is-invalid');
+        return;
+    }
+
     window.electron.ownerConvertToId(
         document.getElementById('client_id').value,
         document.getElementById('client_secret').value,

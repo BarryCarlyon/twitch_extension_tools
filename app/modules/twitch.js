@@ -1,7 +1,7 @@
+const { access } = require('original-fs');
+
 module.exports = function(lib) {
     let { ipcMain, win, store } = lib;
-
-    let temporary_token_storage = {};
 
     const fetch = require('electron-fetch').default;
 
@@ -22,7 +22,39 @@ module.exports = function(lib) {
         }
 
         try {
-            if (!temporary_token_storage.hasOwnProperty(client_id)) {
+            let access_token = store.get(`extensions.${client_id}.access_token`);
+            console.log('Loaded', access_token);
+            // validate existing token
+            if (access_token) {
+                let validate_url = new URL('https://id.twitch.tv/oauth2/validate');
+                try {
+                    let validate_req = await fetch(
+                        validate_url, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${access_token}`
+                            }
+                        }
+                    );
+                    //let validate_resp = await validate_url.json();
+                    console.log(`Validated: ${validate_req.status}`);
+
+                    if (validate_req.status != 200) {
+                        // yay
+                        console.log('Regenerate');
+                        store.delete(`extensions.${client_id}.access_token`);
+                        access_token = '';
+                    }
+                } catch (err) {
+                    console.error('validate error', err);
+                    // remove
+                    store.delete(`extensions.${client_id}.access_token`);
+                    // wipe
+                    access_token = '';
+                }
+            }
+
+            if (!access_token) {
                 // token time
                 let token_url = new URL('https://id.twitch.tv/oauth2/token');
                 let token_params = [
@@ -32,20 +64,22 @@ module.exports = function(lib) {
                 ]
                 token_url.search = new URLSearchParams(token_params).toString();
 
-                let req = await fetch(
+                let token_req = await fetch(
                     token_url, {
                         method: 'POST'
                     }
                 );
-                let resp = await req.json();
-                if (!resp.access_token) {
-                    console.log(resp);
+                let token_resp = await token_req.json();
+                if (!token_resp.access_token) {
+                    console.log(token_resp);
                     win.webContents.send('errorMsg', 'Failed to get an Access Token');
                     return;
                 }
 
-                console.log('Generated a token', resp.access_token);
-                temporary_token_storage[client_id] = resp.access_token;
+                console.log('Generated a token', token_resp.access_token);
+                // store in persistent
+                store.set(`extensions.${client_id}.access_token`, token_resp.access_token);
+                access_token = token_resp.access_token;
             }
 
             // username to ID time
@@ -61,7 +95,7 @@ module.exports = function(lib) {
                     method: 'GET',
                     headers: {
                         'Client-ID': client_id,
-                        'Authorization': `Bearer ${temporary_token_storage[client_id]}`
+                        'Authorization': `Bearer ${access_token}`
                     }
                 }
             );
