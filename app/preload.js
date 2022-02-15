@@ -44,6 +44,15 @@ contextBridge.exposeInMainWorld('electron', {
         }
     },
 
+    ownerConvertToId: (client_id, client_secret, login) => {
+        ipcRenderer.send('ownerConvertToId', { client_id, client_secret, login });
+    },
+        ownerConvertedToId: (fn) => {
+            ipcRenderer.on('ownerConvertedToId', (event, ...args) => fn(...args));
+        },
+    convertToId: (field, value) => {
+        ipcRenderer.send('convertToId', { field, value });
+    },
     extensionAPI: (route, details) => {
         ipcRenderer.send('extensionAPI', {
             route,

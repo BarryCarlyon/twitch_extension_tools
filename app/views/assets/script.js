@@ -54,6 +54,17 @@ document.addEventListener('click', (e) => {
         e.preventDefault();
         window.electron.openWeb(e.target.getAttribute('href'));
     }
+
+    if (e.target.classList.contains('id_convert')) {
+        console.log('has id_convert');
+        let field = e.target.getAttribute('data-target');
+        let el = document.getElementById(field);
+        if (el) {
+            console.log('has el');
+            let value_to_config = el.value;
+            window.electron.convertToId(field, el.value);
+        }
+    }
 });
 
 function tab(id) {

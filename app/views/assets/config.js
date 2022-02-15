@@ -1,3 +1,18 @@
+
+document.getElementById('id_convert_owner').addEventListener('click', (e) => {
+    window.electron.ownerConvertToId(
+        document.getElementById('client_id').value,
+        document.getElementById('client_secret').value,
+        document.getElementById('user_id').value
+    );
+    e.target.closest('.input-group').classList.add('loading');
+});
+    window.electron.ownerConvertedToId(user_id => {
+        console.log('data', user_id);
+        document.getElementById('user_id').value = user_id;
+        document.getElementById('user_id').closest('.input-group').classList.remove('loading');
+    });
+
 document.getElementById('config_form').addEventListener('submit', (e) => {
     e.preventDefault();
 
