@@ -141,9 +141,6 @@ window.electron.config.extensions((extensions) => {
         bindEdit(a_edit)
 
         grp.append(a_edit);
-        bindEdit(a_edit);
-
-        grp.append(a_edit);
 
         let a_remove = document.createElement('div');
         a_remove.classList.add('btn');
@@ -168,11 +165,16 @@ window.electron.config.extensions((extensions) => {
 
 function bindUse(el) {
     el.addEventListener('click', (e) => {
-        // load parameters for edit
+        // load parameters for use
         window.electron.config.select(e.target.getAttribute('data-client_id'));
     });
 }
-
+function bindEdit(el) {
+    el.addEventListener('click', (e) => {
+        // load parameters for edit
+        window.electron.config.loadForEdit(e.target.getAttribute('data-client_id'));
+    });
+}
 function bindRemove(el, ext) {
     el.addEventListener('click', (e) => {
         document.getElementById('remove_name').textContent = ext.name;
