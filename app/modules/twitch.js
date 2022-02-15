@@ -187,6 +187,13 @@ module.exports = function(lib) {
         if (products_resp.data) {
             console.log('send back', products_resp.data.length);
             win.webContents.send('bits.gotProducts', products_resp.data);
+
+            win.webContents.send('extensionAPIResult', {
+                status: products_req.status,
+                ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: products_req.headers.get('ratelimit-limit')
+            });
+
             return;
         }
         win.webContents.send('errorMsg', 'Bits Products not found');
@@ -197,9 +204,9 @@ module.exports = function(lib) {
 
 
     ipcMain.on('bits.createProduct', (e,data) => {
-        createProdcut(data);
+        createProduct(data);
     });
-    async function createProdcut(data) {
+    async function createProduct(data) {
         console.log('Attempt product create', data);
         let client_id = store.get('active.client_id');
 
@@ -226,10 +233,18 @@ module.exports = function(lib) {
         console.log(products_resp);
         if (products_resp.data && products_resp.data.length == 1) {
             win.webContents.send('bits.createdProduct');
+
+            win.webContents.send('extensionAPIResult', {
+                status: products_req.status,
+                ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: products_req.headers.get('ratelimit-limit')
+            });
+
             return;
         }
-        win.webContents.send('errorMsg', 'Bits Product errored');
+        win.webContents.send('errorMsg', `Bits Product errored: ${products_resp.message}`);
     }
+
 
     return;
 }

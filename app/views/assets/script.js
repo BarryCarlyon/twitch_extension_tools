@@ -234,12 +234,15 @@ function buildLayout(details) {
     }
 }
 
-window.electron.errorMsg(words => {
-    // reset all loadings
+function resetLoadings() {
     let loadings = document.getElementsByClassName('loading');
     for (var x=0;x<loadings.length;x++) {
         loadings[x].classList.remove('loading');
     }
+}
+window.electron.errorMsg(words => {
+    // reset all loadings
+    resetLoadings();
     // draw
     errorMsg(words);
 });
