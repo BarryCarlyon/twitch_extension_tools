@@ -108,9 +108,9 @@ window.electron.config.extensions((extensions) => {
         usethis.classList.add('btn-outline-success');
         usethis.textContent = 'Use';
         usethis.setAttribute('data-client_id', extensions[ref].client_id);
-        grp.append(usethis);
 
         bindUse(usethis);
+        grp.append(usethis);
 
         let a_settings = document.createElement('a');
         a_settings.classList.add('btn');
@@ -119,6 +119,7 @@ window.electron.config.extensions((extensions) => {
         a_settings.classList.add('website');
         a_settings.setAttribute('href', `https://dev.twitch.tv/console/extensions/${extensions[ref].client_id}/settings`);
         a_settings.textContent = 'Settings';
+
         grp.append(a_settings);
 
         let a_versions = document.createElement('a');
@@ -139,7 +140,6 @@ window.electron.config.extensions((extensions) => {
         a_edit.setAttribute('data-client_id', extensions[ref].client_id);
 
         bindEdit(a_edit)
-
         grp.append(a_edit);
 
         let a_remove = document.createElement('div');
@@ -149,7 +149,6 @@ window.electron.config.extensions((extensions) => {
         a_remove.textContent = 'Remove';
 
         bindRemove(a_remove, extensions[ref]);
-
         grp.append(a_remove);
 
         let li = document.createElement('li');
