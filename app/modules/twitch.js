@@ -158,7 +158,7 @@ module.exports = function(lib) {
     /*
     Bits products
     */
-    async function getProducts(should_include_all) {
+    async function getProducts(should_include_all, ret) {
         let client_id = store.get('active.client_id');
 
         await accessToken(client_id);
@@ -183,10 +183,30 @@ module.exports = function(lib) {
         );
         let products_resp = await products_req.json();
 
+        if (ret) {
+            return products_resp.data;
+        }
+
         console.log(products_resp);
         if (products_resp.data) {
             console.log('send back', products_resp.data.length);
-            win.webContents.send('bits.gotProducts', products_resp.data);
+
+            let products = products_resp.data;
+
+            if (should_include_all) {
+                // load _AGAIN_ and reset parameters
+                let live_products = await getProducts(false, true);
+                // merge and repair
+                live_products.forEach(product => {
+                    products.forEach((prod, index) => {
+                        if (prod.sku == product.sku) {
+                            products[index].expiration = null;
+                        }
+                    });
+                });
+            }
+
+            win.webContents.send('bits.gotProducts', products);
 
             win.webContents.send('extensionAPIResult', {
                 status: products_req.status,
