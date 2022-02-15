@@ -1,3 +1,6 @@
+/**
+ * Houses all the functions for JWT API Access
+**/
 module.exports = function(lib) {
     let { ipcMain, win, store } = lib;
 

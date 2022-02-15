@@ -1,5 +1,6 @@
-const { access } = require('original-fs');
-
+/**
+ * Houses all the functions for Access Token API Access
+**/
 module.exports = function(lib) {
     let { ipcMain, win, store } = lib;
 
