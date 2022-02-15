@@ -102,6 +102,16 @@ window.electron.config.extensions((extensions) => {
 
         grp.classList.add('btn-group');
 
+        let usethis = document.createElement('div');
+        usethis.classList.add('btn');
+        usethis.classList.add('btn-sm');
+        usethis.classList.add('btn-outline-success');
+        usethis.textContent = 'Use';
+        usethis.setAttribute('data-client_id', extensions[ref].client_id);
+        grp.append(usethis);
+
+        bindUse(usethis);
+
         let a_settings = document.createElement('a');
         a_settings.classList.add('btn');
         a_settings.classList.add('btn-sm');
@@ -128,7 +138,10 @@ window.electron.config.extensions((extensions) => {
         a_edit.textContent = 'Edit';
         a_edit.setAttribute('data-client_id', extensions[ref].client_id);
 
-        bindEdit(a_edit, extensions[ref])
+        bindEdit(a_edit)
+
+        grp.append(a_edit);
+        bindEdit(a_edit);
 
         grp.append(a_edit);
 
@@ -138,7 +151,7 @@ window.electron.config.extensions((extensions) => {
         a_remove.classList.add('btn-outline-danger');
         a_remove.textContent = 'Remove';
 
-        bindRemove(a_remove, extensions[ref])
+        bindRemove(a_remove, extensions[ref]);
 
         grp.append(a_remove);
 
@@ -153,12 +166,13 @@ window.electron.config.extensions((extensions) => {
     }
 });
 
-function bindEdit(el, ext) {
+function bindUse(el) {
     el.addEventListener('click', (e) => {
         // load parameters for edit
-        window.electron.config.loadForEdit(e.target.getAttribute('data-client_id'));
+        window.electron.config.select(e.target.getAttribute('data-client_id'));
     });
 }
+
 function bindRemove(el, ext) {
     el.addEventListener('click', (e) => {
         document.getElementById('remove_name').textContent = ext.name;

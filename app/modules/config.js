@@ -1,3 +1,6 @@
+/**
+ * Houses all the functions for CRUD of configuration sets
+**/
 module.exports = function(lib) {
     let { ipcMain, win, store } = lib;
 

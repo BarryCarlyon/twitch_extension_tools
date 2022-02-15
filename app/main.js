@@ -5,6 +5,9 @@ const path = require('path');
 const Store = require('electron-store');
 const store = new Store();
 
+const contextMenu = require('electron-context-menu');
+contextMenu();
+
 app.on('window-all-closed', () => {
     app.quit()
 });

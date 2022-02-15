@@ -6,6 +6,9 @@ module.exports = function(lib) {
 
     const fetch = require('electron-fetch').default;
 
+    /*
+    UserName to ID
+    */
     ipcMain.on('ownerConvertToId', async (event, data) => {
         let { client_id, client_secret, login } = data;
 
@@ -143,6 +146,12 @@ module.exports = function(lib) {
             console.error(err);
         }
     }
+
+    /*
+    Bits products
+    */
+    ipcMain.on('loadBitsProducts', async (event, data) => {
+    });
 
     return;
 }

@@ -1,3 +1,6 @@
+/**
+ * Houses all the functions for electron updated information relay and trigger
+**/
 const { autoUpdater } = require("electron-updater");
 
 module.exports = function(lib) {
