@@ -16,6 +16,26 @@ module.exports = function(lib) {
             win.webContents.send('errorMsg', 'Twitch API Client Secret is required');
             return;
         }
+
+        store.set(`extensions.${client_id}.client_id`, client_id);
+        store.set(`extensions.${client_id}.client_secret`, client_secret);
+
+        convertToId({
+            client_id,
+            login,
+            el: 'user_id'
+        })
+    });
+
+    ipcMain.on('convertToId', async (event, data) => {
+        console.log('convertToId', data);
+        data.client_id = store.get('active.client_id');
+        convertToId(data);
+    });
+
+    async function convertToId(data) {
+        let { client_id, login, el } = data;
+
         if (!login || login == '') {
             win.webContents.send('errorMsg', 'Username is required to convert to a UserID');
             return;
@@ -55,6 +75,12 @@ module.exports = function(lib) {
             }
 
             if (!access_token) {
+                let client_secret = store.get(`extensions.${client_id}.client_secret`);
+                if (!client_secret) {
+                    win.webContents.send('errorMsg', `No Client Secret for ${client_id}`);
+                    return;
+                }
+
                 // token time
                 let token_url = new URL('https://id.twitch.tv/oauth2/token');
                 let token_params = [
@@ -105,49 +131,17 @@ module.exports = function(lib) {
 
             if (users_resp.data && users_resp.data.length == 1) {
                 console.log('send back', users_resp.data[0].id);
-                win.webContents.send('ownerConvertedToId', users_resp.data[0].id);
+                win.webContents.send('convertedToId', {
+                    el,
+                    id: users_resp.data[0].id
+                });
                 return;
             }
             win.webContents.send('errorMsg', 'User not found');
         } catch (err) {
             console.error(err);
         }
-    });
-
-    function getToken() {
-        let extensions = store.get('extensions');
-        let active = store.get('active');
-        if (!active) {
-            return;
-        }
-
-        let config = extensions[active.client_id];
-        if (!config.client_id && !config.client_secret) {
-            return;
-        }
-
-
-        let url = new URL('https://id.twitch.tv/oauth2/token');
-/*
-    ?client_id=<your client ID>
-    &client_secret=<your client secret>
-    &grant_type=client_credentials
-*/
-        let params = [
-            [ 'extension_id', details.extension_id ],
-            [ 'segment', details.segment ]
-        ];
-        url.search = new URLSearchParams(params).toString();
-
-        //fetch(
-        //);
     }
-    ipcMain.on('convertToId', (event, data) => {
-        let { field, value } = data;
-        console.log('convertToId', value, 'return', field);
-
-
-    });
 
     return;
 }

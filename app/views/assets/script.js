@@ -55,17 +55,29 @@ document.addEventListener('click', (e) => {
         window.electron.openWeb(e.target.getAttribute('href'));
     }
 
-    if (e.target.classList.contains('id_convert')) {
-        console.log('has id_convert');
+    if (e.target.classList.contains('convertToId')) {
+        console.log('has convertToId');
         let field = e.target.getAttribute('data-target');
         let el = document.getElementById(field);
         if (el) {
-            console.log('has el');
-            let value_to_config = el.value;
+            console.log('has el', field, el.value);
+
             window.electron.convertToId(field, el.value);
+
+            e.target.closest('.input-group').classList.add('loading');
         }
     }
 });
+    window.electron.convertedToId((data) => {
+        console.log('convertedToId', data);
+        let target = document.getElementById(data.el);
+        if (target) {
+            console.log('data', data.id);
+            target.value = data.id;
+            target.closest('.input-group').classList.remove('loading');
+        }
+    });
+
 
 function tab(id) {
     let el = document.getElementById(id);
@@ -141,18 +153,20 @@ function buildLayout(details) {
     // images
     let screenshots = document.getElementById('layout_screenshots_slides');
     screenshots.textContent = '';
-    details.screenshot_urls.forEach(url => {
-        let item = document.createElement('div');
-        screenshots.append(item);
-        item.classList.add('carousel-item');
+    if (details.screenshot_urls.length > 0) {
+        details.screenshot_urls.forEach(url => {
+            let item = document.createElement('div');
+            screenshots.append(item);
+            item.classList.add('carousel-item');
 
-        let img = document.createElement('img');
-        item.append(img);
-        img.classList.add('d-block');
-        img.classList.add('w-100');
-        img.setAttribute('src', url);
-    });
-    document.getElementsByClassName('carousel-item')[0].classList.add('active');
+            let img = document.createElement('img');
+            item.append(img);
+            img.classList.add('d-block');
+            img.classList.add('w-100');
+            img.setAttribute('src', url);
+        });
+        document.getElementsByClassName('carousel-item')[0].classList.add('active');
+    }
 
     // additional
     let additional = document.getElementById('layout_additional');

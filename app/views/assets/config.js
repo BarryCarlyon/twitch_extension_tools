@@ -19,11 +19,6 @@ document.getElementById('id_convert_owner').addEventListener('click', (e) => {
     );
     e.target.closest('.input-group').classList.add('loading');
 });
-    window.electron.ownerConvertedToId(user_id => {
-        console.log('data', user_id);
-        document.getElementById('user_id').value = user_id;
-        document.getElementById('user_id').closest('.input-group').classList.remove('loading');
-    });
 
 document.getElementById('config_form').addEventListener('submit', (e) => {
     e.preventDefault();
