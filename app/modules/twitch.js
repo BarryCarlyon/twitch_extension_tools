@@ -195,5 +195,41 @@ module.exports = function(lib) {
         getProducts(should_include_all);
     });
 
+
+    ipcMain.on('bits.createProduct', (e,data) => {
+        createProdcut(data);
+    });
+    async function createProdcut(data) {
+        console.log('Attempt product create', data);
+        let client_id = store.get('active.client_id');
+
+        await accessToken(client_id);
+
+        let access_token = store.get(`extensions.${client_id}.access_token`);
+
+        let products_url = new URL('https://api.twitch.tv/helix/bits/extensions');
+
+        let products_req = await fetch(
+            products_url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Client-ID': client_id,
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+        );
+        let products_resp = await products_req.json();
+
+        console.log(products_resp);
+        if (products_resp.data && products_resp.data.length == 1) {
+            win.webContents.send('bits.createdProduct');
+            return;
+        }
+        win.webContents.send('errorMsg', 'Bits Product errored');
+    }
+
     return;
 }

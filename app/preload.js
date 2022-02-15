@@ -70,6 +70,13 @@ contextBridge.exposeInMainWorld('electron', {
         gotProducts: (fn) =>{
             ipcRenderer.on('bits.gotProducts', (event, ...args) => fn(...args));
         },
+
+        createProduct: (data) => {
+            ipcRenderer.send('bits.createProduct', data);
+        },
+        createdProduct: (fn) =>{
+            ipcRenderer.on('bits.createdProduct', (event, ...args) => fn(...args));
+        }
     },
 
     errorMsg: (fn) => {

@@ -235,7 +235,7 @@ function buildLayout(details) {
 }
 
 window.electron.errorMsg(words => {
-    // reset loadings
+    // reset all loadings
     let loadings = document.getElementsByClassName('loading');
     for (var x=0;x<loadings.length;x++) {
         loadings[x].classList.remove('loading');

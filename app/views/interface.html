@@ -339,7 +339,7 @@
                                                 <th colspan="7">Fetch Products First</th>
                                             </tr>
                                         </tbody>
-                                        <tfoot>
+                                        <tfoot id="bits_products_new">
                                             <tr>
                                                 <td>
                                                     <input type="text" name="bits_product_new_sku" id="bits_product_new_sku" placeholder="New Product Sku" class="form-control"/>
@@ -354,9 +354,10 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="bits_product_new_display_name" id="bits_product_new_display_name" class="form-control" value="New Name" />
+                                                    <input type="text" name="bits_product_new_display_name" id="bits_product_new_display_name" class="form-control" placeholder="New Name" />
                                                 </td>
                                                 <td>
+                                                    <input type="text" name="bits_product_new_expiration" id="bits_product_new_expiration" class="form-control" value="" />
                                                 </td>
                                                 <td>
                                                     <select name="bits_product_new_broadcast" id="bits_product_new_broadcast" class="form-select">
@@ -365,7 +366,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <div id="bits_product_new_create" class="btn btn-sm btn-outline-primary">
+                                                    <div id="bits_product_new_create" class="btn btn-sm btn-outline-primary form-control">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -375,6 +376,7 @@
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    <div class="alert alert-danger">Caution: if you create a Bits Product using an existing sku, the existing product will be updated, instead of an error occuring</div>
                                 </fieldset>
                             </form>
                         </div>

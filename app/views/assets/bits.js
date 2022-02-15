@@ -1,8 +1,11 @@
 document.getElementById('bits_fetch').addEventListener('submit', (e) => {
     e.preventDefault();
+    getProducts();
+});
+function getProducts() {
     let should_include_all = document.getElementById('bits_fetch_should_include_all').value == 'yes' ? 'true' : 'false';
     window.electron.bits.getProducts(should_include_all);
-});
+}
 
 window.electron.bits.gotProducts((products) => {
     let tbl = document.getElementById('bits_products_table');
@@ -94,3 +97,38 @@ function cellInput(row, name, value) {
 
     cell.append(inp);
 }
+
+document.getElementById('bits_product_new_create').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // validate
+
+    // go
+    let data = {
+        sku: document.getElementById('bits_product_new_sku').value,
+        cost: {
+            amount: document.getElementById('bits_product_new_cost').value,
+            type: 'bits'
+        },
+        in_development: (document.getElementById('bits_product_new_in_development').value == 'true' ? true : false),
+        display_name: document.getElementById('bits_product_new_display_name').value,
+        is_broadcast: (document.getElementById('bits_product_new_broadcast').value == 'true' ? true : false)
+    }
+    if (document.getElementById('bits_product_new_expiration').value != '') {
+        data.expiration = document.getElementById('bits_product_new_expiration').value;
+    }
+
+    document.getElementById('bits_products_new').classList.add('loading');
+    window.electron.bits.createProduct(data);
+});
+window.electron.bits.createdProduct(() => {
+    document.getElementById('bits_products_new').classList.remove('loading');
+    // product created
+    let fields = document.getElementById('bits_products_new').getElementsByTagName('input');
+    for (let x=0;x<fields.length;x++) {
+        if (fields[x].getAttribute('type') == 'text') {
+            fields[x].value = '';
+        }
+    }
+    getProducts();
+});
