@@ -15,6 +15,15 @@ module.exports = function(lib) {
 
             config.relay();
         },
+        loadForEdit: (event, client_id) => {
+            let extensions = store.get('extensions');
+            extensions = extensions ? extensions : {};
+            if (extensions.hasOwnProperty(client_id)) {
+                win.webContents.send('extension_loadedForEdit', extensions[client_id]);
+                return;
+            }
+            win.webContents.send('errorMsg', `Config for ${client_id} not found`);
+        },
         remove: (event, client_id) => {
             let extensions = store.get('extensions');
             extensions = extensions ? extensions : {};
@@ -130,6 +139,7 @@ module.exports = function(lib) {
     }
 
     ipcMain.on('config_create', config.create);
+    ipcMain.on('config_loadForEdit', config.loadForEdit);
     ipcMain.on('config_remove', config.remove);
     ipcMain.on('config_select', config.select);
     ipcMain.on('select_version', config.version);

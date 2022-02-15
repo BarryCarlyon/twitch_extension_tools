@@ -101,6 +101,7 @@ app.on('ready', () => {
     // handler
     require(path.join(__dirname, 'modules', 'config.js'))({ app, ipcMain, win, store });
     require(path.join(__dirname, 'modules', 'extensions.js'))({ app, ipcMain, win, store });
+    require(path.join(__dirname, 'modules', 'twitch.js'))({ app, ipcMain, win, store });
 });
 
 let win;

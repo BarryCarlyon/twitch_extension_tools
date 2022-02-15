@@ -17,6 +17,12 @@ contextBridge.exposeInMainWorld('electron', {
         create: (extension) => {
             ipcRenderer.send('config_create', extension);
         },
+        loadForEdit: (client_id) => {
+            ipcRenderer.send('config_loadForEdit', client_id);
+        },
+        loadedForEdit: (fn) => {
+            ipcRenderer.on('extension_loadedForEdit', (event, ...args) => fn(...args));
+        },
         remove: (client_id) => {
             ipcRenderer.send('config_remove', client_id);
         },
@@ -37,6 +43,16 @@ contextBridge.exposeInMainWorld('electron', {
             ipcRenderer.on('extension_details', (event, ...args) => fn(...args));
         }
     },
+
+    ownerConvertToId: (client_id, client_secret, login) => {
+        ipcRenderer.send('ownerConvertToId', { client_id, client_secret, login });
+    },
+    convertToId: (el, login) => {
+        ipcRenderer.send('convertToId', { el, login });
+    },
+        convertedToId: (fn) => {
+            ipcRenderer.on('convertedToId', (event, ...args) => fn(...args));
+        },
 
     extensionAPI: (route, details) => {
         ipcRenderer.send('extensionAPI', {

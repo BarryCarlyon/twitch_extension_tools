@@ -31,14 +31,19 @@ a.website:before {
 }
 
 #updater {
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
 }
+#updater.updating {
+    position: fixed;
+}
 
+.loading,
 .accordion-item {
     position: relative;
 }
+.loading:before,
 .accordion-item.disabled:before {
     position: absolute;
     top: 0px;

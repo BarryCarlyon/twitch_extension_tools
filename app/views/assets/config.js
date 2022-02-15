@@ -1,12 +1,69 @@
+document.getElementById('id_convert_owner').addEventListener('click', (e) => {
+    document.getElementById('client_secret').classList.remove('is-invalid');
+    document.getElementById('user_id').classList.remove('is-invalid');
+
+    if (document.getElementById('client_secret').value == '') {
+        // empty
+        document.getElementById('client_secret').classList.add('is-invalid');
+        return;
+    }
+    if (document.getElementById('user_id').value == '') {
+        document.getElementById('user_id').classList.add('is-invalid');
+        return;
+    }
+
+    window.electron.ownerConvertToId(
+        document.getElementById('client_id').value,
+        document.getElementById('client_secret').value,
+        document.getElementById('user_id').value
+    );
+    e.target.closest('.input-group').classList.add('loading');
+});
+
 document.getElementById('config_form').addEventListener('submit', (e) => {
     e.preventDefault();
+
+    // validate
+    let required = [
+        'name',
+        'client_id',
+        'extension_secret',
+        'user_id'
+    ];
+    let valid = true;
+
+    required.forEach(field => {
+        document.getElementById(field).classList.remove('is-invalid');
+        if (document.getElementById(field).value == '') {
+            document.getElementById(field).classList.add('is-invalid');
+            valid = false;
+        }
+    });
+
+    if (!valid) {
+        return;
+    }
 
     window.electron.config.create({
         name: document.getElementById('name').value,
         client_id: document.getElementById('client_id').value,
         extension_secret: document.getElementById('extension_secret').value,
+        client_secret: document.getElementById('client_secret').value,
         user_id: document.getElementById('user_id').value
     });
+});
+window.electron.config.loadedForEdit((extension) => {
+    let fields = [
+        'name',
+        'client_id',
+        'extension_secret',
+        'client_secret',
+        'user_id'
+    ]
+    fields.forEach(field => {
+        document.getElementById(field).value = extension[field] ? extension[field] : '';
+    });
+    document.getElementById('create_button').value = "Edit";
 });
 
 window.electron.config.extensions((extensions) => {
@@ -19,6 +76,7 @@ window.electron.config.extensions((extensions) => {
             inputs[x].value = '';
         }
     }
+    document.getElementById('create_button').value = "Create";
 
     // draw
     let dropdown = document.getElementById('extension_select');
@@ -63,6 +121,17 @@ window.electron.config.extensions((extensions) => {
 
         grp.append(a_versions);
 
+        let a_edit = document.createElement('div');
+        a_edit.classList.add('btn');
+        a_edit.classList.add('btn-sm');
+        a_edit.classList.add('btn-outline-warning');
+        a_edit.textContent = 'Edit';
+        a_edit.setAttribute('data-client_id', extensions[ref].client_id);
+
+        bindEdit(a_edit, extensions[ref])
+
+        grp.append(a_edit);
+
         let a_remove = document.createElement('div');
         a_remove.classList.add('btn');
         a_remove.classList.add('btn-sm');
@@ -84,6 +153,12 @@ window.electron.config.extensions((extensions) => {
     }
 });
 
+function bindEdit(el, ext) {
+    el.addEventListener('click', (e) => {
+        // load parameters for edit
+        window.electron.config.loadForEdit(e.target.getAttribute('data-client_id'));
+    });
+}
 function bindRemove(el, ext) {
     el.addEventListener('click', (e) => {
         document.getElementById('remove_name').textContent = ext.name;
