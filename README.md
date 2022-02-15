@@ -25,6 +25,9 @@ You can download the latest version from here on GitHub under [releases](https:/
 - [Get Extensions](https://dev.twitch.tv/docs/api/reference#get-extensions)
 - Simulation of the Extension Details page for the selected version of an Extension
 - Test different Versions of an Extension against the API.
+- If Extesnion API Client Secret Provided, convert UserName to UserID for various endpoints via [Get Users](https://dev.twitch.tv/docs/api/reference#get-users)
+- [Get Extension Bits Products](https://dev.twitch.tv/docs/api/reference#get-extension-bits-products)
+- [Update Extension Bits Product](https://dev.twitch.tv/docs/api/reference#update-extension-bits-product)
 
 ## Not Supported Featured
 
