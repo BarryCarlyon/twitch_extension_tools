@@ -37,6 +37,76 @@ module.exports = function(lib) {
         convertToId(data);
     });
 
+    async function accessToken(client_id) {
+        console.log('Running access_token for', client_id);
+        let access_token = store.get(`extensions.${client_id}.access_token`);
+        console.log('Loaded existing token', access_token);
+        // validate existing token
+        if (access_token) {
+            let validate_url = new URL('https://id.twitch.tv/oauth2/validate');
+            try {
+                let validate_req = await fetch(
+                    validate_url, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`
+                        }
+                    }
+                );
+                //let validate_resp = await validate_url.json();
+                console.log(`Validated: ${validate_req.status}`);
+
+                if (validate_req.status != 200) {
+                    // yay
+                    console.log('Regenerate');
+                    store.delete(`extensions.${client_id}.access_token`);
+                    access_token = '';
+                }
+            } catch (err) {
+                console.error('validate error', err);
+                // remove
+                store.delete(`extensions.${client_id}.access_token`);
+                // wipe
+                access_token = '';
+            }
+        }
+
+        if (!access_token) {
+            let client_secret = store.get(`extensions.${client_id}.client_secret`);
+            if (!client_secret) {
+                win.webContents.send('errorMsg', `No Client Secret for ${client_id}`);
+                return;
+            }
+
+            // token time
+            let token_url = new URL('https://id.twitch.tv/oauth2/token');
+            let token_params = [
+                [ 'client_id', client_id ],
+                [ 'client_secret', client_secret ],
+                [ 'grant_type', 'client_credentials' ]
+            ]
+            token_url.search = new URLSearchParams(token_params).toString();
+
+            let token_req = await fetch(
+                token_url, {
+                    method: 'POST'
+                }
+            );
+            let token_resp = await token_req.json();
+            if (!token_resp.access_token) {
+                console.log(token_resp);
+                win.webContents.send('errorMsg', 'Failed to get an Access Token');
+                return;
+            }
+
+            console.log('Generated a token', token_resp.access_token);
+            // store in persistent
+            store.set(`extensions.${client_id}.access_token`, token_resp.access_token);
+        }
+
+        return;
+    }
+
     async function convertToId(data) {
         let { client_id, login, el } = data;
 
@@ -46,71 +116,9 @@ module.exports = function(lib) {
         }
 
         try {
+            await accessToken(client_id);
+
             let access_token = store.get(`extensions.${client_id}.access_token`);
-            console.log('Loaded', access_token);
-            // validate existing token
-            if (access_token) {
-                let validate_url = new URL('https://id.twitch.tv/oauth2/validate');
-                try {
-                    let validate_req = await fetch(
-                        validate_url, {
-                            method: 'GET',
-                            headers: {
-                                'Authorization': `Bearer ${access_token}`
-                            }
-                        }
-                    );
-                    //let validate_resp = await validate_url.json();
-                    console.log(`Validated: ${validate_req.status}`);
-
-                    if (validate_req.status != 200) {
-                        // yay
-                        console.log('Regenerate');
-                        store.delete(`extensions.${client_id}.access_token`);
-                        access_token = '';
-                    }
-                } catch (err) {
-                    console.error('validate error', err);
-                    // remove
-                    store.delete(`extensions.${client_id}.access_token`);
-                    // wipe
-                    access_token = '';
-                }
-            }
-
-            if (!access_token) {
-                let client_secret = store.get(`extensions.${client_id}.client_secret`);
-                if (!client_secret) {
-                    win.webContents.send('errorMsg', `No Client Secret for ${client_id}`);
-                    return;
-                }
-
-                // token time
-                let token_url = new URL('https://id.twitch.tv/oauth2/token');
-                let token_params = [
-                    [ 'client_id', client_id ],
-                    [ 'client_secret', client_secret ],
-                    [ 'grant_type', 'client_credentials' ]
-                ]
-                token_url.search = new URLSearchParams(token_params).toString();
-
-                let token_req = await fetch(
-                    token_url, {
-                        method: 'POST'
-                    }
-                );
-                let token_resp = await token_req.json();
-                if (!token_resp.access_token) {
-                    console.log(token_resp);
-                    win.webContents.send('errorMsg', 'Failed to get an Access Token');
-                    return;
-                }
-
-                console.log('Generated a token', token_resp.access_token);
-                // store in persistent
-                store.set(`extensions.${client_id}.access_token`, token_resp.access_token);
-                access_token = token_resp.access_token;
-            }
 
             // username to ID time
             let users_url = new URL('https://api.twitch.tv/helix/users');
@@ -150,7 +158,41 @@ module.exports = function(lib) {
     /*
     Bits products
     */
-    ipcMain.on('loadBitsProducts', async (event, data) => {
+    async function getProducts(should_include_all) {
+        let client_id = store.get('active.client_id');
+
+        await accessToken(client_id);
+
+        let access_token = store.get(`extensions.${client_id}.access_token`);
+
+        let products_url = new URL('https://api.twitch.tv/helix/bits/extensions');
+        let products_params = [
+            [ 'should_include_all', should_include_all ]
+        ]
+        products_url.search = new URLSearchParams(products_params).toString();
+
+        let products_req = await fetch(
+            products_url,
+            {
+                method: 'GET',
+                headers: {
+                    'Client-ID': client_id,
+                    'Authorization': `Bearer ${access_token}`
+                }
+            }
+        );
+        let products_resp = await products_req.json();
+
+        console.log(products_resp);
+        if (products_resp.data) {
+            console.log('send back', products_resp.data.length);
+            win.webContents.send('bits.gotProducts', products_resp.data);
+            return;
+        }
+        win.webContents.send('errorMsg', 'Bits Products not found');
+    }
+    ipcMain.on('bits.getProducts', (e,should_include_all) => {
+        getProducts(should_include_all);
     });
 
     return;

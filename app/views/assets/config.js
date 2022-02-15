@@ -197,6 +197,7 @@ document.getElementById('select_version').addEventListener('submit', (e) => {
     window.electron.config.selectVersion(document.getElementById('version').value);
 });
 
+// an extension was loaded!
 window.electron.config.extensionDetails((extension_details) => {
     // API response so differing
     document.getElementById('run-tab').classList.remove('disabled');
@@ -213,6 +214,14 @@ window.electron.config.extensionDetails((extension_details) => {
 
     processExtension(extension_details);
     buildLayout(extension_details);
+
+    let tbl = document.getElementById('bits_products_table');
+    tbl.textContent = '';
+    let row = tbl.insertRow();
+    let cell = document.createElement('th');
+    row.append(cell);
+    cell.setAttribute('colspan', '7');
+    cell.textContent = 'Fetch Products First';
 
     document.getElementById('extension_details_data').textContent = JSON.stringify(extension_details, null, 4);
 });
