@@ -17,7 +17,7 @@ You can download the latest version from here on GitHub under [releases](https:/
 
 ## Data/Config Storage
 
-Date is stored in the following location
+Data is stored in the following location
 
 > %appdata%/BarryCarlyonTwitchExtensionTools/
 
