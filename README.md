@@ -2,7 +2,7 @@
 
 The Twitch Developer Rig is great, however the Twitch Developer Rig might not get updated in time for the upcoming Kraken/v5 shutdown. This app serves to replace the Rig in a Helix only world.
 
-This Application solves that problem by putting the "Core" features in an Application in a similar way to that, that the rig did.
+This Application solves that problem by putting the "Core" features in an Application in a similar way to the rig did.
 
 Generally it should serve as a "test tool" and not used to manage a live extension. If you do so it's at your own risk!
 
@@ -14,6 +14,48 @@ It should also update from GitHub as new versions are released on GitHub. (Needs
 It is Code Signed with the Publisher `Barry Carlyon`
 
 You can download the latest version from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
+
+## Data/Config Storage
+
+Date is stored in the following location
+
+> %appdata%/BarryCarlyonTwitchExtensionTools/
+
+In the file `config.json`
+
+Which follows the format:
+
+```json
+{
+    "extensions": {
+        ...
+        "a_client_id": {
+            "name": "Your Entered Name",
+            "client_id": "",
+            "extension_secret": "base 64 encoded secret",
+            "user_id": "Twitch owner ID"
+        },
+        ...
+        "a_client_id_with_secret": {
+            "name": "Your Entered Name",
+            "client_id": "",
+            "extension_secret": "base 64 encoded secret",
+            "client_secret": "a client API secret",
+            "user_id": "Twitch owner ID",
+            "access_token": "A recently generated App Access Token"
+        }
+        ...
+    },
+    "active": {
+        "client_id": "Selected active Extension Key set to use",
+        "version": "Selected Version to talk to"
+    },
+    "window": {
+        "size": [ width, height ],
+        "position": [ x, y ]
+    }
+}
+```
 
 ## Supported Features
 
@@ -29,7 +71,7 @@ You can download the latest version from here on GitHub under [releases](https:/
 - [Get Extension Bits Products](https://dev.twitch.tv/docs/api/reference#get-extension-bits-products)
 - [Update Extension Bits Product](https://dev.twitch.tv/docs/api/reference#update-extension-bits-product)
 
-## Not Supported Featured
+## Not Supported Features
 
 - Extension View simulation, this might get explored but it's not gonna be as effective as actually testing on the Twitch Website itself (when in localtest).
 
