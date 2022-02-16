@@ -47,7 +47,7 @@ Which follows the format:
         ...
     },
     "active": {
-        "client_id": "Selected active Extension Key set to use",
+        "client_id": "Selected active Extension ClientID set to use",
         "version": "Selected Version to talk to"
     },
     "window": {
