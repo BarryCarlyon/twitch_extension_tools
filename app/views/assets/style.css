@@ -46,8 +46,8 @@ a.website:before {
 .accordion-item {
     position: relative;
 }
-.loading:before,
-.accordion-item.disabled:before {
+.loading:after,
+.accordion-item.disabled:after {
     position: absolute;
     top: 0px;
     left: 0px;
