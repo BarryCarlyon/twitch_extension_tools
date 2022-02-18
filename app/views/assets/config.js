@@ -66,7 +66,8 @@ window.electron.config.loadedForEdit((extension) => {
     document.getElementById('create_button').value = "Edit";
 });
 
-window.electron.config.extensions((extensions) => {
+window.electron.config.extensions((data) => {
+    let { extensions, active_client_id } = data;
     console.log('extensions', extensions);
 
     // reset entry form
@@ -160,6 +161,8 @@ window.electron.config.extensions((extensions) => {
         li_a.setAttribute('data-client_id', extensions[ref].client_id);
         li_a.textContent = extensions[ref].name;
     }
+
+    markDropdown(active_client_id);
 });
 
 function bindUse(el) {
@@ -197,6 +200,17 @@ document.getElementById('select_version').addEventListener('submit', (e) => {
     window.electron.config.selectVersion(document.getElementById('version').value);
 });
 
+function markDropdown(client_id) {
+    let items = document.getElementsByClassName('dropdown-item');
+    for (let x=0;x<items.length;x++) {
+        items[x].classList.remove('bg-primary');
+        if (!client_id || client_id == '') {
+            if (items[x].getAttribute('data-client_id') == client_id) {
+                items[x].classList.add('bg-primary');
+            }
+        }
+    }
+}
 // an extension was loaded!
 window.electron.config.extensionDetails((extension_details) => {
     // API response so differing
@@ -204,13 +218,7 @@ window.electron.config.extensionDetails((extension_details) => {
     // change to run requests
     tab('run-tab');
 
-    let items = document.getElementsByClassName('dropdown-item');
-    for (let x=0;x<items.length;x++) {
-        items[x].classList.remove('bg-primary');
-        if (items[x].getAttribute('data-client_id') == extension_details.id) {
-            items[x].classList.add('bg-primary');
-        }
-    }
+    markDropdown(extension_details.id);
 
     processExtension(extension_details);
     buildLayout(extension_details);
