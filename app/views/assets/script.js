@@ -197,7 +197,7 @@ function buildLayout(details) {
     let words = {
         'component': 'Component',
         'panel': 'Panel',
-        'overlay': 'Overlay',
+        'video_overlay': 'Overlay',
         'mobile': 'Mobile'
     }
     let types = [];
