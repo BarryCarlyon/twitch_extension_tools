@@ -69,11 +69,17 @@ window.electron.bits.gotProducts((products) => {
             //let sku = e.target.getAttribute('data-sku');
             let expiration = document.getElementById(`bits_product_expiration_${sku}`).value;
             if (expiration == '') {
-                let now = new Date();
-                expiration = now.toISOString();
+                expiration = new Date();
+            } else {
+                expiration = new Date(expiration);
             }
+            // format
+            expiration = expiration.toISOString();
+            // force raw time entry
+            document.getElementById(`bits_product_expiration_${sku}`).setAttribute('type', 'text');
+            // set
             document.getElementById(`bits_product_expiration_${sku}`).value = expiration;
-
+            // go
             editProduct(sku);
         });
     }
@@ -114,23 +120,27 @@ function cellInput(row, sku, name, value) {
 
     switch (name) {
         case 'expiration':
-            inp.setAttribute('type', 'datetime-local');
-            // convert
-            if (value) {
-                let n = new Date(value);
-                //console.log(`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}T${n.getHours()}:${n.getMinutes()}`);
+            inp.classList.add('timepicker');
 
-                // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
-                // expects 01 not 1 for values
-                let month = n.getMonth() < 10 ? '0' + n.getMonth() : n.getMonth();
-                let date = n.getDate() < 10 ? '0' + n.getDate() : n.getDate();
-                let hour = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
-                let min = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
+            if (!document.getElementById('no_timepicker').checked) {
+                inp.setAttribute('type', 'datetime-local');
+                // convert
+                if (value) {
+                    let n = new Date(value);
+                    //console.log(`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}T${n.getHours()}:${n.getMinutes()}`);
 
-                inp.value = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
-                console.log('Going for', `${n.getFullYear()}-${month}-${date}T${hour}:${min}`);
-                inp.setAttribute('data-raw-value', value);
+                    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
+                    // expects 01 not 1 for values
+                    let month = n.getMonth() < 10 ? '0' + n.getMonth() : n.getMonth();
+                    let date = n.getDate() < 10 ? '0' + n.getDate() : n.getDate();
+                    let hour = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
+                    let min = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
+
+                    inp.value = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
+                    console.log('Going for', `${n.getFullYear()}-${month}-${date}T${hour}:${min}`);
+                }
             }
+            inp.setAttribute('data-raw-value', value);
             break;
 
         case 'in_development':
@@ -203,4 +213,18 @@ window.electron.bits.createdProduct(() => {
         }
     }
     getProducts();
+});
+
+document.getElementById('no_timepicker').addEventListener('change', (e) => {
+    let els = document.getElementById('bits_products').getElementsByClassName('timepicker');
+
+    for (let x=0;x<els.length;x++) {
+        if (document.getElementById('no_timepicker').checked) {
+            // become raw
+            els[x].setAttribute('type', 'text');
+        } else {
+            // become picker
+            els[x].setAttribute('type', 'datetime-local');
+        }
+    }
 });

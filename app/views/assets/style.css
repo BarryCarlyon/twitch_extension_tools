@@ -73,3 +73,8 @@ a.website:before {
     background-size: contain;
 }
 #layout_additional p { margin: 0px; }
+
+th .form-check {
+    margin-bottom: 0px;
+    min-height: 0rem;
+}
