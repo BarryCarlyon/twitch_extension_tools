@@ -68,7 +68,7 @@ window.electron.config.loadedForEdit((extension) => {
 
 window.electron.config.extensions((data) => {
     let { extensions, active_client_id } = data;
-    console.log('extensions', extensions);
+    //console.log('extensions', active_client_id, extensions);
 
     // reset entry form
     let inputs = document.getElementById('config_form').getElementsByTagName('input');
@@ -204,7 +204,7 @@ function markDropdown(client_id) {
     let items = document.getElementsByClassName('dropdown-item');
     for (let x=0;x<items.length;x++) {
         items[x].classList.remove('bg-primary');
-        if (!client_id || client_id == '') {
+        if (client_id || client_id == '') {
             if (items[x].getAttribute('data-client_id') == client_id) {
                 items[x].classList.add('bg-primary');
             }
