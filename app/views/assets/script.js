@@ -140,6 +140,8 @@ function processExtension(extension_details) {
     }
 }
 function buildLayout(details) {
+    document.getElementById('state').textContent = details.state;
+
     document.getElementById('layout_icon').style.backgroundImage = `url(${details.icon_urls['100x100']})`;
 
     document.getElementById('layout_name').textContent = details.name;
