@@ -83,7 +83,7 @@
                     <fieldset>
                         <div class="input-group p-1">
                             <input type="text" name="change_version" id="change_version" value="" class="form-control active_version" />
-                            <input type="submit" class="input-group-text btn btn-outline-primary" value="Change Version" />
+                            <input type="submit" class="input-group-text btn btn-outline-primary" value="Change/Reload Version" />
                         </div>
                     </fieldset>
                 </form>
@@ -377,6 +377,7 @@
                                         </tfoot>
                                     </table>
                                     <div class="alert alert-danger">Caution: if you create a Bits Product using an existing sku, the existing product will be updated, instead of an error occuring</div>
+                                    <div class="alert alert-warning">Settings an Expire Date/Time into the future "un expires" a product and removes the date/time</div>
                                 </fieldset>
                             </form>
                         </div>
@@ -405,6 +406,7 @@
                             <a href="https://dashboard.twitch.tv/extensions/CLIENTID/VERSION" class="install_link btn btn-outline-primary float-end">Install Page</a>
 
                             <p>This is an approximation of the Extension Details page for this extension version</p>
+                            <p>Current state <span id="state" class="badge rounded-pill bg-primary"></span></p>
 
                             <div id="install_layout">
                                 <div class="row">

@@ -50,7 +50,10 @@ module.exports = function(lib) {
         },
         relay: () => {
             console.log('Extensions Punt');
-            win.webContents.send('config_extensions', store.get('extensions'));
+            win.webContents.send('config_extensions', {
+                extensions: store.get('extensions'),
+                active_client_id: store.get('active.client_id')
+            });
         },
 
         select: (event, client_id) => {
