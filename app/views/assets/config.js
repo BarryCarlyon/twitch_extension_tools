@@ -201,12 +201,13 @@ document.getElementById('select_version').addEventListener('submit', (e) => {
 });
 
 function markDropdown(client_id) {
-    console.log('markDropdown', client_id);
     let items = document.getElementsByClassName('dropdown-item');
     for (let x=0;x<items.length;x++) {
         items[x].classList.remove('bg-primary');
-        if (items[x].getAttribute('data-client_id') == client_id) {
-            items[x].classList.add('bg-primary');
+        if (!client_id || client_id == '') {
+            if (items[x].getAttribute('data-client_id') == client_id) {
+                items[x].classList.add('bg-primary');
+            }
         }
     }
 }
