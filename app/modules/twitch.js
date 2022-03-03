@@ -191,22 +191,7 @@ module.exports = function(lib) {
         if (products_resp.data) {
             console.log('send back', products_resp.data.length);
 
-            let products = products_resp.data;
-
-            if (should_include_all) {
-                // load _AGAIN_ and reset parameters
-                let live_products = await getProducts(false, true);
-                // merge and repair
-                live_products.forEach(product => {
-                    products.forEach((prod, index) => {
-                        if (prod.sku == product.sku) {
-                            products[index].expiration = null;
-                        }
-                    });
-                });
-            }
-
-            win.webContents.send('bits.gotProducts', products);
+            win.webContents.send('bits.gotProducts', products_resp.data);
 
             win.webContents.send('extensionAPIResult', {
                 status: products_req.status,
