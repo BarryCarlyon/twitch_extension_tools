@@ -126,25 +126,31 @@ function cellInput(row, sku, name, value) {
         case 'expiration':
             inp.classList.add('timepicker');
 
+            let local = '';
+            if (value) {
+                let n = new Date(value);
+                //console.log(`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}T${n.getHours()}:${n.getMinutes()}`);
+
+                // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
+                // expects 01 not 1 for values
+                let month = n.getMonth() < 10 ? '0' + n.getMonth() : n.getMonth();
+                let date = n.getDate() < 10 ? '0' + n.getDate() : n.getDate();
+                let hour = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
+                let min = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
+
+                //inp.value = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
+                local = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
+                console.log('Going for', `${n.getFullYear()}-${month}-${date}T${hour}:${min}`);
+            }
+
             if (!document.getElementById('no_timepicker').checked) {
                 inp.setAttribute('type', 'datetime-local');
                 // convert
-                if (value) {
-                    let n = new Date(value);
-                    //console.log(`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}T${n.getHours()}:${n.getMinutes()}`);
-
-                    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
-                    // expects 01 not 1 for values
-                    let month = n.getMonth() < 10 ? '0' + n.getMonth() : n.getMonth();
-                    let date = n.getDate() < 10 ? '0' + n.getDate() : n.getDate();
-                    let hour = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
-                    let min = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
-
-                    inp.value = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
-                    console.log('Going for', `${n.getFullYear()}-${month}-${date}T${hour}:${min}`);
-                }
+                inp.value = local;
             }
+
             inp.setAttribute('data-raw-value', value);
+            inp.setAttribute('data-raw-local', local);
             break;
 
         case 'in_development':
