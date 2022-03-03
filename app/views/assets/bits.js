@@ -96,10 +96,12 @@ function editProduct(sku) {
         is_broadcast: (document.getElementById(`bits_product_is_broadcast_${sku}`).value == 'true' ? true : false)
     }
     if (document.getElementById(`bits_product_expiration_${sku}`).value != '') {
-        data.expiration = document.getElementById(`bits_product_expiration_${sku}`).value;
+        data.expiration = new Date(document.getElementById(`bits_product_expiration_${sku}`).value).toISOString();
     }
 
     document.getElementById(`bits_products_${sku}`).classList.add('loading');
+
+    console.log('data', data);
 
     window.electron.bits.createProduct(data);
 }
@@ -146,6 +148,10 @@ function cellInput(row, sku, name, value) {
         case 'in_development':
         case 'is_broadcast':
             inp = document.createElement('select');
+
+                inp.setAttribute('name', `${name}[${sku}]`);
+                inp.setAttribute('id', `bits_product_${name}_${sku}`);
+
             inp.classList.remove('form-control');
             inp.classList.add('form-select');
 
@@ -197,7 +203,7 @@ document.getElementById('bits_product_new_create').addEventListener('click', (e)
         is_broadcast: (document.getElementById('bits_product_new_is_broadcast').value == 'true' ? true : false)
     }
     if (document.getElementById('bits_product_new_expiration').value != '') {
-        data.expiration = document.getElementById('bits_product_new_expiration').value;
+        data.expiration = new Date(document.getElementById('bits_product_new_expiration').value).toISOString();
     }
 
     document.getElementById('bits_products_new').classList.add('loading');
