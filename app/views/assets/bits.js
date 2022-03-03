@@ -96,6 +96,8 @@ function editProduct(sku) {
         is_broadcast: (document.getElementById(`bits_product_is_broadcast_${sku}`).value == 'true' ? true : false)
     }
     if (document.getElementById(`bits_product_expiration_${sku}`).value != '') {
+        console.log(document.getElementById(`bits_product_expiration_${sku}`).value);
+        console.log(new Date(document.getElementById(`bits_product_expiration_${sku}`).value));
         data.expiration = new Date(document.getElementById(`bits_product_expiration_${sku}`).value).toISOString();
     }
 
