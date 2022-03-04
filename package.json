@@ -31,7 +31,7 @@
     }
   },
   "dependencies": {
-    "electron": "^17.0.1",
+    "electron": "^17.1.0",
     "electron-builder": "^22.14.13"
   }
 }
