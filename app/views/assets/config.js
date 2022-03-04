@@ -1,14 +1,24 @@
 document.getElementById('id_convert_owner').addEventListener('click', (e) => {
+    document.getElementById('client_id').classList.remove('is-invalid');
     document.getElementById('client_secret').classList.remove('is-invalid');
     document.getElementById('user_id').classList.remove('is-invalid');
 
+    let invalid = false;
+    if (document.getElementById('client_id').value == '') {
+        // empty
+        document.getElementById('client_id').classList.add('is-invalid');
+        invalid = true;
+    }
     if (document.getElementById('client_secret').value == '') {
         // empty
         document.getElementById('client_secret').classList.add('is-invalid');
-        return;
+        invalid = true;
     }
     if (document.getElementById('user_id').value == '') {
         document.getElementById('user_id').classList.add('is-invalid');
+        invalid = true;
+    }
+    if (invalid) {
         return;
     }
 
