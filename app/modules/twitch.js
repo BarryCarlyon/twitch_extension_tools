@@ -250,6 +250,53 @@ module.exports = function(lib) {
         win.webContents.send('errorMsg', `Bits Product errored: ${products_resp.message}`);
     }
 
+    ipcMain.on('extensionGetLive', (e,data) => {
+        console.log('Going extensionGetLive');
+        getLiveChannels();
+    });
+    async function getLiveChannels() {
+        let client_id = store.get('active.client_id');
+
+        await accessToken(client_id);
+
+        let access_token = store.get(`extensions.${client_id}.access_token`);
+
+        if (!access_token) {
+            return;
+        }
+
+        let live_channels_url = new URL('https://api.twitch.tv/helix/extensions/live');
+        let live_channels_params = [
+            [ 'extension_id', client_id ]
+        ]
+        live_channels_url.search = new URLSearchParams(live_channels_params).toString();
+
+        let live_channels_req = await fetch(
+            live_channels_url,
+            {
+                method: 'GET',
+                headers: {
+                    'Client-ID': client_id,
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        let live_channels_resp = await live_channels_req.json();
+
+        if (live_channels_resp.data) {
+            win.webContents.send('extensionGotLive', live_channels_resp.data);
+
+            win.webContents.send('extensionAPIResult', {
+                status: live_channels_req.status,
+                ratelimitRemain: live_channels_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: live_channels_req.headers.get('ratelimit-limit')
+            });
+
+            return;
+        }
+        win.webContents.send('errorMsg', `Get Extension Live Channels errored: ${live_channels_resp.message}`);
+    }
 
     return;
 }

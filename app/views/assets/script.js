@@ -138,6 +138,13 @@ function processExtension(extension_details) {
         console.log('No bits support');
         extension_bitsproducts_header.closest('.accordion-item').classList.add('disabled');
     }
+
+    let extension_live_channels_header = document.getElementById('extension_live_channels_header');
+    if (extension_details.state == 'Released') {
+        extension_live_channels_header.closest('.accordion-item').classList.remove('disabled');
+    } else {
+        extension_live_channels_header.closest('.accordion-item').classList.add('disabled');
+    }
 }
 function buildLayout(details) {
     document.getElementById('state').textContent = details.state;

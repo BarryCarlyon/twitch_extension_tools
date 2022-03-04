@@ -466,6 +466,31 @@
                     </div>
                 </div>
 
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="extension_live_channels_header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_live_channels" aria-expanded="false" aria-controls="extension_live_channels"><span class="badge rounded-pill bg-secondary me-2 text-light">App Access Token</span> Get Extension Live Channels</button>
+                    </h2>
+                    <div id="extension_live_channels" class="accordion-collapse collapse" aria-labelledby="extension_live_channels_header" data-bs-parent="#run_accordion">
+                        <div class="accordion-body">
+                            <div id="extension_live_channels_fetch" class="float-end btn btn-outline-info">Fetch Live Channels</div>
+                            <p>The data from <a href="https://dev.twitch.tv/docs/api/reference#get-extension-live-channels">Get Extension Live Channels</a> API</p>
+
+                            <table id="extension_live_channels_table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Broadcaster ID</th>
+                                        <th>Broadcaster Name</th>
+                                        <th>Game Name</th>
+                                        <th>Game ID</th>
+                                        <th>Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="extension_live_channels_body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

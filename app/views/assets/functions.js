@@ -148,3 +148,28 @@ document.getElementById('pubsub_form').addEventListener('submit', (e) => {
         }
     );
 });
+
+document.getElementById('extension_live_channels_fetch').addEventListener('click', (e) => {
+    e.target.classList.add('loading');
+    window.electron.extensionGetLive();
+});
+window.electron.extensionGotLive((channels) => {
+    document.getElementById('extension_live_channels_body').textContent = '';
+
+    console.log(channels);
+
+    channels.forEach(channel => {
+        let row = document.getElementById('extension_live_channels_body').insertRow();
+
+        let broadcaster_id = row.insertCell();
+        broadcaster_id.textContent = channel.broadcaster_id;
+        let broadcaster_name = row.insertCell();
+        broadcaster_name.textContent = channel.broadcaster_name;
+        let game_name = row.insertCell();
+        game_name.textContent = channel.game_name;
+        let game_id = row.insertCell();
+        game_id.textContent = channel.game_id;
+        let title = row.insertCell();
+        title.textContent = channel.title;
+    });
+});
