@@ -111,8 +111,13 @@ function editProduct(sku) {
 function cellInput(row, sku, name, value) {
     let cell = row.insertCell();
 
+    let grp = document.createElement('div');
+    grp.classList.add('input-group');
+    cell.append(grp);
+
     let inp = document.createElement('input');
     inp.classList.add('form-control');
+    inp.setAttribute('type', 'text');
 
     if (name == 'sku') {
         inp.setAttribute('readonly', 'readonly');
@@ -123,36 +128,6 @@ function cellInput(row, sku, name, value) {
         inp.value = value;
 
     switch (name) {
-        case 'expiration':
-            inp.classList.add('timepicker');
-
-            let local = '';
-            if (value) {
-                let n = new Date(value);
-                //console.log(`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}T${n.getHours()}:${n.getMinutes()}`);
-
-                // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
-                // expects 01 not 1 for values
-                let month = n.getMonth() < 10 ? '0' + n.getMonth() : n.getMonth();
-                let date = n.getDate() < 10 ? '0' + n.getDate() : n.getDate();
-                let hour = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
-                let min = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
-
-                //inp.value = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
-                local = `${n.getFullYear()}-${month}-${date}T${hour}:${min}`;
-                console.log('Going for', `${n.getFullYear()}-${month}-${date}T${hour}:${min}`);
-            }
-
-            if (!document.getElementById('no_timepicker').checked) {
-                inp.setAttribute('type', 'datetime-local');
-                // convert
-                inp.value = local;
-            }
-
-            inp.setAttribute('data-raw-value', value);
-            inp.setAttribute('data-raw-local', local);
-            break;
-
         case 'in_development':
         case 'is_broadcast':
             inp = document.createElement('select');
@@ -187,11 +162,20 @@ function cellInput(row, sku, name, value) {
 
         case 'display_name':
             inp.setAttribute('length', '255');
-        default:
-            inp.setAttribute('type', 'text');
+            break;
+
+        case 'expiration':
+            let d = document.createElement('div');
+            d.classList.add('btn');
+            d.classList.add('btn-outline-info');
+            d.classList.add('datetimepick');
+            //d.textContent = 'D';
+            d.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16"><path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>';
+            grp.append(d);
+            break;
     }
 
-    cell.append(inp);
+    grp.prepend(inp);
 }
 
 document.getElementById('bits_product_new_create').addEventListener('click', (e) => {
@@ -229,16 +213,17 @@ window.electron.bits.createdProduct(() => {
     getProducts();
 });
 
-document.getElementById('no_timepicker').addEventListener('change', (e) => {
-    let els = document.getElementById('bits_products').getElementsByClassName('timepicker');
-
-    for (let x=0;x<els.length;x++) {
-        if (document.getElementById('no_timepicker').checked) {
-            // become raw
-            els[x].setAttribute('type', 'text');
-        } else {
-            // become picker
-            els[x].setAttribute('type', 'datetime-local');
-        }
+let datetimepick_modal = new bootstrap.Modal(document.getElementById('datetimepick_modal'));
+let datetimepick_target = false;
+document.getElementById('bits_products').addEventListener('click', (e) => {
+    if (e.target.classList.contains('datetimepick')) {
+        // throw up a date time picker
+        datetimepick_target = e.target.closest('.input-group').getElementsByClassName('form-control')[0];
+        datetimepick_modal.show();
     }
+});
+document.getElementById('datetimepick_select').addEventListener('submit', (e) => {
+    e.preventDefault();
+    datetimepick_modal.hide();
+    datetimepick_target.value = new Date(document.getElementById('datetimepick_pick').value).toISOString();
 });

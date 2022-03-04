@@ -78,3 +78,15 @@ th .form-check {
     margin-bottom: 0px;
     min-height: 0rem;
 }
+
+.datetimepick {
+    position: relative;
+}
+.datetimepick:after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    content: '';
+}
