@@ -113,7 +113,7 @@ window.electron.config.extensions((data) => {
 
         grp.classList.add('btn-group');
 
-        let usethis = document.createElement('div');
+        let usethis = document.createElement('button');
         usethis.classList.add('btn');
         usethis.classList.add('btn-sm');
         usethis.classList.add('btn-outline-success');
@@ -143,7 +143,7 @@ window.electron.config.extensions((data) => {
 
         grp.append(a_versions);
 
-        let a_edit = document.createElement('div');
+        let a_edit = document.createElement('button');
         a_edit.classList.add('btn');
         a_edit.classList.add('btn-sm');
         a_edit.classList.add('btn-outline-warning');
@@ -153,7 +153,7 @@ window.electron.config.extensions((data) => {
         bindEdit(a_edit)
         grp.append(a_edit);
 
-        let a_remove = document.createElement('div');
+        let a_remove = document.createElement('button');
         a_remove.classList.add('btn');
         a_remove.classList.add('btn-sm');
         a_remove.classList.add('btn-outline-danger');
@@ -161,6 +161,21 @@ window.electron.config.extensions((data) => {
 
         bindRemove(a_remove, extensions[ref]);
         grp.append(a_remove);
+
+        let a_revoke = document.createElement('button');
+        a_revoke.classList.add('btn');
+        a_revoke.classList.add('btn-sm');
+        a_revoke.classList.add('btn-outline-danger');
+        a_revoke.setAttribute('data-client_id', extensions[ref].client_id);
+        a_revoke.textContent = 'Revoke';
+
+        if (extensions[ref].access_token && extensions[ref].access_token != '') {
+        } else {
+            a_revoke.setAttribute('disabled','disabled');
+        }
+
+        bindRevoke(a_revoke, extensions[ref]);
+        grp.append(a_revoke);
 
         let li = document.createElement('li');
         dropdown.append(li);
@@ -185,6 +200,12 @@ function bindEdit(el) {
     el.addEventListener('click', (e) => {
         // load parameters for edit
         window.electron.config.loadForEdit(e.target.getAttribute('data-client_id'));
+    });
+}
+function bindRevoke(el, ext) {
+    el.addEventListener('click', (e) => {
+        // load parameters for edit
+        window.electron.config.revokeToken(e.target.getAttribute('data-client_id'));
     });
 }
 function bindRemove(el, ext) {

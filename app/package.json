@@ -2,7 +2,7 @@
   "name": "BarryCarlyonTwitchExtensionTools",
   "description": "BarryCarlyon Twitch Extension Tools",
   "author": "Barry Carlyon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "main.js",
   "keywords": [],
   "license": "ISC",
