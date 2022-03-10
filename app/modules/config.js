@@ -79,6 +79,55 @@ module.exports = function(lib) {
             //store.set('active_extension', version);
             console.log('set Version', active.client_id, version);
             getExtensionDetails(active.client_id, version);
+        },
+
+        revoke: async (event, client_id) => {
+            let token = store.get(`extensions.${client_id}.access_token`);
+            console.log('About to revoke', client_id, token);
+            if (token) {
+                // to revoke a token
+                // first we need to confirm the clientID for this token
+                // in case operator manually put a oAuth token in
+                // and the token != clientID
+                let validate_url = new URL('https://id.twitch.tv/oauth2/validate');
+                let validate_request = await fetch(
+                    validate_url,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/json'
+                        }
+                    }
+                );
+                if (validate_request.status == 200) {
+                    // token OK
+                    let validate_response = await validate_request.json();
+                    let token_client_id = validate_response.client_id;
+
+                    let revoke_url = new URL('https://id.twitch.tv/oauth2/revoke');
+                    let revoke_params = [
+                        [ 'client_id', token_client_id ],
+                        [ 'token', token ]
+                    ];
+                    revoke_url.search = new URLSearchParams(revoke_params).toString();
+
+                    let revoke_result = await fetch(
+                        revoke_url,
+                        {
+                            method: 'POST'
+                        }
+                    );
+                    // do do not care about the response really
+
+                    win.webContents.send('errorMsg', 'Token Revoke: ' + revoke_result.status);
+                } else {
+                    win.webContents.send('errorMsg', 'Token Revoke: Not Valid token');
+                }
+            }
+            store.delete(`extensions.${client_id}.access_token`);
+            // broadcast extensions
+            config.relay();
         }
     }
 
@@ -106,7 +155,7 @@ module.exports = function(lib) {
                 headers: {
                     'Client-ID': client_id,
                     'Authorization': `Bearer ${token}`,
-                    'Accpet': 'application/json'
+                    'Accept': 'application/json'
                 }
             }
         )
@@ -149,6 +198,7 @@ module.exports = function(lib) {
     ipcMain.on('config_loadForEdit', config.loadForEdit);
     ipcMain.on('config_remove', config.remove);
     ipcMain.on('config_select', config.select);
+    ipcMain.on('config_revoke', config.revoke);
     ipcMain.on('select_version', config.version);
     ipcMain.on('ready', config.ready);
 
