@@ -41,6 +41,9 @@ contextBridge.exposeInMainWorld('electron', {
         },
         extensionDetails: (fn) => {
             ipcRenderer.on('extension_details', (event, ...args) => fn(...args));
+        },
+        revokeToken: (client_id) => {
+            ipcRenderer.send('config_revoke', client_id);
         }
     },
 
