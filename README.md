@@ -95,6 +95,10 @@ Basically this app is a "save my Extension configs" Insomnia-esque Rest Client. 
 
 If you break your extension from using this tool it's your own fault and the author(s) accept no responsbility for problems caused to your extension from using this tool. Granted the worse thing you might do is deprecate a bits product you actually needed.....
 
+## License
+
+This project is Licensed under [Do What The F*ck You Want To Public License](https://github.com/BarryCarlyon/twitch_extension_tools/blob/main/LICENSE), so Just Do What the F*ck you want to!
+
 ## Further Help with Twitch API
 
 - [TwitchDev Documentation](http://dev.twitch.tv/docs)
