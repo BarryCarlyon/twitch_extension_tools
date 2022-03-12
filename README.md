@@ -8,6 +8,8 @@ Generally it should serve as a "test tool" and not used to manage a live extensi
 
 ![First Launch Screenshot](screenshots/first_open.png)
 
+Check out [more Screenshots](https://github.com/BarryCarlyon/twitch_extension_tools/tree/main/screenshots)
+
 ## Installation
 
 This is an Electron App, so it maybe installed from the GitHub [releases tab](https://github.com/BarryCarlyon/twitch_extension_tools/releases).
