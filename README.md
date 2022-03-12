@@ -1,10 +1,12 @@
 # What is this
 
-The Twitch Developer Rig is great, however the Twitch Developer Rig might not get updated in time for the upcoming Kraken/v5 shutdown. This app serves to replace the Rig in a Helix only world.
+This Program is an alternative version of the [Twitch Developer Rig](https://dev.twitch.tv/docs/extensions/rig).
 
-This Application solves that problem by putting the "Core" features in an Application in a similar way to the rig did.
+Primarilly this works as a glorified Rest Client but handles the required [JWT generation](https://dev.twitch.tv/docs/extensions/building/#signing-the-jwt) or [App Access Token](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth#oauth-client-credentials-flow) generation and maintance as needed.
 
-Generally it should serve as a "test tool" and not used to manage a live extension. If you do so it's at your own risk!
+Generally it should serve as a "test tool" and not used to manage a live extension, but you could, saves you writing your own Bits Product, or Extension Config Managment tool! *If you do so it's at your own risk*!
+
+![First Launch Screenshot](screenshots/first_open.png)
 
 ## Installation
 
