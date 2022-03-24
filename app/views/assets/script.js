@@ -115,6 +115,9 @@ function processExtension(extension_details) {
     if (extension_details.configuration_location == 'hosted') {
         console.log('Config is Hosted');
         extension_config_service_header.closest('.accordion-item').classList.remove('disabled');
+        extension_config_service_required_header.closest('.accordion-item').classList.add('disabled');
+    } else if (extension_details.configuration_location == 'custom') {
+        extension_config_service_header.closest('.accordion-item').classList.add('disabled');
         extension_config_service_required_header.closest('.accordion-item').classList.remove('disabled');
     } else {
         console.log('Config is NOT Hosted');
