@@ -61,6 +61,8 @@ Which follows the format:
 }
 ```
 
+⭐ Tip: If you open the Application and the window has gone missing, close the app, open `config.json` for editing and completely reset `"window"` to `{}` and then reopen the app, it'll reset to default display, top left.
+
 ## Supported Features
 
 - [Get Extension Configuration Segment](https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment)
