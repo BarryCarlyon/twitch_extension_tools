@@ -123,17 +123,17 @@ function cellInput(row, sku, name, value) {
         inp.setAttribute('readonly', 'readonly');
     }
 
-        inp.setAttribute('name', `${name}[${sku}]`);
-        inp.setAttribute('id', `bits_product_${name}_${sku}`);
-        inp.value = value;
+    inp.setAttribute('name', `${name}[${sku}]`);
+    inp.setAttribute('id', `bits_product_${name}_${sku}`);
+    inp.value = value;
 
     switch (name) {
         case 'in_development':
         case 'is_broadcast':
             inp = document.createElement('select');
 
-                inp.setAttribute('name', `${name}[${sku}]`);
-                inp.setAttribute('id', `bits_product_${name}_${sku}`);
+            inp.setAttribute('name', `${name}[${sku}]`);
+            inp.setAttribute('id', `bits_product_${name}_${sku}`);
 
             inp.classList.remove('form-control');
             inp.classList.add('form-select');
@@ -147,6 +147,12 @@ function cellInput(row, sku, name, value) {
             opt_no.value = 'false';
             opt_no.textContent = 'No';
             inp.append(opt_no);
+
+            if (value) {
+                opt_yes.selected = true
+            } else {
+                opt_no.selected = true
+            }
 
             break;
 
