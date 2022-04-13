@@ -11,7 +11,7 @@
     "electron-context-menu": "^3.1.2",
     "electron-fetch": "^1.7.4",
     "electron-store": "^8.0.1",
-    "electron-updater": "^4.6.5",
+    "electron-updater": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   }
 }
