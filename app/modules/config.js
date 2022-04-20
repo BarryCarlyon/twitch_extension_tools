@@ -64,7 +64,7 @@ module.exports = function(lib) {
 
                 // preselect previous version
                 let version_on_select = store.get(`extensions.${client_id}.version`, false);
-                errorMsg(`Loading ${client_id} with preselected version ${version_on_select}`);
+                errorMsg(`Loading ${client_id} with preselected version ${version_on_select ? version_on_select : 'Grabbing Release Version if any' }`);
 
                 getExtensionDetails(client_id, version_on_select);
 
