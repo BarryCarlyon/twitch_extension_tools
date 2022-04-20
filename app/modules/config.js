@@ -62,8 +62,11 @@ module.exports = function(lib) {
             if (extensions.hasOwnProperty(client_id)) {
                 // validate the config
 
-                //twitchRequest('extensions');
-                getExtensionDetails(client_id);
+                // preselect previous version
+                let version_on_select = store.get(`extensions.${client_id}.version`, false);
+                errorMsg(`Loading ${client_id} with preselected version ${version_on_select}`);
+
+                getExtensionDetails(client_id, version_on_select);
 
                 return;
             }
@@ -143,10 +146,8 @@ module.exports = function(lib) {
         ];
         if (version) {
             params.push([ 'extension_version', version ]);
-        } else if (config['version']) {
-            // console.log('using previously used extension version: ' + config['version'])
-            params.push([ 'extension_version', config['version'] ]);
         }
+
         url.search = new URLSearchParams(params).toString();
 
         console.log('Go with', url, token);
