@@ -1,6 +1,9 @@
 body {
     overflow-y: scroll;
 }
+.monospace {
+    font-family: monospace;
+}
 a.website:before {
     content: '';
     position: relative;
