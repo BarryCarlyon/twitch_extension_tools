@@ -143,6 +143,9 @@ module.exports = function(lib) {
         ];
         if (version) {
             params.push([ 'extension_version', version ]);
+        } else if (config['version']) {
+            // console.log('using previously used extension version: ' + config['version'])
+            params.push([ 'extension_version', config['version'] ]);
         }
         url.search = new URLSearchParams(params).toString();
 
@@ -179,6 +182,7 @@ module.exports = function(lib) {
                     client_id,
                     version: resp.data[0].version
                 });
+                store.set(`extensions.${client_id}.version`, resp.data[0].version)
                 win.webContents.send('extension_details', resp.data[0]);
                 return;
             }
