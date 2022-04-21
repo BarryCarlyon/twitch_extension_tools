@@ -65,7 +65,7 @@ Which follows the format:
 }
 ```
 
-⭐ Tip: If you open the Application and the window has gone missing, close the app, open `config.json` for editing and completely reset `"window"` to `{}` and then reopen the app, it'll reset to default display, top left.
+⭐ Tip: If you open the Application and the window has gone missing, close the app, open `config.json` for editing and completely reset `"window"` to `{}` and then reopen the app, it'll reset to default display, top left. The App does _try_ to magically 0,0 the window if this happens but it might need a hand!
 
 ## Supported Features
 
@@ -108,6 +108,10 @@ If you break your extension from using this tool it's your own fault and the aut
 ## License
 
 This project is Licensed under [Do What The F*ck You Want To Public License](https://github.com/BarryCarlyon/twitch_extension_tools/blob/main/LICENSE), so Just Do What the F*ck you want to!
+
+## Development Notes
+
+This is an [Electron Project](https://www.electronjs.org/) that uses a [Two Package.json model](https://www.electron.build/tutorials/two-package-structure.html)
 
 ## Further Help with Twitch API
 
