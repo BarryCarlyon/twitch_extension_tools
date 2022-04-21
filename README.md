@@ -19,6 +19,10 @@ It is Code Signed with the Publisher `Barry Carlyon`
 
 You can download the latest version from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
 
+## Uninstallation
+
+You can use Windows "Add and Remove Programs" to uninstall the program.
+
 ## Data/Config Storage
 
 Data is stored in the following location
