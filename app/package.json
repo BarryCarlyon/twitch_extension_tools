@@ -5,7 +5,11 @@
   "version": "1.1.2",
   "main": "main.js",
   "keywords": [],
-  "license": "ISC",
+  "license": "WTFPL",
+  "homepage": "https://github.com/BarryCarlyon/twitch_extension_tools#readme",
+  "bugs": {
+    "url" : "https://github.com/BarryCarlyon/twitch_extension_tools/issues"
+  },
   "scripts": {},
   "dependencies": {
     "electron-context-menu": "^3.1.2",
