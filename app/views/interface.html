@@ -22,7 +22,10 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane p-3 show active" id="config" role="tabpanel" aria-labelledby="config-tab">
-            <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary float-end">Dev Console</a>
+            <div class="btn-group float-end">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add_new_extension_modal">Add New Extension Configuration</button>
+                <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary">Dev Console</a>
+            </div>
             <h3>Configuration</h3>
 
             <table id="existing_extensions" class="table">
@@ -37,45 +40,7 @@
                 <tbody></tbody>
             </table>
 
-            <form action="" method="post" id="config_form">
-                <fieldset>
-                    <legend>Add New Extension</legend>
-
-                    <p>If the ClientID already exists in the local configuration, the configuration will be overwritten</p>
-
-                    <div class="input-group p-1">
-                        <label class="input-group-text" for="name">Name</label>
-                        <input type="text" name="name" id="name" value="" class="form-control" />
-                    </div>
-                    <div class="help-text">Can use your own name doesn't need to be the real name</div>
-                    <div class="input-group p-1">
-                        <label class="input-group-text" for="client_id">Extension Client ID</label>
-                        <input type="text" name="client_id" id="client_id" value="" class="form-control" />
-                    </div>
-                    <div class="input-group p-1">
-                        <label class="input-group-text" for="extension_secret">Extension Secret</label>
-                        <input type="text" name="extension_secret" id="extension_secret" value="" class="form-control" />
-                    </div>
-                    <div class="help-text">From Extension Client Configuration -> Extension Secrets. The Extension Shared Secret for signing tokens.</div>
-
-                    <div class="input-group p-1">
-                        <label class="input-group-text" for="client_secret">Twitch API Client Secret</label>
-                        <input type="text" name="client_secret" id="client_secret" value="" class="form-control" />
-                    </div>
-                    <div class="help-text">(Optional) From Twitch API Client Secret -> Generate Secret. Optional, only needed for Bits management and Login to ID lookups</div>
-
-
-                    <div class="input-group p-1">
-                        <label class="input-group-text" for="user_id">Owner Twitch ID</label>
-                        <input type="text" name="user_id" id="user_id" value="" class="form-control" />
-                        <span class="input-group-text btn btn-outline-primary" id="id_convert_owner">Convert to ID</span>
-                    </div>
-                    <div class="input-group p-1">
-                        <input type="submit" class="btn btn-primary" id="create_button" value="Create" />
-                    </div>
-                    <div class="help-text">Data is stored locally unencrypted - <kbd>%appdata%/BarryCarlyonTwitchExtensionTools/config.json</kbd></div>
-                </fieldset>
-            </form>
+            <div class="help-text">Extension configurations (Client Secrets and generated App Access Tokens) are stored locally unencrypted in the following file <kbd>%appdata%/BarryCarlyonTwitchExtensionTools/config.json</kbd></div>
         </div>
         <div class="tab-pane p-3" id="run" role="tabpanel" aria-labelledby="run-tab">
             <div class="float-end">
@@ -474,6 +439,55 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_new_extension_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Extension Configuration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="config_form">
+                        <fieldset>
+                            <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary float-end">Dev Console</a>
+                            <p>If the ClientID already exists in the local configuration, the configuration will be overwritten</p>
+
+                            <div class="input-group p-1">
+                                <label class="input-group-text" for="name">Name</label>
+                                <input type="text" name="name" id="name" value="" class="form-control" />
+                            </div>
+                            <div class="help-text">Can use your own name doesn't need to be the real name</div>
+                            <div class="input-group p-1">
+                                <label class="input-group-text" for="client_id">Extension Client ID</label>
+                                <input type="text" name="client_id" id="client_id" value="" class="form-control" />
+                            </div>
+                            <div class="input-group p-1">
+                                <label class="input-group-text" for="extension_secret">Extension Secret</label>
+                                <input type="text" name="extension_secret" id="extension_secret" value="" class="form-control" />
+                            </div>
+                            <div class="help-text">From Extension Client Configuration -> Extension Secrets. The Extension Shared Secret for signing tokens.</div>
+
+                            <div class="input-group p-1">
+                                <label class="input-group-text" for="client_secret">Twitch API Client Secret</label>
+                                <input type="text" name="client_secret" id="client_secret" value="" class="form-control" />
+                            </div>
+                            <div class="help-text">(Optional) From Twitch API Client Secret -> Generate Secret. Optional, only needed for Bits management and Login to ID lookups</div>
+
+                            <div class="input-group p-1">
+                                <label class="input-group-text" for="user_id">Owner Twitch ID</label>
+                                <input type="text" name="user_id" id="user_id" value="" class="form-control" />
+                                <span class="input-group-text btn btn-outline-primary" id="id_convert_owner">Convert to ID</span>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" id="create_button" value="Create Extension Configuration" />
+                </div>
             </div>
         </div>
     </div>

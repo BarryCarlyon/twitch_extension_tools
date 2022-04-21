@@ -30,7 +30,7 @@ document.getElementById('id_convert_owner').addEventListener('click', (e) => {
     e.target.closest('.input-group').classList.add('loading');
 });
 
-document.getElementById('config_form').addEventListener('submit', (e) => {
+document.getElementById('create_button').addEventListener('click', (e) => {
     e.preventDefault();
 
     // validate
@@ -73,12 +73,36 @@ window.electron.config.loadedForEdit((extension) => {
     fields.forEach(field => {
         document.getElementById(field).value = extension[field] ? extension[field] : '';
     });
-    document.getElementById('create_button').value = "Edit";
+    document.getElementById('create_button').value = "Edit Extension Configuration";
+    // and show modal
+    let modal = new bootstrap.Modal(document.getElementById('add_new_extension_modal'));
+    modal.show();
 });
 
 window.electron.config.extensions((data) => {
     let { extensions, active_client_id } = data;
     //console.log('extensions', active_client_id, extensions);
+
+    // draw
+    let dropdown = document.getElementById('extension_select');
+    dropdown.textContent = '';
+    let el = document.getElementById('existing_extensions').getElementsByTagName('tbody')[0];
+    el.textContent = '';
+
+    if (!extensions || Object.keys(extensions).length == 0) {
+        let row = el.insertRow();
+        var cell = row.insertCell();
+        cell.textContent = 'You have no Extensions Configured. Click "Add New Extension Configuration" to add a configuration';
+        cell.classList.add('text-center');
+        cell.classList.add('text-danger');
+        cell.setAttribute('colspan', 4);
+        // and force nudge
+        let modal = new bootstrap.Modal(document.getElementById('add_new_extension_modal'));
+        modal.show();
+        // extra nudge
+        errorMsg('You have no Extension Configurations. Add one to continue');
+        return;
+    }
 
     // reset entry form
     let inputs = document.getElementById('config_form').getElementsByTagName('input');
@@ -87,13 +111,7 @@ window.electron.config.extensions((data) => {
             inputs[x].value = '';
         }
     }
-    document.getElementById('create_button').value = "Create";
-
-    // draw
-    let dropdown = document.getElementById('extension_select');
-    dropdown.textContent = '';
-    let el = document.getElementById('existing_extensions').getElementsByTagName('tbody')[0];
-    el.textContent = '';
+    document.getElementById('create_button').value = "Create Extension Configuration";
 
     for (var ref in extensions) {
         let row = el.insertRow();

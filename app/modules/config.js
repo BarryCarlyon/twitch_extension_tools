@@ -135,10 +135,12 @@ module.exports = function(lib) {
     }
 
     function getExtensionDetails(client_id, version) {
-        let extensions = store.get('extensions');
-        let config = extensions[client_id];
+        let extensions = store.get('extensions', false);
+        if (!extensions || !extensions.hasOwnProperty(client_id)) {
+            errorMsg(`No Extension Configuration for ${client_id}`);
+            return;
+        }
         let token = sign(extensions[client_id]);
-        //console.log('Sig', token);
 
         let url = new URL('https://api.twitch.tv/helix/extensions');
         let params = [
