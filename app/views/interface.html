@@ -445,7 +445,7 @@
     </div>
 
     <div class="modal fade" id="add_new_extension_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Extension Configuration</h5>
@@ -454,8 +454,7 @@
                 <div class="modal-body">
                     <form action="" method="post" id="config_form">
                         <fieldset>
-                            <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary float-end">Dev Console</a>
-                            <p>If the ClientID already exists in the local configuration, the configuration will be overwritten</p>
+                            <div class="help-text">If the ClientID already exists in the local configuration, the configuration will be overwritten</div>
 
                             <div class="input-group p-1">
                                 <label class="input-group-text" for="name">Name</label>
@@ -487,6 +486,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary">Dev Console</a>
+
                     <input type="submit" class="btn btn-primary" id="create_button" value="Create Extension Configuration" />
                 </div>
             </div>

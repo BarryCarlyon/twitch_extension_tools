@@ -181,7 +181,7 @@ window.electron.config.extensions((data) => {
         a_remove.classList.add('btn-sm');
         a_remove.classList.add('btn-outline-danger');
         a_remove.setAttribute('title', 'Remove this Extensions configuration');
-        a_remove.textContent = 'Remove';
+        a_remove.textContent = 'Delete';
 
         bindRemove(a_remove, extensions[ref]);
         grp.append(a_remove);

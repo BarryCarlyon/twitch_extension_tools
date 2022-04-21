@@ -93,3 +93,7 @@ th .form-check {
     bottom: 0px;
     content: '';
 }
+
+#add_new_extension_modal .modal-dialog {
+    max-width: 90%;
+}
