@@ -25,7 +25,11 @@ window.electron.onUpdater((data) => {
             u.innerHTML = 'DL: ' + data.data.percent.toFixed(1) + '%';
             break;
         case 'update-downloaded':
-            u.innerHTML = 'Downloaded Restarting';
+            u.innerHTML = 'Downloaded! Click to restart';
+            u.classList.remove('updating');
+            u.classList.add('update_available');
+            u.classList.remove('btn-outline-primary');
+            u.classList.add('btn-outline-success');
             break;
     }
 });

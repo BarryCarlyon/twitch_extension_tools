@@ -120,6 +120,7 @@ window.electron.config.extensions((data) => {
         cell.textContent = extensions[ref].name;
 
         var cell = row.insertCell();
+        cell.classList.add('monospace');
         cell.textContent = extensions[ref].client_id;
 
         var cell = row.insertCell();
@@ -136,6 +137,7 @@ window.electron.config.extensions((data) => {
         usethis.classList.add('btn-sm');
         usethis.classList.add('btn-outline-success');
         usethis.textContent = 'Use';
+        usethis.setAttribute('title', 'Use this Extension configuration');
         usethis.setAttribute('data-client_id', extensions[ref].client_id);
 
         bindUse(usethis);
@@ -147,6 +149,7 @@ window.electron.config.extensions((data) => {
         a_settings.classList.add('btn-outline-primary');
         a_settings.classList.add('website');
         a_settings.setAttribute('href', `https://dev.twitch.tv/console/extensions/${extensions[ref].client_id}/settings`);
+        a_settings.setAttribute('title', 'View Extension Settings for this Extension on the Dev Console');
         a_settings.textContent = 'Settings';
 
         grp.append(a_settings);
@@ -157,6 +160,7 @@ window.electron.config.extensions((data) => {
         a_versions.classList.add('btn-outline-primary');
         a_versions.classList.add('website');
         a_versions.setAttribute('href', `https://dev.twitch.tv/console/extensions/${extensions[ref].client_id}`);
+        a_versions.setAttribute('title', 'View Versions for this Extension on the Dev Console');
         a_versions.textContent = 'Versions';
 
         grp.append(a_versions);
@@ -165,6 +169,7 @@ window.electron.config.extensions((data) => {
         a_edit.classList.add('btn');
         a_edit.classList.add('btn-sm');
         a_edit.classList.add('btn-outline-warning');
+        a_edit.setAttribute('title', 'Load this Extensions configuration for Editing');
         a_edit.textContent = 'Edit';
         a_edit.setAttribute('data-client_id', extensions[ref].client_id);
 
@@ -175,6 +180,7 @@ window.electron.config.extensions((data) => {
         a_remove.classList.add('btn');
         a_remove.classList.add('btn-sm');
         a_remove.classList.add('btn-outline-danger');
+        a_remove.setAttribute('title', 'Remove this Extensions configuration');
         a_remove.textContent = 'Remove';
 
         bindRemove(a_remove, extensions[ref]);
@@ -185,6 +191,7 @@ window.electron.config.extensions((data) => {
         a_revoke.classList.add('btn-sm');
         a_revoke.classList.add('btn-outline-danger');
         a_revoke.setAttribute('data-client_id', extensions[ref].client_id);
+        a_revoke.setAttribute('title', 'If button is enabled, this button will revoke an App Access Token generated for this Extension');
         a_revoke.textContent = 'Revoke';
 
         if (extensions[ref].access_token && extensions[ref].access_token != '') {

@@ -167,7 +167,7 @@ module.exports = function(lib) {
         )
         .then(resp => resp.json())
         .then(resp => {
-            console.log('Got', resp);
+            //console.log('Got', resp);
             if (resp.status) {
                 errorMsg(`Got Error ${resp.status} - ${resp.message}`);
 
