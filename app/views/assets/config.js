@@ -107,7 +107,7 @@ window.electron.config.extensions((data) => {
     // reset entry form
     let inputs = document.getElementById('config_form').getElementsByTagName('input');
     for (let x=0;x<inputs.length;x++) {
-        if (inputs[x].getAttribute('type') != 'submit') {
+        if (inputs[x].getAttribute('type') != 'submit' && inputs[x].getAttribute('type') != 'button') {
             inputs[x].value = '';
         }
     }
