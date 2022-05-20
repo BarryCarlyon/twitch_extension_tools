@@ -8,7 +8,7 @@ module.exports = function(lib) {
     const fetch = require('electron-fetch').default;
 
     ipcMain.on('extensionAPI', (event, data) => {
-        console.log('in extensionAPI', data);
+        //console.log('in extensionAPI', data);
         let { route, details } = data;
 
         switch (route) {
@@ -44,7 +44,7 @@ module.exports = function(lib) {
 
         let url = new URL('https://api.twitch.tv/helix/extensions/chat');
 
-        console.log('Attempting to post', details);
+        //console.log('Attempting to post', details);
 
         fetch(
             url,
@@ -59,7 +59,6 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
-            console.log(resp.headers);
             if (resp.status != 204) {
                 let body = await resp.json();
 
@@ -111,7 +110,7 @@ module.exports = function(lib) {
         }
         url.search = new URLSearchParams(params).toString();
 
-        console.log('Attempting to get', details, params);
+        //console.log('Attempting to get', details, params);
 
         fetch(
             url,
@@ -124,7 +123,7 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
-            console.log('GET', url, resp.status);
+            //console.log('GET', url, resp.status);
 
             let body = await resp.json();
             if (resp.status != 200) {
@@ -146,7 +145,7 @@ module.exports = function(lib) {
                 version = body.data[0].version;
             }
 
-            console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+            //console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
             win.webContents.send('extensionAPIResult', {
                 route: 'getconfiguration',
                 status: resp.status,
@@ -180,7 +179,7 @@ module.exports = function(lib) {
             delete details.broadcaster_id;
         }
 
-        console.log('setConfiguration Putting', details);
+        //console.log('setConfiguration Putting', details);
 
         fetch(
             url,
@@ -195,9 +194,9 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
-            console.log('PUT', url, resp.status);
+            //console.log('PUT', url, resp.status);
             if (resp.status == 204) {
-                console.log('ok', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                //console.log('ok', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 // yay
                 win.webContents.send('extensionAPIResult', {
                     route: 'setconfiguration',
@@ -212,7 +211,7 @@ module.exports = function(lib) {
             }
 
             let body = await resp.json();
-            //win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            //console.log('fail', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
             win.webContents.send('extensionAPIResult', {
                 route: 'setconfiguration',
                 status: resp.status,
@@ -221,7 +220,6 @@ module.exports = function(lib) {
 
                 message: body.message
             });
-            console.log('fail', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
         })
         .catch(err => {
             console.log(err);
@@ -242,7 +240,7 @@ module.exports = function(lib) {
 
         let url = new URL('https://api.twitch.tv/helix/extensions/required_configuration');
 
-        console.log('setConfigurationReq Putting', details);
+        //console.log('setConfigurationReq Putting', details);
 
         fetch(
             url,
@@ -257,10 +255,10 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
-            console.log('PUT', url, resp.status);
+            //console.log('PUT', url, resp.status);
 
             if (resp.status == 204) {
-                console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                //console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 win.webContents.send('extensionAPIResult', {
                     route: 'setconfigurationreq',
                     status: resp.status,
@@ -274,9 +272,7 @@ module.exports = function(lib) {
             }
 
             let body = await resp.json();
-            console.log('Fail', resp.status, body);
-            //win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
-
+            //console.log('Fail', resp.status, body);
             win.webContents.send('extensionAPIResult', {
                 route: 'setconfigurationreq',
                 status: resp.status,
@@ -324,12 +320,11 @@ module.exports = function(lib) {
 
         delete details.target_whisper;
 
-        console.log('Sig', sigConfigPayload);
         const token = jwt.sign(sigConfigPayload, Buffer.from(config.extension_secret, 'base64'));
 
         let url = new URL('https://api.twitch.tv/helix/extensions/pubsub');
 
-        console.log('sendPubSub POSTing', details);
+        //console.log('sendPubSub POSTing', details);
 
         fetch(
             url,
@@ -344,10 +339,10 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
-            console.log('POST', url, resp.status);
+            //console.log('POST', url, resp.status);
 
             if (resp.status == 204) {
-                console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+                //console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 win.webContents.send('extensionAPIResult', {
                     route: 'sendpubsub',
                     status: resp.status,
@@ -361,8 +356,7 @@ module.exports = function(lib) {
             }
 
             let body = await resp.json();
-            console.log('Fail', resp.status, body);
-            //win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            //console.log('Fail', resp.status, body);
             win.webContents.send('extensionAPIResult', {
                 route: 'sendpubsub',
                 status: resp.status,
