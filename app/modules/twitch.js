@@ -141,7 +141,7 @@ module.exports = function(lib) {
 
             console.log(users_resp);
 
-            if (users_resp.data && users_resp.data.length == 1) {
+            if (users_resp.hasOwnProperty('data') && users_resp.data.length == 1) {
                 console.log('send back', users_resp.data[0].id);
                 win.webContents.send('convertedToId', {
                     el,
@@ -187,8 +187,8 @@ module.exports = function(lib) {
             return products_resp.data;
         }
 
-        console.log(products_resp);
-        if (products_resp.data) {
+        //console.log(products_resp);
+        if (products_resp.hasOwnProperty('data')) {
             console.log('send back', products_resp.data.length);
 
             win.webContents.send('bits.gotProducts', products_resp.data);
@@ -235,7 +235,7 @@ module.exports = function(lib) {
         );
         let products_resp = await products_req.json();
 
-        console.log(products_resp);
+        //console.log(products_resp);
         if (products_resp.data && products_resp.data.length == 1) {
             win.webContents.send('bits.createdProduct');
 
@@ -281,6 +281,27 @@ module.exports = function(lib) {
         );
         let transactions_resp = await transactions_req.json();
 
+        if (transactions_resp.hasOwnProperty('data')) {
+            win.webContents.send('bits.gotTransactions', products_resp.data);
+
+            win.webContents.send('extensionAPIResult', {
+                route: 'gettransactions',
+                status: products_req.status,
+                ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: products_req.headers.get('ratelimit-limit'),
+
+                message: ''
+            });
+        }
+
+        win.webContents.send('extensionAPIResult', {
+            route: 'gettransactions',
+            status: products_req.status,
+            ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
+            ratelimitLimit: products_req.headers.get('ratelimit-limit'),
+
+            message: transactions_resp.message
+        });
     }
 
     return;
