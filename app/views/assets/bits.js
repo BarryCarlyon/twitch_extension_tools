@@ -243,6 +243,43 @@ document.getElementById('transactions_fetch').addEventListener('submit', (e) => 
 function getTransactions() {
     window.electron.bits.getTransactions({});
 }
-window.electron.bits.gotTransactions(() => {
+window.electron.bits.gotTransactions((data) => {
     resetLoadings();
+
+    let table = document.getElementById('transactions_table');
+    table.textContent = '';
+
+    data.forEach(transaction => {
+        let row = table.insertRow();
+
+        let ts = row.insertCell();
+        ts.textContent = transaction.timestamp;
+
+        let caster = row.insertCell();
+        //caster.textContent = `${transaction.broadcaster_id}/${transaction.broadcaster_login}`;
+            var d = document.createElement('div');
+            d.textContent = transaction.broadcaster_id;
+            caster.append(d);
+            var d = document.createElement('div');
+            d.textContent = transaction.broadcaster_login;
+            caster.append(d);
+        let user = row.insertCell();
+        //user.textContent = `${transaction.user_id}/${transaction.user_login}`;
+            var d = document.createElement('div');
+            d.textContent = transaction.user_id;
+            user.append(d);
+            var d = document.createElement('div');
+            d.textContent = transaction.user_login;
+            user.append(d);
+
+        let product = row.insertCell();
+        product.textContent = transaction.product_data.displayName;
+        let sku = row.insertCell();
+        sku.textContent = transaction.product_data.sku;
+        let amount = row.insertCell();
+        amount.textContent = transaction.product_data.cost.amount;
+
+        let dev = row.insertCell();
+        dev.textContent = transaction.product_data.inDevelopment;
+    });
 });

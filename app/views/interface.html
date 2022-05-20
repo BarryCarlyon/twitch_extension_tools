@@ -375,31 +375,32 @@
                     <div id="extension_transactions" class="accordion-collapse collapse collapse" aria-labelledby="extension_transactions_header" data-bs-parent="#run_accordion">
                         <div class="accordion-body">
                             <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-transactions">Get Extension Transactions</a> API</p>
+                            <p>This is a basic fetch and this tool doesn't support the ID parameter for doing specific transaction lookups.</p>
 
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Broadcaster</th>
+                                        <th>Viewer</th>
+                                        <th>Product</th>
+                                        <th>Sku</th>
+                                        <th>Amount</th>
+                                        <th>Dev</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions_table">
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
                             <form action="" method="post" id="transactions_fetch">
                                 <fieldset>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Timestamp</th>
-                                                <th>Broadcaster</th>
-                                                <th>Viewer</th>
-                                                <th>Product</th>
-                                                <th>Sku</th>
-                                                <th>Amount</th>
-                                                <th>Dev</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="transactions_table">
-                                        </tbody>
-                                        <tfoot>
-                                            <div class="btn-group p-1 float-end">
-                                                <span id="transactions_fetch_response" class="btn extension_api_response"></span>
+                                    <div class="btn-group p-1 float-end">
+                                        <span id="transactions_fetch_response" class="btn extension_api_response"></span>
 
-                                                <input type="submit" class="btn btn-primary" value="Fetch Extension Transactions" />
-                                            </div>
-                                        </tfoot>
-                                    </table>
+                                        <input type="submit" class="btn btn-primary" value="Fetch Extension Transactions" />
+                                    </div>
                                 </fieldset>
                             </form>
                         </div>

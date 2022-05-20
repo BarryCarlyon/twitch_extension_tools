@@ -275,20 +275,19 @@ module.exports = function(lib) {
                     'Client-ID': client_id,
                     'Authorization': `Bearer ${access_token}`,
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                }
             }
         );
         let transactions_resp = await transactions_req.json();
 
         if (transactions_resp.hasOwnProperty('data')) {
-            win.webContents.send('bits.gotTransactions', products_resp.data);
+            win.webContents.send('bits.gotTransactions', transactions_resp.data);
 
             win.webContents.send('extensionAPIResult', {
                 route: 'gettransactions',
-                status: products_req.status,
-                ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
-                ratelimitLimit: products_req.headers.get('ratelimit-limit'),
+                status: transactions_req.status,
+                ratelimitRemain: transactions_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: transactions_req.headers.get('ratelimit-limit'),
 
                 message: ''
             });
@@ -296,9 +295,9 @@ module.exports = function(lib) {
 
         win.webContents.send('extensionAPIResult', {
             route: 'gettransactions',
-            status: products_req.status,
-            ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
-            ratelimitLimit: products_req.headers.get('ratelimit-limit'),
+            status: transactions_req.status,
+            ratelimitRemain: transactions_req.headers.get('ratelimit-remaining'),
+            ratelimitLimit: transactions_req.headers.get('ratelimit-limit'),
 
             message: transactions_resp.message
         });

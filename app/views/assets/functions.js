@@ -32,6 +32,9 @@ window.electron.extensionAPIResult((data) => {
                 el = el ? el : document.getElementById('configreq_form_response');
             case 'sendpubsub':
                 el = el ? el : document.getElementById('pubsub_form_response');
+            case 'gettransactions':
+                el = el ? el : document.getElementById('transactions_fetch_response');
+
 
                 el.classList.remove('text-success');
                 el.classList.remove('text-danger');
