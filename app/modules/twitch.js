@@ -187,21 +187,32 @@ module.exports = function(lib) {
             return products_resp.data;
         }
 
-        console.log(products_resp);
-        if (products_resp.data) {
-            console.log('send back', products_resp.data.length);
+        if (products_resp.status != 200) {
+            win.webContents.send('extensionAPIResult', {
+                route: 'bits.getProducts',
+                status: products_req.status,
+                ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: products_req.headers.get('ratelimit-limit'),
 
+                message: products_resp.message
+            });
+        }
+
+        if (products_resp.hasOwnProperty('data')) {
             win.webContents.send('bits.gotProducts', products_resp.data);
 
             win.webContents.send('extensionAPIResult', {
+                route: 'bits.getProducts',
                 status: products_req.status,
                 ratelimitRemain: products_req.headers.get('ratelimit-remaining'),
-                ratelimitLimit: products_req.headers.get('ratelimit-limit')
+                ratelimitLimit: products_req.headers.get('ratelimit-limit'),
+
+                message: ''
             });
 
             return;
         }
-        win.webContents.send('errorMsg', 'Bits Products not found');
+        win.webContents.send('errorMsg', 'No Bits Products found');
     }
     ipcMain.on('bits.getProducts', (e,should_include_all) => {
         getProducts(should_include_all);

@@ -33,6 +33,9 @@ window.electron.extensionAPIResult((data) => {
             case 'sendpubsub':
                 el = el ? el : document.getElementById('pubsub_form_response');
 
+            case 'bits.getProducts':
+                el = el ? el : document.getElementById('bits_fetch_response');
+
                 el.classList.remove('text-success');
                 el.classList.remove('text-danger');
 
