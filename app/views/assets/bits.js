@@ -233,3 +233,16 @@ document.getElementById('datetimepick_select').addEventListener('submit', (e) =>
     datetimepick_modal.hide();
     datetimepick_target.value = new Date(document.getElementById('datetimepick_pick').value).toISOString();
 });
+
+
+document.getElementById('transactions_fetch').addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.target.classList.add('loading');
+    getTransactions();
+});
+function getTransactions() {
+    window.electron.bits.getTransactions({});
+}
+window.electron.bits.gotTransactions(() => {
+    resetLoadings();
+});
