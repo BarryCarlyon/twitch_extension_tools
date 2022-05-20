@@ -251,5 +251,37 @@ module.exports = function(lib) {
     }
 
 
+    ipcMain.on('bits.getTransactions', (e,data) => {
+        getTransactions(data);
+    });
+    async function getTransactions(data) {
+        let client_id = store.get('active.client_id');
+
+        await accessToken(client_id);
+
+        let access_token = store.get(`extensions.${client_id}.access_token`);
+
+        let transactions_url = new URL('https://api.twitch.tv/helix/extensions/transactions');
+        let transactions_params = [
+            [ 'extension_id', client_id ]
+        ]
+        transactions_url.search = new URLSearchParams(transactions_params).toString();
+
+        let transactions_req = await fetch(
+            transactions_url,
+            {
+                method: 'GET',
+                headers: {
+                    'Client-ID': client_id,
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+        );
+        let transactions_resp = await transactions_req.json();
+
+    }
+
     return;
 }
