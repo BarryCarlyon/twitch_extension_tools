@@ -59,16 +59,29 @@ module.exports = function(lib) {
             }
         )
         .then(async resp => {
+            console.log(resp.headers);
             if (resp.status != 204) {
                 let body = await resp.json();
-                win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+
+                win.webContents.send('extensionAPIResult', {
+                    route: 'chat',
+                    status: resp.status,
+                    ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                    ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                    message: body.message
+                });
+
                 return;
             }
-            console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
+
             win.webContents.send('extensionAPIResult', {
+                route: 'chat',
                 status: resp.status,
                 ratelimitRemain: resp.headers.get('ratelimit-remaining'),
-                ratelimitLimit: resp.headers.get('ratelimit-limit')
+                ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                message: ''
             });
         })
         .catch(err => {
@@ -115,7 +128,14 @@ module.exports = function(lib) {
 
             let body = await resp.json();
             if (resp.status != 200) {
-                win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+                win.webContents.send('extensionAPIResult', {
+                    route: 'getconfiguration',
+                    status: resp.status,
+                    ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                    ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                    message: body.message
+                });
                 return;
             }
 
@@ -128,11 +148,14 @@ module.exports = function(lib) {
 
             console.log(resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
             win.webContents.send('extensionAPIResult', {
-                config,
-                version,
+                route: 'getconfiguration',
                 status: resp.status,
                 ratelimitRemain: resp.headers.get('ratelimit-remaining'),
-                ratelimitLimit: resp.headers.get('ratelimit-limit')
+                ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                message: '',
+                config,
+                version
             });
         })
         .catch(err => {
@@ -177,16 +200,27 @@ module.exports = function(lib) {
                 console.log('ok', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 // yay
                 win.webContents.send('extensionAPIResult', {
+                    route: 'setconfiguration',
                     status: resp.status,
                     ratelimitRemain: resp.headers.get('ratelimit-remaining'),
-                    ratelimitLimit: resp.headers.get('ratelimit-limit')
+                    ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                    message: ''
                 });
 
                 return;
             }
 
             let body = await resp.json();
-            win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            //win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            win.webContents.send('extensionAPIResult', {
+                route: 'setconfiguration',
+                status: resp.status,
+                ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                message: body.message
+            });
             console.log('fail', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
         })
         .catch(err => {
@@ -228,9 +262,12 @@ module.exports = function(lib) {
             if (resp.status == 204) {
                 console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 win.webContents.send('extensionAPIResult', {
+                    route: 'setconfigurationreq',
                     status: resp.status,
                     ratelimitRemain: resp.headers.get('ratelimit-remaining'),
-                    ratelimitLimit: resp.headers.get('ratelimit-limit')
+                    ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                    message: ''
                 });
 
                 return;
@@ -238,7 +275,16 @@ module.exports = function(lib) {
 
             let body = await resp.json();
             console.log('Fail', resp.status, body);
-            win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            //win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+
+            win.webContents.send('extensionAPIResult', {
+                route: 'setconfigurationreq',
+                status: resp.status,
+                ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                message: body.message
+            });
         })
         .catch(err => {
             console.log(err);
@@ -303,9 +349,12 @@ module.exports = function(lib) {
             if (resp.status == 204) {
                 console.log('OK', resp.status, resp.headers.get('ratelimit-remaining'), resp.headers.get('ratelimit-limit'));
                 win.webContents.send('extensionAPIResult', {
+                    route: 'sendpubsub',
                     status: resp.status,
                     ratelimitRemain: resp.headers.get('ratelimit-remaining'),
-                    ratelimitLimit: resp.headers.get('ratelimit-limit')
+                    ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                    message: ''
                 });
 
                 return;
@@ -313,7 +362,15 @@ module.exports = function(lib) {
 
             let body = await resp.json();
             console.log('Fail', resp.status, body);
-            win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            //win.webContents.send('errorMsg', `HTTP ${resp.status}: ${body.message}`);
+            win.webContents.send('extensionAPIResult', {
+                route: 'sendpubsub',
+                status: resp.status,
+                ratelimitRemain: resp.headers.get('ratelimit-remaining'),
+                ratelimitLimit: resp.headers.get('ratelimit-limit'),
+
+                message: body.message
+            });
         })
         .catch(err => {
             console.log(err);
