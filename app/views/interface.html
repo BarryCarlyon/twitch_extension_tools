@@ -67,7 +67,7 @@
 
                             <p>If the <kbd>version</kbd> value, of the segment, matches what is set in the manifest on the dev console for <kbd>Developer Writable Channel Segment Version</kbd> or <kbd>Broadcaster Writable Channel Segment Version</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
 
-                            <form action="" method="post" id="config_form">
+                            <form action="" method="post" id="extension_config_service_form">
                                 <fieldset>
                                     <div class="input-group p-1">
                                         <label class="input-group-text" for="config_extension_id">extension_id</label>
@@ -111,8 +111,8 @@
                                     <div class="btn-group p-1 float-end">
                                         <span id="config_form_response" class="btn extension_api_response"></span>
 
-                                        <input type="button" class="btn btn-outline-primary" id="config_fetch" value="Fetch Config" />
-                                        <input type="button" class="btn btn-outline-danger" id="config_write" value="Write Config" />
+                                        <input type="button" class="btn btn-outline-primary" id="extension_config_service_fetch" value="Fetch Config" />
+                                        <input type="button" class="btn btn-outline-danger" id="extension_config_service_write" value="Write Config" />
                                     </div>
                                 </fieldset>
                             </form>
@@ -287,9 +287,14 @@
                                             <option>yes</option>
                                             <option>no</option>
                                         </select>
-                                        <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
                                     </div>
                                     <div class="help-text pb-1">Whether Bits products that are disabled/expired should be included in the response.</div>
+
+                                    <div class="btn-group p-1 float-end">
+                                        <span id="bits_fetch_response" class="btn extension_api_response"></span>
+
+                                        <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
+                                    </div>
                                 </fieldset>
                             </form>
 

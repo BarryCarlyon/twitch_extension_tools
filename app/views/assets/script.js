@@ -286,4 +286,14 @@ function errorMsg(words) {
     let sp = document.createElement('p');
     sp.textContent = words;
     alert.append(sp);
+
+    setTimeout(() => {
+        sp.remove();
+        let ps = alert.getElementsByTagName('p');
+        if (ps && ps.length > 0) {
+            return;
+        }
+        let ins = bootstrap.Alert.getOrCreateInstance(alert);
+        ins.close();
+    }, 10000);
 }
