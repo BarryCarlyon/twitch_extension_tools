@@ -80,6 +80,10 @@ window.electron.config.loadedForEdit((extension) => {
 });
 
 window.electron.config.extensions((data) => {
+    // dismiss dialog
+    let modal = bootstrap.Modal.getOrCreateInstance('#add_new_extension_modal');
+    modal.hide();
+
     let { extensions, active_client_id } = data;
     //console.log('extensions', active_client_id, extensions);
 

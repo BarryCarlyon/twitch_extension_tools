@@ -65,10 +65,10 @@ document.getElementById('config_segment').addEventListener('change', (e) => {
 });
 document.getElementById('config_broadcaster_id').setAttribute('readonly', 'readonly');
 
-document.getElementById('config_form').addEventListener('submit', (e) => {
+document.getElementById('extension_config_service_form').addEventListener('submit', (e) => {
     e.preventDefault();
 });
-document.getElementById('config_fetch').addEventListener('click', (e) => {
+document.getElementById('extension_config_service_fetch').addEventListener('click', (e) => {
     window.electron.extensionAPI(
         'getconfiguration',
         {
@@ -78,7 +78,7 @@ document.getElementById('config_fetch').addEventListener('click', (e) => {
         }
     );
 });
-document.getElementById('config_write').addEventListener('click', (e) => {
+document.getElementById('extension_config_service_write').addEventListener('click', (e) => {
     let content = document.getElementById('config_content').value;
     if (document.getElementById('config_content_json').checked) {
         // tidy up
