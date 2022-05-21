@@ -109,6 +109,8 @@
                                     <div class="help-text">Optional Version field. Used with <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> to block activation until (re)configured</div>
 
                                     <div class="btn-group p-1 float-end">
+                                        <span id="config_form_response" class="btn extension_api_response"></span>
+
                                         <input type="button" class="btn btn-outline-primary" id="extension_config_service_fetch" value="Fetch Config" />
                                         <input type="button" class="btn btn-outline-danger" id="extension_config_service_write" value="Write Config" />
                                     </div>
@@ -153,6 +155,8 @@
                                     </div>
 
                                     <div class="btn-group p-1 float-end">
+                                        <span id="configreq_form_response" class="btn extension_api_response"></span>
+
                                         <input type="submit" class="btn btn-outline-primary" value="Set Extension Required Configuration" />
                                     </div>
                                 </fieldset>
@@ -193,6 +197,7 @@
                                         <input type="text" name="chat_extension_version" id="chat_extension_version" value="" class="form-control active_version" />
                                     </div>
                                     <div class="btn-group p-1 float-end">
+                                        <span id="send_extension_chat_message_response" class="btn extension_api_response"></span>
                                         <input type="submit" class="btn btn-primary" value="Send Extension Chat Message" />
                                     </div>
                                 </fieldset>
@@ -256,6 +261,8 @@
                                     </div>
 
                                     <div class="btn-group p-1 float-end">
+                                        <span id="pubsub_form_response" class="btn extension_api_response"></span>
+
                                         <input type="submit" class="btn btn-primary" value="Send Extension PubSub Message" />
                                     </div>
                                 </fieldset>
@@ -280,9 +287,14 @@
                                             <option>yes</option>
                                             <option>no</option>
                                         </select>
-                                        <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
                                     </div>
                                     <div class="help-text pb-1">Whether Bits products that are disabled/expired should be included in the response.</div>
+
+                                    <div class="btn-group p-1 float-end">
+                                        <span id="bits_fetch_response" class="btn extension_api_response"></span>
+
+                                        <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
+                                    </div>
                                 </fieldset>
                             </form>
 

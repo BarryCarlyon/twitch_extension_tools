@@ -5,7 +5,6 @@ document.getElementById('change_version_form').addEventListener('submit', (e) =>
 
 window.electron.extensionAPIResult((data) => {
     resetLoadings();
-    errorMsg(`HTTP: ${data.status} Ratelimit: ${data.ratelimitRemain}/${data.ratelimitLimit}`);
 
     if (data.hasOwnProperty('config')) {
         try {
@@ -23,6 +22,58 @@ window.electron.extensionAPIResult((data) => {
         document.getElementById('config_content').value = data.config;
         document.getElementById('config_version').value = data.version;
     }
+
+    if (data.hasOwnProperty('route')) {
+        switch (data.route) {
+            case 'getconfiguration':
+            case 'setconfiguration':
+                var el = document.getElementById('config_form_response');
+            case 'setconfigurationreq':
+                el = el ? el : document.getElementById('configreq_form_response');
+            case 'sendpubsub':
+                el = el ? el : document.getElementById('pubsub_form_response');
+
+            case 'bits.getProducts':
+                el = el ? el : document.getElementById('bits_fetch_response');
+
+                el.classList.remove('text-success');
+                el.classList.remove('text-danger');
+
+                if (data.status == 200) {
+                    el.classList.add('text-success');
+                    data.message = 'Fetched Ok';
+                } else if (data.status == 204) {
+                    el.classList.add('text-success');
+                    data.message = 'Wrote Ok';
+                } else {
+                    el.classList.add('text-danger');
+                }
+
+                el.textContent = `${data.message} - ${data.status}/${data.ratelimitRemain}/${data.ratelimitLimit}`;
+
+                break;
+            case 'chat':
+                var el = document.getElementById('send_extension_chat_message_response');
+
+                el.classList.remove('text-success');
+                el.classList.remove('text-danger');
+
+                if (data.status == 204) {
+                    el.classList.add('text-success');
+                    data.message = 'Sent Ok';
+                } else {
+                    el.classList.add('text-danger');
+                }
+                el.textContent = `${data.message} - ${data.status}/${data.ratelimitRemain}/${data.ratelimitLimit}`;
+                break;
+            default:
+                errorMsg(`HTTP: ${data.status} Ratelimit: ${data.ratelimitRemain}/${data.ratelimitLimit}`);
+        }
+
+        return;
+    }
+
+    errorMsg(`HTTP: ${data.status} Ratelimit: ${data.ratelimitRemain}/${data.ratelimitLimit}`);
 });
 
 let els = document.getElementsByClassName('char_count');
