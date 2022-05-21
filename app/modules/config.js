@@ -64,7 +64,7 @@ module.exports = function(lib) {
 
                 // preselect previous version
                 let version_on_select = store.get(`extensions.${client_id}.version`, false);
-                errorMsg(`Loading ${client_id} with version ${version_on_select ? version_on_select : 'Grabbing Release Version if any' }`);
+                errorMsg(`Loading Extension Configuration for ${client_id} with version ${version_on_select ? version_on_select : 'Grabbing Release Version if any' }`);
 
                 getExtensionDetails(client_id, version_on_select);
 
@@ -152,7 +152,7 @@ module.exports = function(lib) {
 
         url.search = new URLSearchParams(params).toString();
 
-        console.log('Go with', url, token);
+        //console.log('Go with', url, token);
 
         fetch(
             url,
@@ -181,6 +181,7 @@ module.exports = function(lib) {
             }
 
             if (resp.data && resp.data.length == 1) {
+                errorMsg(`Loaded Extension Configuration for ${client_id} with version ${resp.data[0].version}`);
                 store.set('active', {
                     client_id,
                     version: resp.data[0].version
