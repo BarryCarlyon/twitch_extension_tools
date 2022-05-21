@@ -23,6 +23,8 @@ You can download the latest version from here on GitHub under [releases](https:/
 
 You can use Windows "Add and Remove Programs" to uninstall the program.
 
+You may need to manually remove data stored in the data/config storage location below.
+
 ## Data/Config Storage
 
 Data is stored in the following location
@@ -82,6 +84,7 @@ If a Key Sets Extension API Client Secret is Provided, alllowing the generation 
 - Convert UserName to UserID for various endpoints via [Get Users](https://dev.twitch.tv/docs/api/reference#get-users)
 - [Get Extension Bits Products](https://dev.twitch.tv/docs/api/reference#get-extension-bits-products)
 - [Update Extension Bits Product](https://dev.twitch.tv/docs/api/reference#update-extension-bits-product)
+- [Get Extension Transactions](https://dev.twitch.tv/docs/api/reference#get-extension-transactions)
 
 ## Not Supported Features
 

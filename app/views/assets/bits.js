@@ -240,16 +240,18 @@ document.getElementById('transactions_fetch').addEventListener('submit', (e) => 
     e.target.classList.add('loading');
     getTransactions();
 });
-function getTransactions() {
-    window.electron.bits.getTransactions({});
+function getTransactions(after) {
+    window.electron.bits.getTransactions({
+        after
+    });
 }
-window.electron.bits.gotTransactions((data) => {
+window.electron.bits.gotTransactions((resp) => {
     resetLoadings();
 
     let table = document.getElementById('transactions_table');
     table.textContent = '';
 
-    data.forEach(transaction => {
+    resp.data.forEach(transaction => {
         let row = table.insertRow();
 
         let ts = row.insertCell();
@@ -282,4 +284,22 @@ window.electron.bits.gotTransactions((data) => {
         let dev = row.insertCell();
         dev.textContent = transaction.product_data.inDevelopment;
     });
+
+    let nxt = document.getElementById('transactions_fetch_next');
+    console.log(resp.pagination);
+    if (resp.hasOwnProperty('pagination')) {
+        if (resp.pagination.hasOwnProperty('cursor')) {
+            nxt.classList.remove('d-none');
+            nxt.setAttribute('data-cursor', resp.pagination.cursor);
+            return;
+        }
+    }
+    nxt.classList.add('d-none');
+});
+
+document.getElementById('transactions_fetch_next').addEventListener('click', (e) => {
+    e.preventDefault();
+    //document.getElementById('transactions_fetch')
+    e.target.classList.add('loading');
+    getTransactions(e.target.getAttribute('data-cursor'));
 });

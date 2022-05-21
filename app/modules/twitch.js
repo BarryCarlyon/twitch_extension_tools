@@ -277,7 +277,16 @@ module.exports = function(lib) {
         let transactions_params = [
             [ 'extension_id', client_id ]
         ]
+
+        if (data.hasOwnProperty('after')) {
+            if (data.after) {
+                transactions_params.push([ 'after', data.after ]);
+            }
+        }
+
         transactions_url.search = new URLSearchParams(transactions_params).toString();
+
+        //console.log('Fetching', transactions_url);
 
         let transactions_req = await fetch(
             transactions_url,
@@ -293,7 +302,7 @@ module.exports = function(lib) {
         let transactions_resp = await transactions_req.json();
 
         if (transactions_resp.hasOwnProperty('data')) {
-            win.webContents.send('bits.gotTransactions', transactions_resp.data);
+            win.webContents.send('bits.gotTransactions', transactions_resp);
 
             win.webContents.send('extensionAPIResult', {
                 route: 'gettransactions',
