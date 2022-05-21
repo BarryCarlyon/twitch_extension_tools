@@ -67,7 +67,7 @@
 
                             <p>If the <kbd>version</kbd> value, of the segment, matches what is set in the manifest on the dev console for <kbd>Developer Writable Channel Segment Version</kbd> or <kbd>Broadcaster Writable Channel Segment Version</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
 
-                            <form action="" method="post" id="config_form">
+                            <form action="" method="post" id="extension_config_service_form">
                                 <fieldset>
                                     <div class="input-group p-1">
                                         <label class="input-group-text" for="config_extension_id">extension_id</label>
@@ -109,8 +109,8 @@
                                     <div class="help-text">Optional Version field. Used with <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> to block activation until (re)configured</div>
 
                                     <div class="btn-group p-1 float-end">
-                                        <input type="button" class="btn btn-outline-primary" id="config_fetch" value="Fetch Config" />
-                                        <input type="button" class="btn btn-outline-danger" id="config_write" value="Write Config" />
+                                        <input type="button" class="btn btn-outline-primary" id="extension_config_service_fetch" value="Fetch Config" />
+                                        <input type="button" class="btn btn-outline-danger" id="extension_config_service_write" value="Write Config" />
                                     </div>
                                 </fieldset>
                             </form>
