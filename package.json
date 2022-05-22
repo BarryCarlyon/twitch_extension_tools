@@ -42,7 +42,8 @@
     "jsonwebtoken": "^8.5.1"
   },
 
-  "name": "BarryCarlyonTwitchExtensionTools",
+  "name": "barrycarlyontwitchextensiontools",
+  "productName": "BarryCarlyonTwitchExtensionTools",
   "description": "BarryCarlyon Twitch Extension Tools",
   "author": "Barry Carlyon",
   "version": "1.1.3",

@@ -37,7 +37,7 @@ app.on('ready', () => {
 
         show: false,
 
-        title: 'BarryCarlyon Twitch Extension Tools',
+        title: `BarryCarlyon Twitch Extension Tools: v${app.getVersion()}`,
         autoHideMenuBar: false,
         backgroundColor: '#000000',
 
@@ -97,7 +97,7 @@ app.on('ready', () => {
     win.loadFile(path.join(app.getAppPath(), 'app', 'views', 'interface.html'));
     win.once('ready-to-show', () => {
         win.show();
-        win.setTitle('BarryCarlyon Twitch Extension Tools: ' + app.getVersion());
+        win.setTitle(`BarryCarlyon Twitch Extension Tools: v${app.getVersion()}`);
     });
     //win.webContents.openDevTools();
 
