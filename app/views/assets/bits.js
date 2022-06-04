@@ -235,12 +235,15 @@ document.getElementById('datetimepick_select').addEventListener('submit', (e) =>
 });
 
 
+
+// transactions
 document.getElementById('transactions_fetch').addEventListener('submit', (e) => {
     e.preventDefault();
-    e.target.classList.add('loading');
     getTransactions();
 });
 function getTransactions(after) {
+    document.getElementById('transactions_fetch').classList.add('loading');
+    transactions_fetch_poll_timer_polling = true;
     window.electron.bits.getTransactions({
         after
     });
@@ -285,6 +288,12 @@ window.electron.bits.gotTransactions((resp) => {
         dev.textContent = transaction.product_data.inDevelopment;
     });
 
+    console.log('ADD TIME');
+    //transactions_fetch_poll_timer_clock.setSeconds(transactions_fetch_poll_timer_clock.getSeconds() + transactions_fetch_poll_timer_interval);
+    transactions_fetch_poll_timer_clock = new Date();
+    transactions_fetch_poll_timer_polling = false;
+    console.log('transactions_fetch_poll_timer_clock', transactions_fetch_poll_timer_clock);
+
     let nxt = document.getElementById('transactions_fetch_next');
     console.log(resp.pagination);
     if (resp.hasOwnProperty('pagination')) {
@@ -303,3 +312,51 @@ document.getElementById('transactions_fetch_next').addEventListener('click', (e)
     e.target.classList.add('loading');
     getTransactions(e.target.getAttribute('data-cursor'));
 });
+
+let transactions_fetch_poll_timer_polling = false;
+let transactions_fetch_poll_timer = false;
+let transactions_fetch_poll_timer_clock = new Date();
+let transactions_fetch_poll_timer_interval = 10;//seconds
+
+document.getElementById('transactions_fetch_poll').addEventListener('click', (e) => {
+    if (transactions_fetch_poll_timer) {
+        console.log('Clearing Timer');
+
+        document.getElementById('transactions_fetch_poll').classList.remove('btn-warning');
+        document.getElementById('transactions_fetch_poll').classList.remove('btn-danger');
+        document.getElementById('transactions_fetch_poll').value = `Auto Poll`;
+
+        clearInterval(transactions_fetch_poll_timer);
+        transactions_fetch_poll_timer = false;
+        return;
+    }
+
+    console.log('Create Timer');
+    transactions_fetch_poll_timer_clock = new Date();
+    console.log('transactions_fetch_poll_timer_clock', transactions_fetch_poll_timer_clock);
+    document.getElementById('transactions_fetch_poll').classList.add('btn-warning');
+    transactions_fetch_poll_timer = setInterval(getTransactionsPoll, 1000);
+
+    // initial fetch
+    getTransactions();
+    // touch
+    //getTransactionsPoll();
+});
+function getTransactionsPoll() {
+    if (transactions_fetch_poll_timer_polling) {
+        return;
+    }
+
+    let diff = new Date().getTime() - transactions_fetch_poll_timer_clock.getTime();
+    //console.log('Poll in', (diff / 1000));
+    if (diff >= (transactions_fetch_poll_timer_interval * 1000)) {
+        document.getElementById('transactions_fetch_poll').value = 'Auto Poll (0)';
+        document.getElementById('transactions_fetch_poll').classList.add('btn-danger');
+
+        getTransactions();
+    } else {
+        let s = 10 - Math.round(diff / 1000);
+        document.getElementById('transactions_fetch_poll').value = `Auto Poll (${s})`;
+        document.getElementById('transactions_fetch_poll').classList.remove('btn-danger');
+    }
+}
