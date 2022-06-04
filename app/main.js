@@ -12,6 +12,21 @@ app.on('window-all-closed', () => {
     app.quit()
 });
 
+const gotLock = app.requestSingleInstanceLock();
+if (!gotLock) {
+    app.quit();
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        // Someone tried to run a second instance, we should focus our window.
+        if (win) {
+            if (win.isMinimized()) {
+                win.restore();
+            }
+            win.focus();
+        }
+    });
+}
+
 app.on('ready', () => {
     // settings migration
     let options = {
@@ -22,7 +37,7 @@ app.on('ready', () => {
 
         show: false,
 
-        title: 'BarryCarlyon Twitch Extension Tools',
+        title: `BarryCarlyon Twitch Extension Tools: v${app.getVersion()}`,
         autoHideMenuBar: false,
         backgroundColor: '#000000',
 
@@ -31,7 +46,7 @@ app.on('ready', () => {
         frame: true,
 
         webPreferences: {
-            preload: path.join(app.getAppPath(), '/preload.js')
+            preload: path.join(app.getAppPath(), 'app', 'preload.js')
         }
     }
 
@@ -79,10 +94,10 @@ app.on('ready', () => {
         store.set('window.size', win.getSize());
     });
 
-    win.loadFile('views/interface.html');
+    win.loadFile(path.join(app.getAppPath(), 'app', 'views', 'interface.html'));
     win.once('ready-to-show', () => {
         win.show();
-        win.setTitle('BarryCarlyon Twitch Extension Tools: ' + app.getVersion());
+        win.setTitle(`BarryCarlyon Twitch Extension Tools: v${app.getVersion()}`);
     });
     //win.webContents.openDevTools();
 
@@ -97,11 +112,11 @@ app.on('ready', () => {
     });
 
     // add updater
-    require(path.join(__dirname, 'modules', 'updater.js'))({ app, ipcMain, win, store });
+    require(path.join(app.getAppPath(), 'app', 'modules', 'updater.js'))({ app, ipcMain, win, store });
     // handler
-    require(path.join(__dirname, 'modules', 'config.js'))({ app, ipcMain, win, store });
-    require(path.join(__dirname, 'modules', 'extensions.js'))({ app, ipcMain, win, store });
-    require(path.join(__dirname, 'modules', 'twitch.js'))({ app, ipcMain, win, store });
+    require(path.join(app.getAppPath(), 'app', 'modules', 'config.js'))({ app, ipcMain, win, store });
+    require(path.join(app.getAppPath(), 'app', 'modules', 'extensions.js'))({ app, ipcMain, win, store });
+    require(path.join(app.getAppPath(), 'app', 'modules', 'twitch.js'))({ app, ipcMain, win, store });
 });
 
 let win;
