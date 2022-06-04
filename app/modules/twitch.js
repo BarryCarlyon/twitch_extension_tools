@@ -187,7 +187,7 @@ module.exports = function(lib) {
             return products_resp.data;
         }
 
-        if (products_resp.status != 200) {
+        if (products_req.status != 200) {
             win.webContents.send('extensionAPIResult', {
                 route: 'bits.getProducts',
                 status: products_req.status,
