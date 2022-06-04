@@ -283,6 +283,7 @@ window.electron.config.extensionDetails((extension_details) => {
     processExtension(extension_details);
     buildLayout(extension_details);
 
+    // reset bits products table
     let tbl = document.getElementById('bits_products_table');
     tbl.textContent = '';
     let row = tbl.insertRow();
@@ -290,6 +291,17 @@ window.electron.config.extensionDetails((extension_details) => {
     row.append(cell);
     cell.setAttribute('colspan', '7');
     cell.textContent = 'Fetch Products First';
+    // reset bits transactions table
+    let trnbl = document.getElementById('transactions_table');
+    trnbl.textContent = '';
+    document.getElementById('transactions_fetch_next').classList.add('d-none');
 
+    // reset resp fields
+    let els = document.getElementsByClassName('extension_api_response');
+    for (let x=0;x<els.length;x++) {
+        els[x].textContent = '';
+    }
+
+    // JSON it
     document.getElementById('extension_details_data').textContent = JSON.stringify(extension_details, null, 4);
 });

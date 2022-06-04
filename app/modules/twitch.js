@@ -141,7 +141,7 @@ module.exports = function(lib) {
 
             console.log(users_resp);
 
-            if (users_resp.data && users_resp.data.length == 1) {
+            if (users_resp.hasOwnProperty('data') && users_resp.data.length == 1) {
                 console.log('send back', users_resp.data[0].id);
                 win.webContents.send('convertedToId', {
                     el,
@@ -187,7 +187,7 @@ module.exports = function(lib) {
             return products_resp.data;
         }
 
-        if (products_resp.status != 200) {
+        if (products_req.status != 200) {
             win.webContents.send('extensionAPIResult', {
                 route: 'bits.getProducts',
                 status: products_req.status,
@@ -196,6 +196,7 @@ module.exports = function(lib) {
 
                 message: products_resp.message
             });
+            return;
         }
 
         if (products_resp.hasOwnProperty('data')) {
@@ -246,7 +247,7 @@ module.exports = function(lib) {
         );
         let products_resp = await products_req.json();
 
-        console.log(products_resp);
+        //console.log(products_resp);
         if (products_resp.data && products_resp.data.length == 1) {
             win.webContents.send('bits.createdProduct');
 
@@ -261,6 +262,67 @@ module.exports = function(lib) {
         win.webContents.send('errorMsg', `Bits Product errored: ${products_resp.message}`);
     }
 
+
+    ipcMain.on('bits.getTransactions', (e,data) => {
+        getTransactions(data);
+    });
+    async function getTransactions(data) {
+        let client_id = store.get('active.client_id');
+
+        await accessToken(client_id);
+
+        let access_token = store.get(`extensions.${client_id}.access_token`);
+
+        let transactions_url = new URL('https://api.twitch.tv/helix/extensions/transactions');
+        let transactions_params = [
+            [ 'extension_id', client_id ]
+        ]
+
+        if (data.hasOwnProperty('after')) {
+            if (data.after) {
+                transactions_params.push([ 'after', data.after ]);
+            }
+        }
+
+        transactions_url.search = new URLSearchParams(transactions_params).toString();
+
+        //console.log('Fetching', transactions_url);
+
+        let transactions_req = await fetch(
+            transactions_url,
+            {
+                method: 'GET',
+                headers: {
+                    'Client-ID': client_id,
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        let transactions_resp = await transactions_req.json();
+
+        if (transactions_resp.hasOwnProperty('data')) {
+            win.webContents.send('bits.gotTransactions', transactions_resp);
+
+            win.webContents.send('extensionAPIResult', {
+                route: 'gettransactions',
+                status: transactions_req.status,
+                ratelimitRemain: transactions_req.headers.get('ratelimit-remaining'),
+                ratelimitLimit: transactions_req.headers.get('ratelimit-limit'),
+
+                message: ''
+            });
+        }
+
+        win.webContents.send('extensionAPIResult', {
+            route: 'gettransactions',
+            status: transactions_req.status,
+            ratelimitRemain: transactions_req.headers.get('ratelimit-remaining'),
+            ratelimitLimit: transactions_req.headers.get('ratelimit-limit'),
+
+            message: transactions_resp.message
+        });
+    }
 
     return;
 }

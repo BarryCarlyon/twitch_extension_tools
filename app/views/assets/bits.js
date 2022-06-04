@@ -233,3 +233,130 @@ document.getElementById('datetimepick_select').addEventListener('submit', (e) =>
     datetimepick_modal.hide();
     datetimepick_target.value = new Date(document.getElementById('datetimepick_pick').value).toISOString();
 });
+
+
+
+// transactions
+document.getElementById('transactions_fetch').addEventListener('submit', (e) => {
+    e.preventDefault();
+    getTransactions();
+});
+function getTransactions(after) {
+    document.getElementById('transactions_fetch').classList.add('loading');
+    transactions_fetch_poll_timer_polling = true;
+    window.electron.bits.getTransactions({
+        after
+    });
+}
+window.electron.bits.gotTransactions((resp) => {
+    resetLoadings();
+
+    let table = document.getElementById('transactions_table');
+    table.textContent = '';
+
+    resp.data.forEach(transaction => {
+        let row = table.insertRow();
+
+        let ts = row.insertCell();
+        ts.textContent = transaction.timestamp;
+
+        let caster = row.insertCell();
+        //caster.textContent = `${transaction.broadcaster_id}/${transaction.broadcaster_login}`;
+            var d = document.createElement('div');
+            d.textContent = transaction.broadcaster_id;
+            caster.append(d);
+            var d = document.createElement('div');
+            d.textContent = transaction.broadcaster_login;
+            caster.append(d);
+        let user = row.insertCell();
+        //user.textContent = `${transaction.user_id}/${transaction.user_login}`;
+            var d = document.createElement('div');
+            d.textContent = transaction.user_id;
+            user.append(d);
+            var d = document.createElement('div');
+            d.textContent = transaction.user_login;
+            user.append(d);
+
+        let product = row.insertCell();
+        product.textContent = transaction.product_data.displayName;
+        let sku = row.insertCell();
+        sku.textContent = transaction.product_data.sku;
+        let amount = row.insertCell();
+        amount.textContent = transaction.product_data.cost.amount;
+
+        let dev = row.insertCell();
+        dev.textContent = transaction.product_data.inDevelopment;
+    });
+
+    console.log('ADD TIME');
+    //transactions_fetch_poll_timer_clock.setSeconds(transactions_fetch_poll_timer_clock.getSeconds() + transactions_fetch_poll_timer_interval);
+    transactions_fetch_poll_timer_clock = new Date();
+    transactions_fetch_poll_timer_polling = false;
+    console.log('transactions_fetch_poll_timer_clock', transactions_fetch_poll_timer_clock);
+
+    let nxt = document.getElementById('transactions_fetch_next');
+    console.log(resp.pagination);
+    if (resp.hasOwnProperty('pagination')) {
+        if (resp.pagination.hasOwnProperty('cursor')) {
+            nxt.classList.remove('d-none');
+            nxt.setAttribute('data-cursor', resp.pagination.cursor);
+            return;
+        }
+    }
+    nxt.classList.add('d-none');
+});
+
+document.getElementById('transactions_fetch_next').addEventListener('click', (e) => {
+    e.preventDefault();
+    //document.getElementById('transactions_fetch')
+    e.target.classList.add('loading');
+    getTransactions(e.target.getAttribute('data-cursor'));
+});
+
+let transactions_fetch_poll_timer_polling = false;
+let transactions_fetch_poll_timer = false;
+let transactions_fetch_poll_timer_clock = new Date();
+let transactions_fetch_poll_timer_interval = 10;//seconds
+
+document.getElementById('transactions_fetch_poll').addEventListener('click', (e) => {
+    if (transactions_fetch_poll_timer) {
+        console.log('Clearing Timer');
+
+        document.getElementById('transactions_fetch_poll').classList.remove('btn-warning');
+        document.getElementById('transactions_fetch_poll').classList.remove('btn-danger');
+        document.getElementById('transactions_fetch_poll').value = `Auto Poll`;
+
+        clearInterval(transactions_fetch_poll_timer);
+        transactions_fetch_poll_timer = false;
+        return;
+    }
+
+    console.log('Create Timer');
+    transactions_fetch_poll_timer_clock = new Date();
+    console.log('transactions_fetch_poll_timer_clock', transactions_fetch_poll_timer_clock);
+    document.getElementById('transactions_fetch_poll').classList.add('btn-warning');
+    transactions_fetch_poll_timer = setInterval(getTransactionsPoll, 1000);
+
+    // initial fetch
+    getTransactions();
+    // touch
+    //getTransactionsPoll();
+});
+function getTransactionsPoll() {
+    if (transactions_fetch_poll_timer_polling) {
+        return;
+    }
+
+    let diff = new Date().getTime() - transactions_fetch_poll_timer_clock.getTime();
+    //console.log('Poll in', (diff / 1000));
+    if (diff >= (transactions_fetch_poll_timer_interval * 1000)) {
+        document.getElementById('transactions_fetch_poll').value = 'Auto Poll (0)';
+        document.getElementById('transactions_fetch_poll').classList.add('btn-danger');
+
+        getTransactions();
+    } else {
+        let s = 10 - Math.round(diff / 1000);
+        document.getElementById('transactions_fetch_poll').value = `Auto Poll (${s})`;
+        document.getElementById('transactions_fetch_poll').classList.remove('btn-danger');
+    }
+}

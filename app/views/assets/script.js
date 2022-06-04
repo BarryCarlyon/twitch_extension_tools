@@ -145,6 +145,13 @@ function processExtension(extension_details) {
         console.log('No bits support');
         extension_bitsproducts_header.closest('.accordion-item').classList.add('disabled');
     }
+    // needs to check if we have a Client Secret to use
+    let extension_transactions_header = document.getElementById('extension_transactions_header');
+    if (extension_details.bits_enabled) {
+        extension_transactions_header.closest('.accordion-item').classList.remove('disabled');
+    } else {
+        extension_transactions_header.closest('.accordion-item').classList.add('disabled');
+    }
 }
 function buildLayout(details) {
     document.getElementById('state').textContent = details.state;

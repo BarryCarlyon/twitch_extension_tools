@@ -374,6 +374,49 @@
                 </div>
 
                 <div class="accordion-item">
+                    <h2 class="accordion-header" id="extension_transactions_header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_transactions" aria-expanded="false" aria-controls="extension_transactions"><span class="badge rounded-pill bg-secondary me-2 text-light">App Access Token</span> Extension Transactions</button>
+                    </h2>
+                    <div id="extension_transactions" class="accordion-collapse collapse collapse" aria-labelledby="extension_transactions_header" data-bs-parent="#run_accordion">
+                        <div class="accordion-body">
+                            <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-transactions">Get Extension Transactions</a> API</p>
+                            <p>This is a basic fetch and this tool doesn't support the ID parameter for doing specific transaction lookups.</p>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Broadcaster</th>
+                                        <th>Viewer</th>
+                                        <th>Product</th>
+                                        <th>Sku</th>
+                                        <th>Amount</th>
+                                        <th>Dev</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions_table">
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                            <form action="" method="post" id="transactions_fetch">
+                                <fieldset>
+                                    <input type="button" class="btn btn-primary" id="transactions_fetch_poll" value="Auto Poll" />
+
+                                    <div class="btn-group p-1 float-end">
+                                        <span id="transactions_fetch_response" class="btn extension_api_response"></span>
+
+                                        <input type="button" class="btn btn-primary d-none" id="transactions_fetch_next" value="Next Page" />
+                                        <input type="submit" class="btn btn-primary" value="Fetch Extension Transactions" />
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
                     <h2 class="accordion-header" id="extension_details_header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_details" aria-expanded="false" aria-controls="extension_details"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Extension Details</button>
                     </h2>
