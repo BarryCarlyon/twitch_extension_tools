@@ -28,7 +28,14 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "menuCategory": true
-    }
+    },
+    "files": [
+      "!.github",
+      "!dist",
+      "!dist_test",
+      "!docs",
+      "!screenshots"
+    ]
   },
   "devDependencies": {
     "electron": "^19.0.3",
@@ -46,7 +53,7 @@
   "productName": "BarryCarlyonTwitchExtensionTools",
   "description": "BarryCarlyon Twitch Extension Tools, a tool for interacting with various aspects of the Twitch API specifically for Twitch Extension related endpoints.",
   "author": "Barry Carlyon",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "app/main.js",
   "keywords": [
     "desktop-app",
