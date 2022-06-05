@@ -114,7 +114,7 @@ This project is Licensed under [Do What The F*ck You Want To Public License](htt
 
 ## Development Notes
 
-This is an [Electron Project](https://www.electronjs.org/) that uses a [Two Package.json model](https://www.electron.build/tutorials/two-package-structure.html)
+This is an [Electron Project](https://www.electronjs.org/)
 
 ## Further Help with Twitch API
 
