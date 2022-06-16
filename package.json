@@ -38,13 +38,13 @@
     ]
   },
   "devDependencies": {
-    "electron": "^19.0.3",
+    "electron": "^19.0.4",
     "electron-builder": "^23.0.3"
   },
   "dependencies": {
-    "electron-context-menu": "^3.1.2",
+    "electron-context-menu": "^3.2.0",
     "electron-fetch": "^1.7.4",
-    "electron-store": "^8.0.1",
+    "electron-store": "^8.0.2",
     "electron-updater": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   },
