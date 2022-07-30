@@ -116,6 +116,13 @@ This project is Licensed under [Do What The F*ck You Want To Public License](htt
 
 This is an [Electron Project](https://www.electronjs.org/)
 
+To run locally, after cloning, just
+
+```
+$ npm install
+$ npn run start
+```
+
 ## Further Help with Twitch API
 
 - [TwitchDev Documentation](http://dev.twitch.tv/docs)
