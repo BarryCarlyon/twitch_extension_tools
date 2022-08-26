@@ -38,11 +38,11 @@
     ]
   },
   "devDependencies": {
-    "electron": "^20.0.3",
+    "electron": "^20.1.0",
     "electron-builder": "^23.4.0"
   },
   "dependencies": {
-    "electron-context-menu": "^3.4.0",
+    "electron-context-menu": "^3.5.0",
     "electron-fetch": "^1.7.4",
     "electron-store": "^8.1.0",
     "electron-updater": "^5.2.1",
