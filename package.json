@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "electron-context-menu": "^3.5.0",
-    "electron-fetch": "^1.7.4",
+    "electron-fetch": "^1.9.1",
     "electron-store": "^8.1.0",
     "electron-updater": "^5.2.1",
     "jsonwebtoken": "^8.5.1"
@@ -63,7 +63,7 @@
     "url": "https://github.com/BarryCarlyon/twitch_extension_tools/issues"
   },
   "devDependencies": {
-    "electron": "^20.1.1",
+    "electron": "^21.0.1",
     "electron-builder": "^23.3.3"
   }
 }
