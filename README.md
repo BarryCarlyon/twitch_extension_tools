@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/BarryCarlyon/twitch_extension_tools/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BarryCarlyon/twitch_extension_tools/actions/workflows/codeql-analysis.yml)
+
 # What is this
 
 This Program is an alternative version of the [Twitch Developer Rig](https://dev.twitch.tv/docs/extensions/rig).
