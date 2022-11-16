@@ -271,6 +271,26 @@ function markDropdown(client_id) {
         }
     }
 }
+
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+
 // an extension was loaded!
 window.electron.config.extensionDetails((extension_details) => {
     // API response so differing
@@ -303,5 +323,5 @@ window.electron.config.extensionDetails((extension_details) => {
     }
 
     // JSON it
-    document.getElementById('extension_details_data').textContent = JSON.stringify(extension_details, null, 4);
+    document.getElementById('extension_details_data').innerHTML = syntaxHighlight(JSON.stringify(extension_details, null, 4));
 });
