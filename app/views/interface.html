@@ -5,312 +5,323 @@
     <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+        <div class="container-fluid fs-5">
+            <div class="navbar-collapse" id="navbarsExampleDefault">
+                <ul class="nav navbar-nav me-auto mb-2 mb-lg-0" >
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" href="#" role="tab" aria-controls="config" aria-selected="true">Extensions</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link disabled" id="run-tab" data-bs-toggle="tab" data-bs-target="#run" href="#" role="tab" aria-controls="run" aria-selected="false">Requests and Controls</a>
+                    </li>
 
-
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" type="button" role="tab" aria-controls="config" aria-selected="true">Extensions</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link disabled" id="run-tab" data-bs-toggle="tab" data-bs-target="#run" type="button" role="tab" aria-controls="run" aria-selected="false">Requests and Controls</button>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Select Active Extension</a>
-            <ul class="dropdown-menu" id="extension_select"></ul>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane p-3 show active" id="config" role="tabpanel" aria-labelledby="config-tab">
-            <div class="btn-group float-end">
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add_new_extension_modal">Add New Extension Configuration</button>
-                <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary">Dev Console</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="dropdown01" href="#" role="button" aria-expanded="false">Select Active Extension</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown01" id="extension_select"></ul>
+                    </li>
+                </ul>
             </div>
-            <h3>Configuration</h3>
+        </div>
+    </nav>
+    <main class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane p-3 show active" id="config" role="tabpanel" aria-labelledby="config-tab">
+                <div class="btn-group float-end">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add_new_extension_modal">Add New Extension Configuration</button>
+                    <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary">Dev Console</a>
+                </div>
+                <h3>Configuration</h3>
 
-            <table id="existing_extensions" class="table">
-                <thead>
+                <table id="existing_extensions" class="table">
+                    <thead>
                     <tr>
                         <th>Name</th>
                         <th>ClientID</th>
                         <th>OwnerID</th>
                         <th>DevConsole Links/Controls</th>
                     </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <p>Use "Revoke" to revoke a generated App Access Token if we have one on file</p>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="bg-dark rounded p-3">
+                    <p>Use "Revoke" to revoke a generated App Access Token if we have one on file</p>
 
-            <div class="help-text">Extension configurations (Client Secrets and generated App Access Tokens) are stored locally unencrypted in the following file <kbd>%appdata%/BarryCarlyonTwitchExtensionTools/config.json</kbd></div>
-        </div>
-        <div class="tab-pane p-3" id="run" role="tabpanel" aria-labelledby="run-tab">
-            <div class="float-end">
-                <form action="" method="post" id="change_version_form" class="m-0">
-                    <fieldset>
-                        <div class="input-group p-1">
-                            <input type="text" name="change_version" id="change_version" value="" class="form-control active_version" />
-                            <input type="submit" class="input-group-text btn btn-outline-primary" value="Change/Reload Version" />
-                        </div>
-                    </fieldset>
-                </form>
+                    <div class="help-text">
+                        Extension configurations (Client Secrets and generated App Access Tokens) are stored locally unencrypted in the following file <kbd>%appdata%/BarryCarlyonTwitchExtensionTools/config.json</kbd>
+                    </div>
+                </div>
             </div>
-            <h3 class="mb-2" id="run_requests_title"></h3>
+            <div class="tab-pane p-3" id="run" role="tabpanel" aria-labelledby="run-tab">
+                <div class="d-flex mb-3 align-items-center justify-content-between">
+                    <div class="h3 mb-0" id="run_requests_title"></div>
+                    <div>
+                        <form action="" method="post" id="change_version_form" class="m-0">
+                            <fieldset>
+                                <div class="input-group p-1">
+                                    <input type="text" name="change_version" id="change_version" value="" class="form-control active_version" />
+                                    <input type="submit" class="input-group-text btn btn-outline-primary" value="Change/Reload Version" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
 
-            <div class="accordion" id="run_accordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_config_service_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service" aria-expanded="false" aria-controls="extension_config_service"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Configuration Service</button>
-                    </h2>
-                    <div id="extension_config_service" class="accordion-collapse collapse collapse" aria-labelledby="extension_config_service_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment">Get Extension Configuration Segment</a> and <a href="https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment">Set Extension Configuration Segment</a> API</p>
+                <div class="accordion" id="run_accordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_config_service_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service" aria-expanded="false" aria-controls="extension_config_service"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Configuration Service</button>
+                        </h2>
+                        <div id="extension_config_service" class="accordion-collapse collapse collapse" aria-labelledby="extension_config_service_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment">Get Extension Configuration Segment</a> and <a href="https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment">Set Extension Configuration Segment</a> API</p>
 
-                            <p>If the <kbd>version</kbd> value, of the segment, matches what is set in the manifest on the dev console for <kbd>Developer Writable Channel Segment Version</kbd> or <kbd>Broadcaster Writable Channel Segment Version</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
+                                <p>If the <kbd>version</kbd> value, of the segment, matches what is set in the manifest on the dev console for <kbd>Developer Writable Channel Segment Version</kbd> or <kbd>Broadcaster Writable Channel Segment Version</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
 
-                            <form action="" method="post" id="extension_config_service_form">
-                                <fieldset>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="config_extension_id">extension_id</label>
-                                        <input type="text" name="config_extension_id" id="config_extension_id" class="form-control active_extension_id" />
-                                    </div>
-
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="config_segment">segment</label>
-                                        <select name="config_segment" id="config_segment" class="form-select">
-                                            <option>global</option>
-                                            <option>broadcaster</option>
-                                            <option>developer</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="config_broadcaster_id">broadcaster_id</label>
-                                        <input type="text" name="config_broadcaster_id" id="config_broadcaster_id" class="form-control" />
-                                        <span class="input-group-text btn btn-outline-primary convertToId" data-target="config_broadcaster_id">Convert to ID</span>
-                                    </div>
-                                    <div class="help-text">Broadcaster ID only needed for broadcaster and developer segements</div>
-
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="config_content">content</label>
-                                        <textarea rows="10" cols="50" name="config_content" id="config_content" class="form-control"></textarea>
-                                    </div>
-                                    <div class="help-text">
-                                        <div class="form-check float-end">
-                                            <input class="form-check-input" type="checkbox" name="config_content_json" id="config_content_json"/>
-                                            <label class="form-check-label" for="config_content_json">Please JSON stringify for me</label>
+                                <form action="" method="post" id="extension_config_service_form">
+                                    <fieldset>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="config_extension_id">extension_id</label>
+                                            <input type="text" name="config_extension_id" id="config_extension_id" class="form-control active_extension_id" />
                                         </div>
-                                        Content is limited to 5kb per segment and 20 requests per minute (per segment)
-                                    </div>
 
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="config_version">version</label>
-                                        <input type="text" name="config_version" id="config_version" class="form-control" />
-                                    </div>
-                                    <div class="help-text">Optional Version field. Used with <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> to block activation until (re)configured</div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="config_segment">segment</label>
+                                            <select name="config_segment" id="config_segment" class="form-select">
+                                                <option>global</option>
+                                                <option>broadcaster</option>
+                                                <option>developer</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="btn-group p-1 float-end">
-                                        <span id="config_form_response" class="btn extension_api_response"></span>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="config_broadcaster_id">broadcaster_id</label>
+                                            <input type="text" name="config_broadcaster_id" id="config_broadcaster_id" class="form-control" />
+                                            <span class="input-group-text btn btn-outline-primary convertToId" data-target="config_broadcaster_id">Convert to ID</span>
+                                        </div>
+                                        <div class="help-text">Broadcaster ID only needed for broadcaster and developer segements</div>
 
-                                        <input type="button" class="btn btn-outline-primary" id="extension_config_service_fetch" value="Fetch Config" />
-                                        <input type="button" class="btn btn-outline-danger" id="extension_config_service_write" value="Write Config" />
-                                    </div>
-                                </fieldset>
-                            </form>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="config_content">content</label>
+                                            <textarea rows="10" cols="50" name="config_content" id="config_content" class="form-control"></textarea>
+                                        </div>
+                                        <div class="help-text">
+                                            <div class="form-check float-end">
+                                                <input class="form-check-input" type="checkbox" name="config_content_json" id="config_content_json"/>
+                                                <label class="form-check-label" for="config_content_json">Please JSON stringify for me</label>
+                                            </div>
+                                            Content is limited to 5kb per segment and 20 requests per minute (per segment)
+                                        </div>
+
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="config_version">version</label>
+                                            <input type="text" name="config_version" id="config_version" class="form-control" />
+                                        </div>
+                                        <div class="help-text">Optional Version field. Used with <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> to block activation until (re)configured</div>
+
+                                        <div class="btn-group p-1 float-end">
+                                            <span id="config_form_response" class="btn extension_api_response"></span>
+
+                                            <input type="button" class="btn btn-outline-primary" id="extension_config_service_fetch" value="Fetch Config" />
+                                            <input type="button" class="btn btn-outline-danger" id="extension_config_service_write" value="Write Config" />
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_config_service_required_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service_required" aria-expanded="false" aria-controls="extension_config_service_required"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span>Configuration Service - Required Configuration</button>
-                    </h2>
-                    <div id="extension_config_service_required" class="accordion-collapse collapse" aria-labelledby="extension_config_service_required_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> API</p>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_config_service_required_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_config_service_required" aria-expanded="false" aria-controls="extension_config_service_required"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span>Configuration Service - Required Configuration</button>
+                        </h2>
+                        <div id="extension_config_service_required" class="accordion-collapse collapse" aria-labelledby="extension_config_service_required_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#set-extension-required-configuration">Set Extension Required Configuration</a> API</p>
 
-                            <p>If the <kbd>required_configuration</kbd> value matches what is set in the manifest on the dev console for <kbd>Required Per Channel Configuration</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
+                                <p>If the <kbd>required_configuration</kbd> value matches what is set in the manifest on the dev console for <kbd>Required Per Channel Configuration</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
 
-                            <form action="" method="post" id="configreq_form">
-                                <fieldset>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="configreq_extension_id">extension_id</label>
-                                        <input type="text" name="configreq_extension_id" id="configreq_extension_id" class="form-control active_extension_id" />
-                                    </div>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="configreq_extension_version">extension_version</label>
-                                        <input type="text" name="configreq_extension_version" id="configreq_extension_version" class="form-control active_version" />
-                                    </div>
+                                <form action="" method="post" id="configreq_form">
+                                    <fieldset>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="configreq_extension_id">extension_id</label>
+                                            <input type="text" name="configreq_extension_id" id="configreq_extension_id" class="form-control active_extension_id" />
+                                        </div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="configreq_extension_version">extension_version</label>
+                                            <input type="text" name="configreq_extension_version" id="configreq_extension_version" class="form-control active_version" />
+                                        </div>
 
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="configreq_broadcaster_id">broadcaster_id</label>
-                                        <input type="text" name="configreq_broadcaster_id" id="configreq_broadcaster_id" class="form-control" />
-                                        <span class="input-group-text btn btn-outline-primary convertToId" data-target="configreq_broadcaster_id">Convert to ID</span>
-                                    </div>
-                                    <div class="help-text">Enable activation of a specified Extension, after any required broadcaster configuration is correct.<br /><a href="https://dev.twitch.tv/console/extensions/CLIENTID/VERSIONID/capabilities" class="version_link">Dashboard - Version - Capabilities</a> Tab to define the Version String required for activation.</div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="configreq_broadcaster_id">broadcaster_id</label>
+                                            <input type="text" name="configreq_broadcaster_id" id="configreq_broadcaster_id" class="form-control" />
+                                            <span class="input-group-text btn btn-outline-primary convertToId" data-target="configreq_broadcaster_id">Convert to ID</span>
+                                        </div>
+                                        <div class="help-text">Enable activation of a specified Extension, after any required broadcaster configuration is correct.<br /><a href="https://dev.twitch.tv/console/extensions/CLIENTID/VERSIONID/capabilities" class="version_link">Dashboard - Version - Capabilities</a> Tab to define the Version String required for activation.</div>
 
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="configreq_required_configuration">required_configuration</label>
-                                        <input type="text" name="configreq_required_configuration" id="configreq_required_configuration" class="form-control" />
-                                    </div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="configreq_required_configuration">required_configuration</label>
+                                            <input type="text" name="configreq_required_configuration" id="configreq_required_configuration" class="form-control" />
+                                        </div>
 
-                                    <div class="btn-group p-1 float-end">
-                                        <span id="configreq_form_response" class="btn extension_api_response"></span>
+                                        <div class="btn-group p-1 float-end">
+                                            <span id="configreq_form_response" class="btn extension_api_response"></span>
 
-                                        <input type="submit" class="btn btn-outline-primary" value="Set Extension Required Configuration" />
-                                    </div>
-                                </fieldset>
-                            </form>
+                                            <input type="submit" class="btn btn-outline-primary" value="Set Extension Required Configuration" />
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_chat_service_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_chat_service" aria-expanded="false" aria-controls="extension_chat_service"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Send Extension Chat Message</button>
-                    </h2>
-                    <div id="extension_chat_service" class="accordion-collapse collapse" aria-labelledby="extension_chat_service_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#send-extension-chat-message">Send Extension Chat Message</a> API</p>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_chat_service_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_chat_service" aria-expanded="false" aria-controls="extension_chat_service"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Send Extension Chat Message</button>
+                        </h2>
+                        <div id="extension_chat_service" class="accordion-collapse collapse" aria-labelledby="extension_chat_service_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#send-extension-chat-message">Send Extension Chat Message</a> API</p>
 
-                            <p>Rate limit is 12 messages per minute</p>
+                                <p>Rate limit is 12 messages per minute</p>
 
-                            <form action="" method="post" id="send_extension_chat_message">
-                                <fieldset>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="chat_broadcaster_id">broadcaster_id</label>
-                                        <input type="text" name="chat_broadcaster_id" id="chat_broadcaster_id" value="" class="form-control" />
-                                        <span class="input-group-text btn btn-outline-primary convertToId" data-target="chat_broadcaster_id">Convert to ID</span>
-                                    </div>
-                                    <div class="help-text">Destination Channel</div>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="chat_text">text</label>
-                                        <input type="text" name="chat_text" id="chat_text" value="" class="form-control" />
-                                    </div>
-                                    <div class="help-text">Text to send: <span class="char_count" data-of="chat_text">0</span>/280 characters and 12 requests per minute</div>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="chat_extension_id">extension_id</label>
-                                        <input type="text" name="chat_extension_id" id="chat_extension_id" value="" class="form-control active_extension_id" />
-                                    </div>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="chat_extension_version">extension_version</label>
-                                        <input type="text" name="chat_extension_version" id="chat_extension_version" value="" class="form-control active_version" />
-                                    </div>
-                                    <div class="btn-group p-1 float-end">
-                                        <span id="send_extension_chat_message_response" class="btn extension_api_response"></span>
-                                        <input type="submit" class="btn btn-primary" value="Send Extension Chat Message" />
-                                    </div>
-                                </fieldset>
-                            </form>
+                                <form action="" method="post" id="send_extension_chat_message">
+                                    <fieldset>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="chat_broadcaster_id">broadcaster_id</label>
+                                            <input type="text" name="chat_broadcaster_id" id="chat_broadcaster_id" value="" class="form-control" />
+                                            <span class="input-group-text btn btn-outline-primary convertToId" data-target="chat_broadcaster_id">Convert to ID</span>
+                                        </div>
+                                        <div class="help-text">Destination Channel</div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="chat_text">text</label>
+                                            <input type="text" name="chat_text" id="chat_text" value="" class="form-control" />
+                                        </div>
+                                        <div class="help-text">Text to send: <span class="char_count" data-of="chat_text">0</span>/280 characters and 12 requests per minute</div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="chat_extension_id">extension_id</label>
+                                            <input type="text" name="chat_extension_id" id="chat_extension_id" value="" class="form-control active_extension_id" />
+                                        </div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="chat_extension_version">extension_version</label>
+                                            <input type="text" name="chat_extension_version" id="chat_extension_version" value="" class="form-control active_version" />
+                                        </div>
+                                        <div class="btn-group p-1 float-end">
+                                            <span id="send_extension_chat_message_response" class="btn extension_api_response"></span>
+                                            <input type="submit" class="btn btn-primary" value="Send Extension Chat Message" />
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_pubsub_service_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_pubsub_service" aria-expanded="false" aria-controls="extension_pubsub_service"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> PubSub Service</button>
-                    </h2>
-                    <div id="extension_pubsub_service" class="accordion-collapse collapse collapse" aria-labelledby="extension_pubsub_service_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#send-extension-pubsub-message">Send Extension PubSub Message</a> API</p>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_pubsub_service_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_pubsub_service" aria-expanded="false" aria-controls="extension_pubsub_service"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> PubSub Service</button>
+                        </h2>
+                        <div id="extension_pubsub_service" class="accordion-collapse collapse collapse" aria-labelledby="extension_pubsub_service_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#send-extension-pubsub-message">Send Extension PubSub Message</a> API</p>
 
-                            <form action="" method="post" id="pubsub_form">
-                                <fieldset>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="pubsub_target">target (an array)</label>
-                                        <select name="pubsub_target" id="pubsub_target" class="form-select">
-                                            <option>global</option>
-                                            <option>broadcast</option>
-                                            <option value="whisper">whisper-USERID</option>
-                                        </select>
-                                    </div>
+                                <form action="" method="post" id="pubsub_form">
+                                    <fieldset>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="pubsub_target">target (an array)</label>
+                                            <select name="pubsub_target" id="pubsub_target" class="form-select">
+                                                <option>global</option>
+                                                <option>broadcast</option>
+                                                <option value="whisper">whisper-USERID</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="pubsub_target_whisper">target</label>
-                                        <div class="input-group-text">whisper-</div>
-                                        <input type="text" name="pubsub_target_whisper" id="pubsub_target_whisper" placeholder="opaqueUserId" class="form-control" disabled />
-                                    </div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="pubsub_target_whisper">target</label>
+                                            <div class="input-group-text">whisper-</div>
+                                            <input type="text" name="pubsub_target_whisper" id="pubsub_target_whisper" placeholder="opaqueUserId" class="form-control" disabled />
+                                        </div>
 
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="pubsub_broadcaster_id">broadcaster_id</label>
-                                        <input type="text" name="pubsub_broadcaster_id" id="pubsub_broadcaster_id" value="" class="form-control" disabled />
-                                        <span class="input-group-text btn btn-outline-primary convertToId" data-target="pubsub_broadcaster_id">Convert to ID</span>
-                                    </div>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="pubsub_is_global_broadcast">is_global_broadcast</label>
-                                        <select name="pubsub_is_global_broadcast" id="pubsub_is_global_broadcast" class="form-select" disabled="disabled">
-                                            <option value="yes">yes - true</option>
-                                            <option value="no">no - false</option>
-                                        </select>
-                                    </div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="pubsub_broadcaster_id">broadcaster_id</label>
+                                            <input type="text" name="pubsub_broadcaster_id" id="pubsub_broadcaster_id" value="" class="form-control" disabled />
+                                            <span class="input-group-text btn btn-outline-primary convertToId" data-target="pubsub_broadcaster_id">Convert to ID</span>
+                                        </div>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="pubsub_is_global_broadcast">is_global_broadcast</label>
+                                            <select name="pubsub_is_global_broadcast" id="pubsub_is_global_broadcast" class="form-select" disabled="disabled">
+                                                <option value="yes">yes - true</option>
+                                                <option value="no">no - false</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="pubsub_message">message</label>
-                                        <textarea rows="10" cols="50" name="pubsub_message" id="pubsub_message" class="form-control">{
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="pubsub_message">message</label>
+                                            <textarea rows="10" cols="50" name="pubsub_message" id="pubsub_message" class="form-control">{
     "example": "message",
     "text": "The App will auto JSON stringify based on the switch"
 }</textarea>
-                                    </div>
-                                    <div class="help-text pb-1">
-                                        <div class="form-check form-switch float-end">
-                                            <input class="form-check-input" type="checkbox" name="pubsub_content_json" id="pubsub_content_json" checked/>
-                                            <label class="form-check-label" for="pubsub_content_json">Please JSON stringify for me</label>
+                                        </div>
+                                        <div class="help-text pb-1">
+                                            <div class="form-check form-switch float-end">
+                                                <input class="form-check-input" type="checkbox" name="pubsub_content_json" id="pubsub_content_json" checked/>
+                                                <label class="form-check-label" for="pubsub_content_json">Please JSON stringify for me</label>
+                                            </div>
+
+                                            Content is a string is limited to 5kb and 100 requests per minute.<br />Two pools: 100 global AND 100 per brodacasterID with whispers use the broadcasterID pool.
                                         </div>
 
-                                        Content is a string is limited to 5kb and 100 requests per minute.<br />Two pools: 100 global AND 100 per brodacasterID with whispers use the broadcasterID pool.
-                                    </div>
+                                        <div class="btn-group p-1 float-end">
+                                            <span id="pubsub_form_response" class="btn extension_api_response"></span>
 
-                                    <div class="btn-group p-1 float-end">
-                                        <span id="pubsub_form_response" class="btn extension_api_response"></span>
-
-                                        <input type="submit" class="btn btn-primary" value="Send Extension PubSub Message" />
-                                    </div>
-                                </fieldset>
-                            </form>
+                                            <input type="submit" class="btn btn-primary" value="Send Extension PubSub Message" />
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_bitsproducts_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_bitsproducts" aria-expanded="false" aria-controls="extension_bitsproducts"><span class="badge rounded-pill bg-secondary me-2 text-light">App Access Token</span> Bits Products</button>
-                    </h2>
-                    <div id="extension_bitsproducts" class="accordion-collapse collapse collapse" aria-labelledby="extension_bitsproducts_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-bits-products">Get/Update Extension Bits Products</a> API</p>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_bitsproducts_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_bitsproducts" aria-expanded="false" aria-controls="extension_bitsproducts"><span class="badge rounded-pill bg-secondary me-2 text-light">App Access Token</span> Bits Products</button>
+                        </h2>
+                        <div id="extension_bitsproducts" class="accordion-collapse collapse collapse" aria-labelledby="extension_bitsproducts_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-bits-products">Get/Update Extension Bits Products</a> API</p>
 
-                            <form action="" method="post" id="bits_fetch">
-                                <fieldset>
-                                    <div class="input-group p-1">
-                                        <label class="input-group-text" for="bits_fetch_should_include_all">should_include_all</label>
-                                        <select name="bits_fetch_should_include_all" id="bits_fetch_should_include_all" class="form-select">
-                                            <option>yes</option>
-                                            <option>no</option>
-                                        </select>
-                                    </div>
-                                    <div class="help-text pb-1">Whether Bits products that are disabled/expired should be included in the response.</div>
+                                <form action="" method="post" id="bits_fetch">
+                                    <fieldset>
+                                        <div class="input-group p-1">
+                                            <label class="input-group-text" for="bits_fetch_should_include_all">should_include_all</label>
+                                            <select name="bits_fetch_should_include_all" id="bits_fetch_should_include_all" class="form-select">
+                                                <option>yes</option>
+                                                <option>no</option>
+                                            </select>
+                                        </div>
+                                        <div class="help-text pb-1">Whether Bits products that are disabled/expired should be included in the response.</div>
 
-                                    <div class="btn-group p-1 float-end">
-                                        <span id="bits_fetch_response" class="btn extension_api_response"></span>
+                                        <div class="btn-group p-1 float-end">
+                                            <span id="bits_fetch_response" class="btn extension_api_response"></span>
 
-                                        <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
-                                    </div>
-                                </fieldset>
-                            </form>
+                                            <input type="submit" class="input-group-text btn btn-outline-primary" value="Fetch" />
+                                        </div>
+                                    </fieldset>
+                                </form>
 
-                            <form action="" method="post" id="bits_products">
-                                <fieldset>
-                                    <p>Notes on Limitations: <a href="https://dev.twitch.tv/docs/extensions/monetization#bits-catalog-fields">Documentation Link</a></p>
+                                <form action="" method="post" id="bits_products">
+                                    <fieldset>
+                                        <p>Notes on Limitations: <a href="https://dev.twitch.tv/docs/extensions/monetization#bits-catalog-fields">Documentation Link</a></p>
 
-                                    <ul>
-                                        <li>A sku is limited to 255 characters, no white spaces</li>
-                                        <li>cost is limited to between 1 and 10,000 bits</li>
-                                        <li>Display Names are limited to 255 characters</li>
-                                        <li>You can have up to 250 products</li>
-                                    </ul>
+                                        <ul>
+                                            <li>A sku is limited to 255 characters, no white spaces</li>
+                                            <li>cost is limited to between 1 and 10,000 bits</li>
+                                            <li>Display Names are limited to 255 characters</li>
+                                            <li>You can have up to 250 products</li>
+                                        </ul>
 
-                                    <table class="table">
-                                        <thead>
+                                        <table class="table">
+                                            <thead>
                                             <tr>
                                                 <th>sku</th>
                                                 <th>cost</th>
@@ -319,13 +330,13 @@
                                                 <th>Expire</th>
                                                 <th colspan="2">Broadcast</th>
                                             </tr>
-                                        </thead>
-                                        <tbody id="bits_products_table">
+                                            </thead>
+                                            <tbody id="bits_products_table">
                                             <tr>
                                                 <th colspan="7">Fetch Products First</th>
                                             </tr>
-                                        </tbody>
-                                        <tfoot id="bits_products_new">
+                                            </tbody>
+                                            <tfoot id="bits_products_new">
                                             <tr>
                                                 <td>
                                                     <input type="text" name="bits_product_new_sku" id="bits_product_new_sku" placeholder="New Product Sku" class="form-control"/>
@@ -363,27 +374,27 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        </tfoot>
-                                    </table>
-                                    <div class="alert alert-danger">Caution: if you create a Bits Product using an existing sku, the existing product will be updated, instead of an error occuring</div>
-                                    <div class="alert alert-warning">Settings an Expire Date/Time into the future "un expires" a product and removes the date/time</div>
-                                </fieldset>
-                            </form>
+                                            </tfoot>
+                                        </table>
+                                        <div class="alert alert-danger">Caution: if you create a Bits Product using an existing sku, the existing product will be updated, instead of an error occuring</div>
+                                        <div class="alert alert-warning">Settings an Expire Date/Time into the future "un expires" a product and removes the date/time</div>
+                                    </fieldset>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_transactions_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_transactions" aria-expanded="false" aria-controls="extension_transactions"><span class="badge rounded-pill bg-secondary me-2 text-light">App Access Token</span> Extension Transactions</button>
-                    </h2>
-                    <div id="extension_transactions" class="accordion-collapse collapse collapse" aria-labelledby="extension_transactions_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-transactions">Get Extension Transactions</a> API</p>
-                            <p>This is a basic fetch and this tool doesn't support the ID parameter for doing specific transaction lookups.</p>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_transactions_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_transactions" aria-expanded="false" aria-controls="extension_transactions"><span class="badge rounded-pill bg-secondary me-2 text-light">App Access Token</span> Extension Transactions</button>
+                        </h2>
+                        <div id="extension_transactions" class="accordion-collapse collapse collapse" aria-labelledby="extension_transactions_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>Use the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-transactions">Get Extension Transactions</a> API</p>
+                                <p>This is a basic fetch and this tool doesn't support the ID parameter for doing specific transaction lookups.</p>
 
-                            <table class="table">
-                                <thead>
+                                <table class="table">
+                                    <thead>
                                     <tr>
                                         <th>Timestamp</th>
                                         <th>Broadcaster</th>
@@ -393,98 +404,101 @@
                                         <th>Amount</th>
                                         <th>Dev</th>
                                     </tr>
-                                </thead>
-                                <tbody id="transactions_table">
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
-                            <form action="" method="post" id="transactions_fetch">
-                                <fieldset>
-                                    <input type="button" class="btn btn-primary" id="transactions_fetch_poll" value="Auto Poll" />
+                                    </thead>
+                                    <tbody id="transactions_table">
+                                    </tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                                <form action="" method="post" id="transactions_fetch">
+                                    <fieldset>
+                                        <input type="button" class="btn btn-primary" id="transactions_fetch_poll" value="Auto Poll" />
 
-                                    <div class="btn-group p-1 float-end">
-                                        <span id="transactions_fetch_response" class="btn extension_api_response"></span>
+                                        <div class="btn-group p-1 float-end">
+                                            <span id="transactions_fetch_response" class="btn extension_api_response"></span>
 
-                                        <input type="button" class="btn btn-primary d-none" id="transactions_fetch_next" value="Next Page" />
-                                        <input type="submit" class="btn btn-primary" value="Fetch Extension Transactions" />
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_details_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_details" aria-expanded="false" aria-controls="extension_details"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Extension Details</button>
-                    </h2>
-                    <div id="extension_details" class="accordion-collapse collapse" aria-labelledby="extension_details_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <p>The data from <a href="https://dev.twitch.tv/docs/api/reference#get-extensions">Get Extensions</a> API which this program used to get data about the Extension for use</p>
-
-                            <pre id="extension_details_data"></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="extension_details_view_header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_details_view" aria-expanded="false" aria-controls="extension_details_view"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Extension Details View</button>
-                    </h2>
-                    <div id="extension_details_view" class="accordion-collapse collapse" aria-labelledby="extension_details_view_header" data-bs-parent="#run_accordion">
-                        <div class="accordion-body">
-                            <a href="https://dashboard.twitch.tv/extensions/CLIENTID/VERSION" class="install_link btn btn-outline-primary float-end">Install Page</a>
-
-                            <p>This is an approximation of the Extension Details page for this extension version</p>
-                            <p>Current state <span id="state" class="badge rounded-pill bg-primary"></span></p>
-
-                            <div id="install_layout">
-                                <div class="row">
-                                    <div class="col">
-                                        <div id="layout_icon"></div>
-                                        <div id="layout_title">
-                                            <div id="layout_name"></div>
-                                            <div id="layout_created_by">Created By <span id="layout_author_name"></span></div>
+                                            <input type="button" class="btn btn-primary d-none" id="transactions_fetch_next" value="Next Page" />
+                                            <input type="submit" class="btn btn-primary" value="Fetch Extension Transactions" />
                                         </div>
-                                    </div>
-                                </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div class="row">
-                                    <h5>Details</h5>
-                                    <div class="row">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_details_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_details" aria-expanded="false" aria-controls="extension_details"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Extension Details</button>
+                        </h2>
+                        <div id="extension_details" class="accordion-collapse collapse" aria-labelledby="extension_details_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <p>The data from <a href="https://dev.twitch.tv/docs/api/reference#get-extensions">Get Extensions</a> API which this program used to get data about the Extension for use</p>
+
+                                <pre id="extension_details_data" class="json bg-darker"></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="extension_details_view_header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#extension_details_view" aria-expanded="false" aria-controls="extension_details_view"><span class="badge rounded-pill bg-secondary me-2 text-light">JWT</span> Extension Details View</button>
+                        </h2>
+                        <div id="extension_details_view" class="accordion-collapse collapse" aria-labelledby="extension_details_view_header" data-bs-parent="#run_accordion">
+                            <div class="accordion-body">
+                                <a href="https://dashboard.twitch.tv/extensions/CLIENTID/VERSION" class="install_link btn btn-outline-primary float-end">Install Page</a>
+
+                                <p>This is an approximation of the Extension Details page for this extension version</p>
+                                <p>Current state <span id="state" class="badge rounded-pill bg-primary"></span></p>
+
+                                <div id="install_layout">
+                                    <div class="row mb-3">
                                         <div class="col">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card-text" id="layout_description"></div>
+                                            <div class="d-flex">
+                                                <div id="layout_icon"></div>
+                                                <div id="layout_title" class="align-self-center ms-3">
+                                                    <div id="layout_name"></div>
+                                                    <div id="layout_created_by">Created By <span id="layout_author_name"></span></div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div id="layout_screenshots" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false" data-bs-wrap="false">
-                                                <div class="carousel-inner" id="layout_screenshots_slides">
-                                                </div>
-                                                <button class="carousel-control-prev" type="button" data-bs-target="#layout_screenshots" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#layout_screenshots" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
-                                    <h5>Additional Information</h5>
                                     <div class="row">
-                                        <div class="col-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card-text" id="layout_additional"></div>
+                                        <h5>Details</h5>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card bg-darker">
+                                                    <div class="card-body">
+                                                        <div class="card-text" id="layout_description"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div id="layout_screenshots" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false" data-bs-wrap="false">
+                                                    <div class="carousel-inner" id="layout_screenshots_slides">
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#layout_screenshots" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#layout_screenshots" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <h5>Additional Information</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="card bg-darker">
+                                                    <div class="card-body">
+                                                        <div class="card-text" id="layout_additional"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -493,131 +507,131 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="add_new_extension_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Extension Configuration</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" id="config_form">
-                        <fieldset>
-                            <div class="help-text">If the ClientID already exists in the local configuration, the configuration will be overwritten</div>
-
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="name">Name</label>
-                                <input type="text" name="name" id="name" value="" class="form-control" />
-                            </div>
-                            <div class="help-text">Can use your own name doesn't need to be the real name</div>
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="client_id">Extension Client ID</label>
-                                <input type="text" name="client_id" id="client_id" value="" class="form-control" />
-                            </div>
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="extension_secret">Extension Secret</label>
-                                <input type="text" name="extension_secret" id="extension_secret" value="" class="form-control" />
-                            </div>
-                            <div class="help-text">From Extension Client Configuration -> Extension Secrets. The Extension Shared Secret for signing tokens.</div>
-
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="client_secret">Twitch API Client Secret</label>
-                                <input type="text" name="client_secret" id="client_secret" value="" class="form-control" />
-                            </div>
-                            <div class="help-text">(Optional) From Twitch API Client Secret -> Generate Secret. Optional, only needed for Bits management and Login to ID lookups</div>
-
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="user_id">Owner Twitch ID</label>
-                                <input type="text" name="user_id" id="user_id" value="" class="form-control" />
-                                <span class="input-group-text btn btn-outline-primary" id="id_convert_owner">Convert to ID</span>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary">Dev Console</a>
-
-                    <input type="submit" class="btn btn-primary" id="create_button" value="Create Extension Configuration" />
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="rusure_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Are you sure you wish to remove:</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" id="remove_configuration">
-                        <fieldset>
-                            <legend id="remove_name"></legend>
+        <div class="modal fade" id="add_new_extension_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Extension Configuration</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" id="config_form">
+                            <fieldset>
+                                <div class="help-text">If the ClientID already exists in the local configuration, the configuration will be overwritten</div>
 
-                            <div class="btn-group d-flex">
-                                <input type="button" value="Remove" class="btn btn-outline-danger" data-bs-dismiss="modal" id="actuallyRemove" />
-                                <input type="button" value="KeepIt" class="btn btn-outline-primary" data-bs-dismiss="modal" />
-                            </div>
-                        </fieldset>
-                    </form>
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="name">Name</label>
+                                    <input type="text" name="name" id="name" value="" class="form-control" />
+                                </div>
+                                <div class="help-text">Can use your own name doesn't need to be the real name</div>
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="client_id">Extension Client ID</label>
+                                    <input type="text" name="client_id" id="client_id" value="" class="form-control" />
+                                </div>
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="extension_secret">Extension Secret</label>
+                                    <input type="text" name="extension_secret" id="extension_secret" value="" class="form-control" />
+                                </div>
+                                <div class="help-text">From Extension Client Configuration -> Extension Secrets. The Extension Shared Secret for signing tokens.</div>
+
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="client_secret">Twitch API Client Secret</label>
+                                    <input type="text" name="client_secret" id="client_secret" value="" class="form-control" />
+                                </div>
+                                <div class="help-text">(Optional) From Twitch API Client Secret -> Generate Secret. Optional, only needed for Bits management and Login to ID lookups</div>
+
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="user_id">Owner Twitch ID</label>
+                                    <input type="text" name="user_id" id="user_id" value="" class="form-control" />
+                                    <span class="input-group-text btn btn-outline-primary" id="id_convert_owner">Convert to ID</span>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="https://dev.twitch.tv/console/extensions" class="btn btn-outline-primary">Dev Console</a>
+
+                        <input type="submit" class="btn btn-primary" id="create_button" value="Create Extension Configuration" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="version_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Provide Version Numbers</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Your selected extension doesn't have a release version or the specified version was not found!</p>
-                    <p>Please specify the Version</p>
+        <div class="modal fade" id="rusure_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Are you sure you wish to remove:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" id="remove_configuration">
+                            <fieldset>
+                                <legend id="remove_name"></legend>
 
-                    <form action="" method="post" id="select_version">
-                        <fieldset>
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="version">Version</label>
-                                <input type="text" name="version" id="version" value="" class="form-control" />
-                                <input type="submit" class="input-group-text btn btn-outline-primary" value="Select Version" />
-                            </div>
-                        </fieldset>
-                    </form>
+                                <div class="btn-group d-flex">
+                                    <input type="button" value="Remove" class="btn btn-outline-danger" data-bs-dismiss="modal" id="actuallyRemove" />
+                                    <input type="button" value="KeepIt" class="btn btn-outline-primary" data-bs-dismiss="modal" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="datetimepick_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Date Time Picker</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" id="datetimepick_select">
-                        <fieldset>
-                            <div class="input-group p-1">
-                                <label class="input-group-text" for="datetimepick_pick">Picker</label>
-                                <input type="datetime-local" name="datetimepick_pick" id="datetimepick_pick" value="" class="form-control" />
-                                <input type="submit" class="input-group-text btn btn-outline-primary" value="Submit Date/Time" />
-                            </div>
-                        </fieldset>
-                    </form>
+        <div class="modal fade" id="version_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Provide Version Numbers</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Your selected extension doesn't have a release version or the specified version was not found!</p>
+                        <p>Please specify the Version</p>
+
+                        <form action="" method="post" id="select_version">
+                            <fieldset>
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="version">Version</label>
+                                    <input type="text" name="version" id="version" value="" class="form-control" />
+                                    <input type="submit" class="input-group-text btn btn-outline-primary" value="Select Version" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="modal fade" id="datetimepick_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Date Time Picker</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" id="datetimepick_select">
+                            <fieldset>
+                                <div class="input-group p-1">
+                                    <label class="input-group-text" for="datetimepick_pick">Picker</label>
+                                    <input type="datetime-local" name="datetimepick_pick" id="datetimepick_pick" value="" class="form-control" />
+                                    <input type="submit" class="input-group-text btn btn-outline-primary" value="Submit Date/Time" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <div id="updater" class="btn btn-outline-primary">Check for Update</div>
 
