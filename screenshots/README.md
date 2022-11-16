@@ -18,7 +18,7 @@ Using one of the Tools, it implements fields for each parameter of a API call
 
 # Functionality Awareness
 
-![All Functions Available](tools_for_this_extension.png)
+![(Nearly) All Functions Available](tools_for_this_extension.png)
 ![Some Functions Available](disabled_functions.png)
 
 Using the Extension Details API, the Application checks for what functions are enabled for this version of the Extension and enables/disables access as needed.
