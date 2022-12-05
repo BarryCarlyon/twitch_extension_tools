@@ -48,7 +48,7 @@
   "productName": "BarryCarlyonTwitchExtensionTools",
   "description": "BarryCarlyon Twitch Extension Tools, a tool for interacting with various aspects of the Twitch API specifically for Twitch Extension related endpoints.",
   "author": "Barry Carlyon",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "app/main.js",
   "keywords": [
     "desktop-app",
