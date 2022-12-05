@@ -63,7 +63,7 @@
     "url": "https://github.com/BarryCarlyon/twitch_extension_tools/issues"
   },
   "devDependencies": {
-    "electron": "^21.3.0",
+    "electron": "^22.0.0",
     "electron-builder": "^23.6.0"
   }
 }
