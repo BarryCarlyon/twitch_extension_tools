@@ -47,6 +47,7 @@ a.website:before {
     position: absolute;
     top: 0px;
     right: 0px;
+    z-index: 1031;
 }
 #updater.updating {
     position: fixed;
