@@ -73,8 +73,6 @@
       "sign": true
     },
     "mas": {
-      "bundleVersion": "1.3.1001",
-      "bundleShortVersion": "1.3.1001",
       "hardenedRuntime": false,
 
       "entitlements": "build/entitlements.plist",
