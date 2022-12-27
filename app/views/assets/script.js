@@ -9,6 +9,9 @@ window.electron.onUpdater((data) => {
     }, 10000);
 
     switch (data.event) {
+        case 'noupdater':
+            u.classList.add('d-none');
+            break;
         case 'update-error':
             u.innerHTML = 'Update Error';
             break;

@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const os = require('os');
 
 const path = require('path');
 
@@ -12,19 +13,24 @@ app.on('window-all-closed', () => {
     app.quit()
 });
 
-const gotLock = app.requestSingleInstanceLock();
-if (!gotLock) {
-    app.quit();
-} else {
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-        // Someone tried to run a second instance, we should focus our window.
-        if (win) {
-            if (win.isMinimized()) {
-                win.restore();
+/*
+not needed/doesn't work for MAS
+*/
+if (os.platform() == 'win32') {
+    const gotLock = app.requestSingleInstanceLock();
+    if (!gotLock) {
+        app.quit();
+    } else {
+        app.on('second-instance', (event, commandLine, workingDirectory) => {
+            // Someone tried to run a second instance, we should focus our window.
+            if (win) {
+                if (win.isMinimized()) {
+                    win.restore();
+                }
+                win.focus();
             }
-            win.focus();
-        }
-    });
+        });
+    }
 }
 
 app.on('ready', () => {
