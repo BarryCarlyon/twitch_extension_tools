@@ -4,11 +4,19 @@
 const { autoUpdater } = require("electron-updater");
 
 module.exports = function(lib) {
-    let { ipcMain, win } = lib;
+    let { ipcMain, win, app } = lib;
 
     let ready_to_restart = false;
 
     function doUpdateCheck() {
+        if (!app.isPackaged || process.mas) {
+            // it is mac app store
+            win.webContents.send('updater', {
+                event: 'noupdater',
+            });
+            return;
+        }
+
         console.log('Update Check', ready_to_restart);
         if (ready_to_restart) {
             autoUpdater.quitAndInstall();

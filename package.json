@@ -2,9 +2,13 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
+
     "dist": "electron-builder --win --x64",
+    "mdist": "electron-builder --mac",
+
     "start": "set NODE_ENV=development && electron .",
     "test": "set NODE_ENV=development && set DEBUG=* && electron .",
+
     "publish": "electron-builder -p always"
   },
   "build": {
@@ -28,6 +32,54 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "menuCategory": true
+    },
+    "mac": {
+      "appId": "com.barrycarlyon.twitch-extension-tools",
+
+      "target": [
+          {
+              "target": "mas",
+              "arch": "universal"
+          }
+      ],
+      "target": "dmg",
+      "target": [
+        "dmg",
+          {
+              "target": "mas",
+              "arch": "universal"
+          }
+      ],
+
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/512_eLgNUAVE.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "type": "distribution",
+
+      "extendInfo": {
+          "CFBundleVersion": "1.3.1004",
+          "NSBluetoothAlwaysUsageDescription": false,
+          "NSBluetoothPeripheralUsageDescription": false,
+          "NSCameraUsageDescription": false,
+          "NSMicrophoneUsageDescription": false,
+          "CFBundleSupportedPlatforms": [ "MacOSX" ]
+      }
+    },
+    "afterSign": "electron-builder-notarize",
+    "dmg": {
+      "backgroundColor": "#382f2b",
+      "internetEnabled": true,
+      "sign": true
+    },
+    "mas": {
+      "hardenedRuntime": false,
+
+      "entitlements": "build/entitlements.plist",
+      "entitlementsInherit": "build/entitlements.inherit.plist",
+      "entitlementsLoginHelper": "build/entitlements.loginhelper.plist",
+
+      "provisioningProfile": "build/RobynExtToolStore.provisionprofile"
     },
     "files": [
       "!.github",
@@ -67,7 +119,10 @@
     "node": ">=12"
   },
   "devDependencies": {
+    "@electron/osx-sign": "^1.0.4",
+    "dmg-license": "^1.0.11",
     "electron": "^22.0.0",
-    "electron-builder": "^23.6.0"
+    "electron-builder": "^23.6.0",
+    "electron-builder-notarize": "^1.5.0"
   }
 }
