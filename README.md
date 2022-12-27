@@ -23,7 +23,7 @@ You can download the latest version, for Windows and Mac from here on GitHub und
 
 Or
 
-[![Download on Mac App Store](docs/mac_app_store.svg)](https://apps.apple.com/us/app/barrycarlyon-extension-tools/id1661327253)
+[![Download on Mac App Store](docs/mac_app_store.svg)](https://apps.apple.com/app/id1661327253)
 
 ## Uninstallation
 
