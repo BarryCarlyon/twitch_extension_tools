@@ -19,7 +19,7 @@ It should also update from GitHub as new versions are released on GitHub. (Needs
 
 It is Code Signed with the Publisher `Barry Carlyon`
 
-You can download the latest version from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
+You can download the latest version, for Windows and Mac from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
 
 ## Uninstallation
 
@@ -29,9 +29,25 @@ You may need to manually remove data stored in the data/config storage location 
 
 ## Data/Config Storage
 
-Data is stored in the following location
+Your Extensions Client IDs and secrets are stored locally unencrypted in the file `config.json` in the following location:
 
-> %appdata%/BarryCarlyonTwitchExtensionTools/
+Windows:
+
+```
+%appdata%/BarryCarlyonTwitchExtensionTools/
+```
+
+Mac DMG/Manual install:
+
+```
+~/Library/Application Support/BarryCarlyonTwitchExtensionTools/
+```
+
+Mac App Store
+
+```
+~/Library/Containers/com.barrycarlyon.twitch-extension-tools/Data/Library/Application\ Support/BarryCarlyonTwitchExtensionTools/
+```
 
 In the file `config.json`
 
