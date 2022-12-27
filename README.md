@@ -21,6 +21,10 @@ It is Code Signed with the Publisher `Barry Carlyon`
 
 You can download the latest version, for Windows and Mac from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
 
+Or
+
+[![Download on Mac App Store](docs/mac_app_store.svg)](https://apps.apple.com/us/app/barrycarlyon-extension-tools/id1661327253)
+
 ## Uninstallation
 
 You can use Windows "Add and Remove Programs" to uninstall the program.
