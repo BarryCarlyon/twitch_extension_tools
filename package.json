@@ -79,7 +79,6 @@
       "entitlementsInherit": "build/entitlements.inherit.plist",
       "entitlementsLoginHelper": "build/entitlements.loginhelper.plist",
 
-      "provisioningProfile": "build/RobynExtTools.provisionprofile",
       "provisioningProfile": "build/RobynExtToolStore.provisionprofile"
     },
     "files": [
