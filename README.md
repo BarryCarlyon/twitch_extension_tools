@@ -12,7 +12,7 @@ Generally it should serve as a "test tool" and not used to manage a live extensi
 
 Check out [more Screenshots](https://github.com/BarryCarlyon/twitch_extension_tools/tree/main/screenshots)
 
-## Installation and updates
+## Installation and Updates
 
 This is an Electron App, so it maybe installed from the GitHub [releases tab](https://github.com/BarryCarlyon/twitch_extension_tools/releases).
 
@@ -94,6 +94,8 @@ Which follows the format:
 ⭐ Tip: If you open the Application and the window has gone missing, close the app, open `config.json` for editing and completely reset `"window"` to `{}` and then reopen the app, it'll reset to default display, top left. The App does _try_ to magically 0,0 the window if this happens but it might need a hand!
 
 ## Supported Features
+
+We will use the [Get Extensions](https://dev.twitch.tv/docs/api/reference#get-extensions) API to see which features are enabled for your selected version of your extension and block/allow access in the UI as needed. Don't forget to turn on/off features (such as the Config Service of Chat Service) you'll need to use the Developer Console to do so.
 
 - [Get Extension Configuration Segment](https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment)
 - [Set Extension Configuration Segment](https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment)
