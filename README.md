@@ -19,11 +19,13 @@ It should also update from GitHub as new versions are released on GitHub. (Needs
 
 It is Code Signed with the Publisher `Barry Carlyon`
 
-You can download the latest version, for Windows and Mac from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases)
+You can download the latest version, for Windows and Mac from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases). These builds will self update
 
 Or
 
 [![Download on Mac App Store](docs/mac_app_store.svg)](https://apps.apple.com/app/id1661327253)
+
+This Mac App Store build will update from the App Store itself and may lag a little behind releases here.
 
 ## Uninstallation
 
