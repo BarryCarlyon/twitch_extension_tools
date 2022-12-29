@@ -12,12 +12,12 @@ Generally it should serve as a "test tool" and not used to manage a live extensi
 
 Check out [more Screenshots](https://github.com/BarryCarlyon/twitch_extension_tools/tree/main/screenshots)
 
-## Installation
+## Installation and updates
 
 This is an Electron App, so it maybe installed from the GitHub [releases tab](https://github.com/BarryCarlyon/twitch_extension_tools/releases).
-It should also update from GitHub as new versions are released on GitHub. (Needs testing as I've never done Electron updates via GitHub)
 
-It is Code Signed with the Publisher `Barry Carlyon`
+The Windows Build is Code Signed with the Publisher `Barry Carlyon`
+The Mac Builds are Code Signed with Apple Cerficates that identify `Barry Carlyon`
 
 You can download the latest version, for Windows and Mac from here on GitHub under [releases](https://github.com/BarryCarlyon/twitch_extension_tools/releases). These builds will self update
 
