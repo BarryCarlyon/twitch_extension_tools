@@ -1,11 +1,15 @@
 ---
-name: Bug Report
-about: Report a platform independant bug that has occured
+name: Windows Bug Report
+about: Report a Windows bug that has occured
 title: ''
-labels: 'bug'
+labels: 'bug WIN'
 assignees: ''
 
 ---
+
+**Windows Version**
+
+10 or 11?
 
 **Brief description**
 

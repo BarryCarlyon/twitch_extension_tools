@@ -1,11 +1,13 @@
 ---
-name: Bug Report
-about: Report a platform independant bug that has occured
+name: MAS Bug Report
+about: Report a Mac App Store bug that has occured
 title: ''
-labels: 'bug'
+labels: 'bug MAS'
 assignees: ''
 
 ---
+
+**OSX Version**
 
 **Brief description**
 

@@ -1,11 +1,13 @@
 ---
-name: Bug Report
-about: Report a platform independant bug that has occured
+name: DMG Bug Report
+about: Report a Mac DMG bug that has occured
 title: ''
-labels: 'bug'
+labels: 'bug DMG'
 assignees: ''
 
 ---
+
+**OSX Version**
 
 **Brief description**
 
