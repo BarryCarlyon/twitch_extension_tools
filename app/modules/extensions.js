@@ -126,6 +126,8 @@ module.exports = function(lib) {
             //console.log('GET', url, resp.status);
 
             let body = await resp.json();
+            //console.log('Got', body);
+
             if (resp.status != 200) {
                 win.webContents.send('extensionAPIResult', {
                     route: 'getconfiguration',
