@@ -52,7 +52,7 @@
       ],
 
       "category": "public.app-category.developer-tools",
-      "icon": "assets/512_eLgNUAVE.icns",
+      "icon": "assets/eLgNUAVE.icns",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "type": "distribution",
@@ -86,7 +86,8 @@
       "!dist",
       "!dist_test",
       "!docs",
-      "!screenshots"
+      "!screenshots",
+      "!assets"
     ]
   },
   "dependencies": {
