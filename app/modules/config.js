@@ -47,6 +47,8 @@ module.exports = function(lib) {
                     getExtensionDetails(active.client_id, active.version);
                 }
             }
+
+            win.webContents.send('config_location', store.path);
         },
         relay: () => {
             console.log('Extensions Punt');

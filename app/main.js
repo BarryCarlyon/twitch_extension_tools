@@ -14,7 +14,9 @@ app.on('window-all-closed', () => {
 });
 
 /*
-not needed/doesn't work for MAS
+not needed/doesn't work for MAS and not needed for mac.
+Mac self enforces
+and MAS has a fun permissions issue
 */
 if (os.platform() == 'win32') {
     const gotLock = app.requestSingleInstanceLock();

@@ -9,7 +9,7 @@ module.exports = function(lib) {
     let ready_to_restart = false;
 
     function doUpdateCheck() {
-        if (!app.isPackaged || process.mas) {
+        if (!app.isPackaged || process.mas || process.windowsStore) {
             // it is mac app store
             win.webContents.send('updater', {
                 event: 'noupdater',

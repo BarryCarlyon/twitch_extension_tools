@@ -1,3 +1,7 @@
+window.electron.config.location((loc) => {
+    document.getElementById('config_location').textContent = loc;
+});
+
 document.getElementById('id_convert_owner').addEventListener('click', (e) => {
     document.getElementById('client_id').classList.remove('is-invalid');
     document.getElementById('client_secret').classList.remove('is-invalid');

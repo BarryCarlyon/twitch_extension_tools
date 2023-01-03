@@ -14,6 +14,10 @@ contextBridge.exposeInMainWorld('electron', {
     },
 
     config: {
+        location: (fn) => {
+            ipcRenderer.on('config_location', (event, ...args) => fn(...args));
+        },
+
         create: (extension) => {
             ipcRenderer.send('config_create', extension);
         },
