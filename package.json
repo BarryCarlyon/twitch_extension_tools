@@ -52,7 +52,7 @@
       ],
 
       "category": "public.app-category.developer-tools",
-      "icon": "assets/512_eLgNUAVE.icns",
+      "icon": "assets/eLgNUAVE.icns",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "type": "distribution",
@@ -86,7 +86,8 @@
       "!dist",
       "!dist_test",
       "!docs",
-      "!screenshots"
+      "!screenshots",
+      "!assets"
     ]
   },
   "dependencies": {
@@ -118,11 +119,13 @@
     "npm": ">=6",
     "node": ">=12"
   },
-  "devDependencies": {
+  "optionalDependencies": {
     "@electron/osx-sign": "^1.0.4",
     "dmg-license": "^1.0.11",
-    "electron": "^22.0.0",
-    "electron-builder": "^23.6.0",
     "electron-builder-notarize": "^1.5.0"
+  },
+  "devDependencies": {
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0"
   }
 }
