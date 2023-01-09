@@ -58,7 +58,7 @@
       "type": "distribution",
 
       "extendInfo": {
-          "CFBundleVersion": "1.3.1004",
+          "CFBundleVersion": "1.4.1000",
           "NSBluetoothAlwaysUsageDescription": false,
           "NSBluetoothPeripheralUsageDescription": false,
           "NSCameraUsageDescription": false,
@@ -101,7 +101,7 @@
   "productName": "BarryCarlyonTwitchExtensionTools",
   "description": "BarryCarlyon Twitch Extension Tools, a tool for interacting with various aspects of the Twitch API specifically for Twitch Extension related endpoints.",
   "author": "Barry Carlyon",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "main": "app/main.js",
   "keywords": [
     "desktop-app",
