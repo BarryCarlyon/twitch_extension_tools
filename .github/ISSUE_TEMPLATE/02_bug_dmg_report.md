@@ -2,7 +2,7 @@
 name: DMG Bug Report
 about: Report a Mac DMG bug that has occured
 title: ''
-labels: 'bug DMG'
+labels: ['bug','DMG']
 assignees: ''
 
 ---

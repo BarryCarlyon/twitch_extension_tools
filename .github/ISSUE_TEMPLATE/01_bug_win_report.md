@@ -2,7 +2,7 @@
 name: Windows Bug Report
 about: Report a Windows bug that has occured
 title: ''
-labels: 'bug WIN'
+labels: ['bug', 'WIN']
 assignees: ''
 
 ---

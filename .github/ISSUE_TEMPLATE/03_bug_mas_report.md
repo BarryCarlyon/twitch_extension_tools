@@ -2,7 +2,7 @@
 name: MAS Bug Report
 about: Report a Mac App Store bug that has occured
 title: ''
-labels: 'bug MAS'
+labels: ['bug','MAS']
 assignees: ''
 
 ---
