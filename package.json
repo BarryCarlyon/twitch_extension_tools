@@ -37,19 +37,20 @@
       "appId": "com.barrycarlyon.twitch-extension-tools",
 
       "target": [
-          {
-              "target": "mas",
-              "arch": "universal"
-          }
+        {
+            "target": "mas",
+            "arch": "universal"
+        },
+        {
+            "target": "dmg",
+            "arch": "universal"
+        },
+        {
+            "target": "zip",
+            "arch": "universal"
+        }
       ],
-      "target": "dmg",
-      "target": [
-        "dmg",
-          {
-              "target": "mas",
-              "arch": "universal"
-          }
-      ],
+
 
       "category": "public.app-category.developer-tools",
       "icon": "assets/eLgNUAVE.icns",
