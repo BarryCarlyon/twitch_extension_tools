@@ -59,7 +59,7 @@
       "type": "distribution",
 
       "extendInfo": {
-          "CFBundleVersion": "1.4.1000",
+          "CFBundleVersion": "1.4.1001",
           "NSBluetoothAlwaysUsageDescription": false,
           "NSBluetoothPeripheralUsageDescription": false,
           "NSCameraUsageDescription": false,
