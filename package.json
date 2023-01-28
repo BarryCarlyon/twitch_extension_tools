@@ -13,8 +13,10 @@
   },
   "build": {
     "appId": "com.barrycarlyon.twitch_extension_tools",
+    "appId": "com.barrycarlyon.twitch-extension-tools",
+
     "productName": "BarryCarlyon Extension Tools",
-    "copyright": "Copyright © 2022 ${author}",
+    "copyright": "Copyright © 2023 ${author}",
     "icon": "app/assets/eLgNUAVE.ico",
     "win": {
       "target": "nsis",
@@ -51,7 +53,6 @@
         }
       ],
 
-
       "category": "public.app-category.developer-tools",
       "icon": "assets/eLgNUAVE.icns",
       "hardenedRuntime": true,
@@ -65,7 +66,8 @@
           "NSCameraUsageDescription": false,
           "NSMicrophoneUsageDescription": false,
           "CFBundleSupportedPlatforms": [ "MacOSX" ]
-      }
+      },
+      "mergeASARs": true
     },
     "afterSign": "electron-builder-notarize",
     "dmg": {
@@ -126,7 +128,7 @@
     "electron-builder-notarize": "^1.5.0"
   },
   "devDependencies": {
-    "electron": "^22.0.0",
+    "electron": "^22.0.2",
     "electron-builder": "^23.6.0"
   }
 }
