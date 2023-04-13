@@ -76,8 +76,6 @@
                             <div class="accordion-body">
                                 <p>Test the <a href="https://dev.twitch.tv/docs/api/reference#get-extension-configuration-segment">Get Extension Configuration Segment</a> and <a href="https://dev.twitch.tv/docs/api/reference#set-extension-configuration-segment">Set Extension Configuration Segment</a> API</p>
 
-                                <p>If the <kbd>version</kbd> value, of the segment, matches what is set in the manifest on the dev console for <kbd>Developer Writable Channel Segment Version</kbd> or <kbd>Broadcaster Writable Channel Segment Version</kbd> value. Then the Extension can be activated by the Broadcaster on their channel</p>
-
                                 <form action="" method="post" id="extension_config_service_form">
                                     <fieldset>
                                         <div class="input-group p-1">
@@ -117,7 +115,8 @@
                                             <label class="input-group-text" for="config_version">version</label>
                                             <input type="text" name="config_version" id="config_version" class="form-control" />
                                         </div>
-                                        <div class="help-text">Optional Version field. If you have set a required version string in the dev console, then putting the corresponding value here will allow the Extension to be enabled in a slot.</div>
+                                        <div class="help-text">Optional Version field.</div>
+                                        <div class="help-text"><p>If the <kbd>version</kbd> value, of the <kbd>developer</kbd> or <kbd>broadcaster</kbd> segment that you set here, matches what is set in the manifest on the dev console for <kbd>Developer Writable Channel Segment Version</kbd> or <kbd>Broadcaster Writable Channel Segment Version</kbd> value respectfully. Then the Extension can be activated by the Broadcaster on their channel via the Dashboard (or relevant API call)</p></div>
 
                                         <div class="btn-group p-1 float-end">
                                             <span id="config_form_response" class="btn extension_api_response"></span>
@@ -268,7 +267,7 @@
                                                 <label class="form-check-label" for="pubsub_content_json">Please JSON stringify for me</label>
                                             </div>
 
-                                            Content is a string is limited to 5kb and 100 requests per minute.<br />Two pools: 100 global AND 100 per brodacasterID with whispers use the broadcasterID pool.
+                                            Content is a string is limited to 5kb and 100 requests per minute.<br />Two rate limiting pools here depending on which <kbd>target</kbd> you use: 100 global AND 100 per broadcasterID where whispers use the broadcasterID pool as they take a broadcasterID.
                                         </div>
 
                                         <div class="btn-group p-1 float-end">

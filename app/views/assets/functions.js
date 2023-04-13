@@ -113,11 +113,14 @@ Config service
 document.getElementById('config_segment').addEventListener('change', (e) => {
     if (e.target.value == 'global') {
         document.getElementById('config_broadcaster_id').setAttribute('readonly', 'readonly');
+        document.getElementById('config_version').setAttribute('readonly', 'readonly');
     } else {
         document.getElementById('config_broadcaster_id').removeAttribute('readonly');
+        document.getElementById('config_version').removeAttribute('readonly');
     }
 });
 document.getElementById('config_broadcaster_id').setAttribute('readonly', 'readonly');
+document.getElementById('config_version').setAttribute('readonly', 'readonly');
 
 document.getElementById('extension_config_service_form').addEventListener('submit', (e) => {
     e.preventDefault();
