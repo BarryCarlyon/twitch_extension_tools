@@ -33,6 +33,8 @@ This Mac App Store build will update from the App Store itself and may lag a lit
 
 You can use Windows "Add and Remove Programs" to uninstall the program.
 
+And on mac just throw it in the trash! :-P
+
 You may need to manually remove data stored in the data/config storage location below.
 
 ## Data/Config Storage
