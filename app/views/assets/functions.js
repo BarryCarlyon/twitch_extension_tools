@@ -7,12 +7,13 @@ window.electron.extensionAPIResult((data) => {
     resetLoadings();
 
     if (data.hasOwnProperty('config')) {
+        // in theory most people will store a JSON blob in the config service.
+        // but the config service is just a flat string
+        // so it could be anything
+        // if we fail to parse as JSON then it's a flat/gibberish string
         try {
-            console.log(data.config);
             data.config = JSON.parse(data.config);
-            console.log(data.config);
             data.config = JSON.stringify(data.config, null, 4);
-            console.log(data.config);
             // tick JSON
             document.getElementById('config_content_json').setAttribute('checked', 'checked');
         } catch (e) {
@@ -139,7 +140,13 @@ document.getElementById('extension_config_service_write').addEventListener('clic
     let content = document.getElementById('config_content').value;
     if (document.getElementById('config_content_json').checked) {
         // tidy up
-        content = JSON.stringify(JSON.parse(content));
+        try {
+            content = JSON.stringify(JSON.parse(content));
+        } catch (e) {
+            // json invalid
+            config_form_response.textContent = 'JSON failed to stringify';
+            return
+        }
     }
 
     window.electron.extensionAPI(
@@ -191,7 +198,13 @@ document.getElementById('pubsub_form').addEventListener('submit', (e) => {
     let message = document.getElementById('pubsub_message').value;
     if (document.getElementById('pubsub_content_json').checked) {
         // tidy up
-        message = JSON.stringify(JSON.parse(message));
+        try {
+            message = JSON.stringify(JSON.parse(message));
+        } catch (e) {
+            // json invalid
+            pubsub_form_response.textContent = 'JSON failed to stringify';
+            return;
+        }
     }
 
     window.electron.extensionAPI(
