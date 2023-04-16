@@ -24,6 +24,19 @@ a.website:before {
     background-repeat: no-repeat;
 }
 
+/* helping js clicks in the css'est way possible */
+button {
+    position: relative;
+}
+button:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
 #alert {
     position: fixed;
     bottom: 0px;

@@ -108,7 +108,9 @@ app.on('ready', () => {
         win.setTitle(`BarryCarlyon Twitch Extension Tools: v${app.getVersion()}`);
     });
     if (!app.isPackaged) {
-        win.webContents.openDevTools();
+        setTimeout(() => {
+            win.webContents.openDevTools();
+        }, 1500);
     }
 
     ipcMain.on('openWeb', (e,url) => {
