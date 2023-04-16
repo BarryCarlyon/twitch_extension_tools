@@ -31,7 +31,7 @@ document.getElementById('id_convert_owner').addEventListener('click', (e) => {
         document.getElementById('client_secret').value,
         document.getElementById('user_id').value
     );
-    e.target.closest('.input-group').classList.add('loading');
+    e.currentTarget.closest('.input-group').classList.add('loading');
 });
 
 document.getElementById('create_button').addEventListener('click', (e) => {
@@ -232,19 +232,19 @@ window.electron.config.extensions((data) => {
 function bindUse(el) {
     el.addEventListener('click', (e) => {
         // load parameters for use
-        window.electron.config.select(e.target.getAttribute('data-client_id'));
+        window.electron.config.select(e.currentTarget.getAttribute('data-client_id'));
     });
 }
 function bindEdit(el) {
     el.addEventListener('click', (e) => {
         // load parameters for edit
-        window.electron.config.loadForEdit(e.target.getAttribute('data-client_id'));
+        window.electron.config.loadForEdit(e.currentTarget.getAttribute('data-client_id'));
     });
 }
 function bindRevoke(el, ext) {
     el.addEventListener('click', (e) => {
         // load parameters for edit
-        window.electron.config.revokeToken(e.target.getAttribute('data-client_id'));
+        window.electron.config.revokeToken(e.currentTarget.getAttribute('data-client_id'));
     });
 }
 function bindRemove(el, ext) {
@@ -256,7 +256,7 @@ function bindRemove(el, ext) {
     });
 }
 document.getElementById('actuallyRemove').addEventListener('click', (e) => {
-    window.electron.config.remove(e.target.getAttribute('data-client_id'));
+    window.electron.config.remove(e.currentTarget.getAttribute('data-client_id'));
 });
 
 let version_modal = new bootstrap.Modal(document.getElementById('version_modal'));
