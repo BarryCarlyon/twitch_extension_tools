@@ -20,14 +20,18 @@ window.electron.bits.gotProducts((products) => {
         cellInput(row, sku, 'sku', sku);
 
         let { amount, type } = cost;
-        cellInput(row, sku, 'amount', amount);
+        cellInput(row, sku, 'amount', amount, 'text-end');
 
-        if (in_development) {row.classList.add('table-warning'); }
         cellInput(row, sku, 'in_development', in_development);
         cellInput(row, sku, 'display_name', display_name);
-        if (expiration) { row.classList.add('table-danger'); }
         cellInput(row, sku, 'expiration', expiration);
         cellInput(row, sku, 'is_broadcast', is_broadcast);
+
+        if (expiration) {
+            row.classList.add('table-danger');
+        } else if (in_development) {
+            row.classList.add('table-warning');
+        }
 
         let btn_group = document.createElement('div');
         btn_group.classList.add('btn-group');
@@ -110,7 +114,7 @@ function editProduct(sku) {
     window.electron.bits.createProduct(data);
 }
 
-function cellInput(row, sku, name, value) {
+function cellInput(row, sku, name, value, cls) {
     let cell = row.insertCell();
 
     let grp = document.createElement('div');
@@ -120,6 +124,10 @@ function cellInput(row, sku, name, value) {
     let inp = document.createElement('input');
     inp.classList.add('form-control');
     inp.setAttribute('type', 'text');
+
+    if (cls) {
+        inp.classList.add(cls);
+    }
 
     if (name == 'sku') {
         inp.setAttribute('readonly', 'readonly');
