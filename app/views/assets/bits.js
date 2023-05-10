@@ -22,8 +22,10 @@ window.electron.bits.gotProducts((products) => {
         let { amount, type } = cost;
         cellInput(row, sku, 'amount', amount);
 
+        if (in_development) {row.classList.add('table-warning'); }
         cellInput(row, sku, 'in_development', in_development);
         cellInput(row, sku, 'display_name', display_name);
+        if (expiration) { row.classList.add('table-danger'); }
         cellInput(row, sku, 'expiration', expiration);
         cellInput(row, sku, 'is_broadcast', is_broadcast);
 
