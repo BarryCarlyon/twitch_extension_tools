@@ -126,7 +126,7 @@ A. Since the Extension API's _mostly_ utilise a JWT, this program creates a JWT 
 
 Extension View simulation, this might get explored but it's not gonna be as effective as actually testing on the Twitch Website itself (when in localtest).
 
-Whilst the Twitch Developer Rig is now marked as no longer supported, view testing in the Rig remains working, but you may need another tool to update any Rig manifests you have stored, you can check out the [Twitch Developerrig Manifester](https://github.com/BarryCarlyon/twitch_developerrig_manifester) to provide manifest import and revision. This manifester tool _might_ at somepoint get added to this tool.
+Whilst the Twitch Developer Rig is now marked as no longer supported, view testing in the Rig remains working, but you may need another tool to update any Rig manifests you have stored, you can check out the [Twitch Developer Rig Manifester](https://github.com/BarryCarlyon/twitch_developerrig_manifester) to provide manifest import and revision. This manifester tool _might_ at somepoint get added to this tool.
 
 ## Notes
 

@@ -277,6 +277,7 @@ function markDropdown(client_id) {
         if (client_id || client_id == '') {
             if (items[x].getAttribute('data-client_id') == client_id) {
                 items[x].classList.add('bg-primary');
+                select_active_extension.textContent = items[x].textContent;
             }
         }
     }
