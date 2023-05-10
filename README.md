@@ -116,15 +116,23 @@ If a Key Sets Extension API Client Secret is Provided, alllowing the generation 
 - [Update Extension Bits Product](https://dev.twitch.tv/docs/api/reference#update-extension-bits-product)
 - [Get Extension Transactions](https://dev.twitch.tv/docs/api/reference#get-extension-transactions)
 
+## Common Gotchas/FAQ
+
+Q. No matter what I do, it just claims authentication failed when trying to validate/refresh my Extension
+
+A. Since the Extension API's _mostly_ utilise a JWT, this program creates a JWT on the fly with only a 4 second expiration. So if your system clock is _significantly_ out of date, this can generate an already expired JWT. So check your system clock is accurate.
+
 ## Not Supported Features
 
-- Extension View simulation, this might get explored but it's not gonna be as effective as actually testing on the Twitch Website itself (when in localtest).
+Extension View simulation, this might get explored but it's not gonna be as effective as actually testing on the Twitch Website itself (when in localtest).
+
+Whilst the Twitch Developer Rig is now marked as no longer supported, view testing in the Rig remains working, but you may need another tool to update any Rig manifests you have stored, you can check out the [Twitch Developerrig Manifester](https://github.com/BarryCarlyon/twitch_developerrig_manifester) to provide manifest import and revision. This manifester tool _might_ at somepoint get added to this tool.
 
 ## Notes
 
 - Uses Electron to provide as a Desktop App
 - Uses Bootstrap for primary layout
-- Uses GitHub for update delivery and code management
+- Uses GitHub for update delivery and code management (and mac app store for MAS builds)
 - JWT tokens are generated _inside_ the App via [auth0/node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken), as apposed to "ClientSide" like [this example](https://barrycarlyon.github.io/twitch_misc/examples/extension_config/)
 - A number of [sindresorhus](https://github.com/sindresorhus/) Electron Modules.
 
