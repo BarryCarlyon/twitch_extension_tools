@@ -150,6 +150,7 @@ function cellInput(row, sku, name, value) {
             break;
 
         case 'amount':
+            inp.classList.add('text-end');
             inp.setAttribute('type', 'number');
 
             inp.setAttribute('step', '1');
