@@ -89,11 +89,11 @@ function editProduct(sku) {
         sku,
         cost: {
             amount: document.getElementById(`bits_product_amount_${sku}`).value,
-            type: 'bits'
+            type:   'bits'
         },
-        in_development: (document.getElementById(`bits_product_in_development_${sku}`).value == 'true' ? true : false),
-        display_name: document.getElementById(`bits_product_display_name_${sku}`).value,
-        is_broadcast: (document.getElementById(`bits_product_is_broadcast_${sku}`).value == 'true' ? true : false)
+        in_development:     document.getElementById(`bits_product_in_development_${sku}`).checked,
+        display_name:       document.getElementById(`bits_product_display_name_${sku}`).value,
+        is_broadcast:       document.getElementById(`bits_product_is_broadcast_${sku}`).checked
     }
     if (document.getElementById(`bits_product_expiration_${sku}`).value != '') {
         console.log(document.getElementById(`bits_product_expiration_${sku}`).value);
@@ -130,33 +130,27 @@ function cellInput(row, sku, name, value) {
     switch (name) {
         case 'in_development':
         case 'is_broadcast':
-            inp = document.createElement('select');
+            inp = document.createElement('div');
+            inp.classList.add('form-check');
+            inp.classList.add('form-switch');
 
-            inp.setAttribute('name', `${name}[${sku}]`);
-            inp.setAttribute('id', `bits_product_${name}_${sku}`);
+            let fci = document.createElement('input');
+            fci.setAttribute('type', 'checkbox');
+            fci.classList.add('form-check-input');
 
-            inp.classList.remove('form-control');
-            inp.classList.add('form-select');
-
-            let opt_yes = document.createElement('option');
-            opt_yes.value = 'true';
-            opt_yes.textContent = 'Yes';
-            inp.append(opt_yes);
-
-            let opt_no = document.createElement('option');
-            opt_no.value = 'false';
-            opt_no.textContent = 'No';
-            inp.append(opt_no);
+            fci.setAttribute('name', `${name}[${sku}]`);
+            fci.setAttribute('id', `bits_product_${name}_${sku}`);
 
             if (value) {
-                opt_yes.selected = true
-            } else {
-                opt_no.selected = true
+                fci.checked = true
             }
+
+            inp.append(fci);
 
             break;
 
         case 'amount':
+            inp.classList.add('text-end');
             inp.setAttribute('type', 'number');
 
             inp.setAttribute('step', '1');
@@ -191,14 +185,14 @@ document.getElementById('bits_product_new_create').addEventListener('click', (e)
 
     // go
     let data = {
-        sku: document.getElementById('bits_product_new_sku').value,
+        sku:                document.getElementById('bits_product_new_sku').value,
         cost: {
             amount: document.getElementById('bits_product_new_cost').value,
-            type: 'bits'
+            type:   'bits'
         },
-        in_development: (document.getElementById('bits_product_new_in_development').value == 'true' ? true : false),
-        display_name: document.getElementById('bits_product_new_display_name').value,
-        is_broadcast: (document.getElementById('bits_product_new_is_broadcast').value == 'true' ? true : false)
+        in_development:     document.getElementById('bits_product_new_in_development').checked,
+        display_name:       document.getElementById('bits_product_new_display_name').value,
+        is_broadcast:       document.getElementById('bits_product_new_is_broadcast').checked
     }
     if (document.getElementById('bits_product_new_expiration').value != '') {
         data.expiration = new Date(document.getElementById('bits_product_new_expiration').value).toISOString();
