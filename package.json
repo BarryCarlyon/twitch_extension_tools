@@ -97,8 +97,8 @@
     "electron-context-menu": "^3.6.1",
     "electron-fetch": "^1.9.1",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.1",
-    "jsonwebtoken": "^9.0.1"
+    "electron-updater": "^6.1.4",
+    "jsonwebtoken": "^9.0.2"
   },
   "name": "barrycarlyontwitchextensiontools",
   "productName": "BarryCarlyonTwitchExtensionTools",
@@ -123,12 +123,12 @@
     "node": ">=12"
   },
   "optionalDependencies": {
-    "@electron/osx-sign": "^1.0.4",
+    "@electron/osx-sign": "^1.0.5",
     "dmg-license": "^1.0.11",
     "electron-builder-notarize": "^1.5.1"
   },
   "devDependencies": {
-    "electron": "^26.0.0",
-    "electron-builder": "^24.6.3"
+    "electron": "^26.1.0",
+    "electron-builder": "^24.6.4"
   }
 }
