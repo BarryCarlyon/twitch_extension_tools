@@ -29,6 +29,12 @@ Or
 
 This Mac App Store build will update from the App Store itself and may lag a little behind releases here.
 
+Or
+
+Install using [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
+
+> winget install BarryCarlyon.BarryCarlyonExtensionTools
+
 ## Uninstallation
 
 You can use Windows "Add and Remove Programs" to uninstall the program.
