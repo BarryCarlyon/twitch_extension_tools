@@ -30,13 +30,15 @@ module.exports = function(lib) {
         }
     });
 
+    let masterDrift = 60;
+
     function sendChat(details) {
         let extensions = store.get('extensions');
         let active = store.get('active');
         let config = extensions[active.client_id];
 
         const sigConfigPayload = {
-            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "exp": Math.floor(new Date().getTime() / 1000) + masterDrift,
             "user_id": config.user_id,
             "role": "external",
         }
@@ -94,7 +96,7 @@ module.exports = function(lib) {
         let config = extensions[active.client_id];
 
         const sigConfigPayload = {
-            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "exp": Math.floor(new Date().getTime() / 1000) + masterDrift,
             "user_id": config.user_id,
             "role": "external",
         }
@@ -169,7 +171,7 @@ module.exports = function(lib) {
         let config = extensions[active.client_id];
 
         const sigConfigPayload = {
-            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "exp": Math.floor(new Date().getTime() / 1000) + masterDrift,
             "user_id": config.user_id,
             "role": "external",
         }
@@ -234,7 +236,7 @@ module.exports = function(lib) {
         let config = extensions[active.client_id];
 
         const sigConfigPayload = {
-            "exp": Math.floor(new Date().getTime() / 1000) + 4,
+            "exp": Math.floor(new Date().getTime() / 1000) + masterDrift,
             "user_id": config.user_id,
             "role": "external",
         }
@@ -295,7 +297,7 @@ module.exports = function(lib) {
         let config = extensions[active.client_id];
 
         const sigConfigPayload = {
-            "exp":          Math.floor(new Date().getTime() / 1000) + 4,
+            "exp":          Math.floor(new Date().getTime() / 1000) + masterDrift,
             "user_id":      config.user_id,
             "role":         "external",
             "channel_id":   "all",
