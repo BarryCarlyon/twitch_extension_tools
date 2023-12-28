@@ -16,7 +16,7 @@
     "appId": "com.barrycarlyon.twitch-extension-tools",
 
     "productName": "BarryCarlyon Extension Tools",
-    "copyright": "Copyright © 2023 ${author}",
+    "copyright": "Copyright © 2024 ${author}",
     "icon": "app/assets/eLgNUAVE.ico",
     "win": {
       "target": "nsis",
@@ -128,7 +128,7 @@
     "electron-builder-notarize": "^1.5.1"
   },
   "devDependencies": {
-    "electron": "^28.0.0",
+    "electron": "^28.1.0",
     "electron-builder": "^24.9.1"
   }
 }
