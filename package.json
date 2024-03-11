@@ -82,7 +82,9 @@
       "!dist_test",
       "!docs",
       "!screenshots",
-      "!assets"
+      "!assets",
+      "!app/views/assets/boostrap.css",
+      "!app/views/assets/purple.css"
     ]
   },
   "dependencies": {
