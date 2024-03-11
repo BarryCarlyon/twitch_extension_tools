@@ -24,10 +24,10 @@ a.website:before {
     background-repeat: no-repeat;
 }
 
-#alert {
+#mytoast {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 10px;
+    left: 10px;
 
     z-index: 9001;
 }

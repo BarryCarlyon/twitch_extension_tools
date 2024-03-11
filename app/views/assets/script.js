@@ -265,38 +265,30 @@ window.electron.errorMsg(words => {
     // draw
     errorMsg(words);
 });
+
+const myToaster = bootstrap.Toast.getOrCreateInstance(mytoast);
+
 function errorMsg(words) {
-    let alert = document.getElementById('alert');
+    mytoast.classList.add('text-bg-secondary');
+    mytoast.classList.remove('text-bg-primary');
+    mytoast.classList.remove('text-bg-danger');
+    toastCommon(words);
+}
 
-    if (!alert) {
-        alert = document.createElement('div');
-        alert.setAttribute('id', 'alert');
-
-        alert.classList.add('alert');
-        alert.classList.add('alert-warning');
-        alert.classList.add('alert-dismissable');
-        alert.classList.add('fade');
-        alert.classList.add('show');
-        //alert.classList.add('bg-warning');
-
-        let b = document.createElement('button');
-        b.classList.add('btn-close');
-        b.setAttribute('data-bs-dismiss', 'alert');
-        alert.append(b);
-        document.body.append(alert);
-    }
-
-    let sp = document.createElement('p');
-    sp.textContent = words;
-    alert.append(sp);
-
-    setTimeout(() => {
-        sp.remove();
-        let ps = alert.getElementsByTagName('p');
-        if (ps && ps.length > 0) {
-            return;
-        }
-        let ins = bootstrap.Alert.getOrCreateInstance(alert);
-        ins.close();
-    }, 10000);
+function toastWarning(msg) {
+    mytoast.classList.remove('text-bg-secondary');
+    mytoast.classList.remove('text-bg-primary');
+    mytoast.classList.add('text-bg-danger');
+    toastCommon(msg);
+}
+function toastSuccess(msg) {
+    mytoast.classList.remove('text-bg-secondary');
+    mytoast.classList.add('text-bg-primary');
+    mytoast.classList.remove('text-bg-danger');
+    toastCommon(msg);
+}
+function toastCommon(msg) {
+    mytoast.querySelector('.toast-body').textContent = msg;
+    console.log('Making Toast');
+    myToaster.show();
 }

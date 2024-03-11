@@ -2,19 +2,14 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
-
     "dist": "electron-builder --win --x64",
     "mdist": "electron-builder --mac",
-
-    "start": "set NODE_ENV=development && electron .",
+    "start": "uglifycss app/views/assets/bootstrap.css app/views/assets/bootstrap.addition.css > app/views/assets/bootstrap.min.css && set NODE_ENV=development && electron .",
     "test": "set NODE_ENV=development && set DEBUG=* && electron .",
-
     "publish": "electron-builder -p always"
   },
   "build": {
-    "appId": "com.barrycarlyon.twitch_extension_tools",
     "appId": "com.barrycarlyon.twitch-extension-tools",
-
     "productName": "BarryCarlyon Extension Tools",
     "copyright": "Copyright © 2024 ${author}",
     "icon": "app/assets/eLgNUAVE.ico",
@@ -37,35 +32,34 @@
     },
     "mac": {
       "appId": "com.barrycarlyon.twitch-extension-tools",
-
       "target": [
         {
-            "target": "mas",
-            "arch": "universal"
+          "target": "mas",
+          "arch": "universal"
         },
         {
-            "target": "dmg",
-            "arch": "universal"
+          "target": "dmg",
+          "arch": "universal"
         },
         {
-            "target": "zip",
-            "arch": "universal"
+          "target": "zip",
+          "arch": "universal"
         }
       ],
-
       "category": "public.app-category.developer-tools",
       "icon": "assets/eLgNUAVE.icns",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "type": "distribution",
-
       "extendInfo": {
-          "CFBundleVersion": "1.4.1001",
-          "NSBluetoothAlwaysUsageDescription": false,
-          "NSBluetoothPeripheralUsageDescription": false,
-          "NSCameraUsageDescription": false,
-          "NSMicrophoneUsageDescription": false,
-          "CFBundleSupportedPlatforms": [ "MacOSX" ]
+        "CFBundleVersion": "1.4.1001",
+        "NSBluetoothAlwaysUsageDescription": false,
+        "NSBluetoothPeripheralUsageDescription": false,
+        "NSCameraUsageDescription": false,
+        "NSMicrophoneUsageDescription": false,
+        "CFBundleSupportedPlatforms": [
+          "MacOSX"
+        ]
       },
       "mergeASARs": true
     },
@@ -77,11 +71,9 @@
     },
     "mas": {
       "hardenedRuntime": false,
-
       "entitlements": "build/entitlements.plist",
       "entitlementsInherit": "build/entitlements.inherit.plist",
       "entitlementsLoginHelper": "build/entitlements.loginhelper.plist",
-
       "provisioningProfile": "build/RobynExtToolStore.provisionprofile"
     },
     "files": [
@@ -129,6 +121,7 @@
   },
   "devDependencies": {
     "electron": "^29.1.1",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "uglifycss": "^0.0.29"
   }
 }
