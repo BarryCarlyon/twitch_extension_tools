@@ -183,7 +183,7 @@ module.exports = function(lib) {
             }
 
             if (resp.data && resp.data.length == 1) {
-                errorMsg(`Loaded Extension Configuration for ${client_id} with version ${resp.data[0].version}`);
+                errorMsg(`Loaded Extension Manifest for ${client_id} with version ${resp.data[0].version}`);
                 store.set('active', {
                     client_id,
                     version: resp.data[0].version
