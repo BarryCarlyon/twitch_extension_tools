@@ -117,6 +117,23 @@ function processExtension(extension_details) {
         install_link[x].setAttribute('href', `https://dashboard.twitch.tv/extensions/${extension_details.id}-${extension_details.version}`);
     }
 
+    // collapse everything
+    //accordion-button collapsed
+    let btns = document.querySelectorAll('.accordion-button');
+    btns.forEach(btn => {
+        if (!btn.classList.contains('collapsed')) {
+            btn.classList.add('collapsed');
+        }
+    });
+    //accordion-collapse collapse show
+    let sections = document.querySelectorAll('.accordion-collapse');
+    sections.forEach(section => {
+        if (section.classList.contains('show')) {
+            section.classList.remove('show');
+        }
+    });
+
+    // toggles
     let extension_config_service_header = document.getElementById('extension_config_service_header');
     let extension_config_service_required_header = document.getElementById('extension_config_service_required_header');
     if (extension_details.configuration_location == 'hosted') {

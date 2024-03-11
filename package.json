@@ -85,8 +85,7 @@
       "!screenshots",
       "!assets",
       "!app/views/assets/boostrap.css",
-      "!app/views/assets/boostrap.addition.css",
-      "!app/views/assets/purple.css"
+      "!app/views/assets/boostrap.addition.css"
     ]
   },
   "dependencies": {
