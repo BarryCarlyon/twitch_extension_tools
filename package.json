@@ -96,8 +96,8 @@
   "dependencies": {
     "electron-context-menu": "^3.6.1",
     "electron-fetch": "^1.9.1",
-    "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.7",
+    "electron-store": "^8.2.0",
+    "electron-updater": "^6.1.8",
     "jsonwebtoken": "^9.0.2"
   },
   "name": "barrycarlyontwitchextensiontools",
@@ -128,7 +128,7 @@
     "electron-builder-notarize": "^1.5.1"
   },
   "devDependencies": {
-    "electron": "^28.1.0",
-    "electron-builder": "^24.9.1"
+    "electron": "^29.1.1",
+    "electron-builder": "^24.13.3"
   }
 }
