@@ -65,6 +65,9 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('convertToId')) {
         console.log('has convertToId');
         let field = e.target.getAttribute('data-target');
+        if (field.hasAttribute('disabled')) {
+            return;
+        }
         let el = document.getElementById(field);
         if (el) {
             console.log('has el', field, el.value);
