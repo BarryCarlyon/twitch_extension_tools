@@ -4,6 +4,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder --win --x64",
     "mdist": "electron-builder --mac",
+    "css": "uglifycss app/views/assets/bootstrap.css app/views/assets/bootstrap.addition.css",
     "start": "uglifycss app/views/assets/bootstrap.css app/views/assets/bootstrap.addition.css > app/views/assets/bootstrap.min.css && set NODE_ENV=development && electron .",
     "test": "set NODE_ENV=development && set DEBUG=* && electron .",
     "publish": "electron-builder -p always"
