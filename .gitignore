@@ -4,3 +4,4 @@ dist
 dist_full
 dist_test
 build
+app/views/assets/bootstrap.min.css

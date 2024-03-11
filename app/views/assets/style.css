@@ -13,21 +13,20 @@ body {
 }
 a.website:before {
     content: '';
-    position: relative;
-    top: 0;
-    left: -2px;
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     background: url(../assets/pop.svg);
     background-size: contain;
     background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 2px;
 }
 
-#alert {
+#mytoast {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 10px;
+    left: 10px;
 
     z-index: 9001;
 }

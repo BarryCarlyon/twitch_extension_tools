@@ -65,6 +65,9 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('convertToId')) {
         console.log('has convertToId');
         let field = e.target.getAttribute('data-target');
+        if (field.hasAttribute('disabled')) {
+            return;
+        }
         let el = document.getElementById(field);
         if (el) {
             console.log('has el', field, el.value);
@@ -117,6 +120,23 @@ function processExtension(extension_details) {
         install_link[x].setAttribute('href', `https://dashboard.twitch.tv/extensions/${extension_details.id}-${extension_details.version}`);
     }
 
+    // collapse everything
+    //accordion-button collapsed
+    let btns = document.querySelectorAll('.accordion-button');
+    btns.forEach(btn => {
+        if (!btn.classList.contains('collapsed')) {
+            btn.classList.add('collapsed');
+        }
+    });
+    //accordion-collapse collapse show
+    let sections = document.querySelectorAll('.accordion-collapse');
+    sections.forEach(section => {
+        if (section.classList.contains('show')) {
+            section.classList.remove('show');
+        }
+    });
+
+    // toggles
     let extension_config_service_header = document.getElementById('extension_config_service_header');
     let extension_config_service_required_header = document.getElementById('extension_config_service_required_header');
     if (extension_details.configuration_location == 'hosted') {
@@ -265,38 +285,30 @@ window.electron.errorMsg(words => {
     // draw
     errorMsg(words);
 });
+
+const myToaster = bootstrap.Toast.getOrCreateInstance(mytoast);
+
 function errorMsg(words) {
-    let alert = document.getElementById('alert');
+    mytoast.classList.add('text-bg-secondary');
+    mytoast.classList.remove('text-bg-primary');
+    mytoast.classList.remove('text-bg-danger');
+    toastCommon(words);
+}
 
-    if (!alert) {
-        alert = document.createElement('div');
-        alert.setAttribute('id', 'alert');
-
-        alert.classList.add('alert');
-        alert.classList.add('alert-warning');
-        alert.classList.add('alert-dismissable');
-        alert.classList.add('fade');
-        alert.classList.add('show');
-        //alert.classList.add('bg-warning');
-
-        let b = document.createElement('button');
-        b.classList.add('btn-close');
-        b.setAttribute('data-bs-dismiss', 'alert');
-        alert.append(b);
-        document.body.append(alert);
-    }
-
-    let sp = document.createElement('p');
-    sp.textContent = words;
-    alert.append(sp);
-
-    setTimeout(() => {
-        sp.remove();
-        let ps = alert.getElementsByTagName('p');
-        if (ps && ps.length > 0) {
-            return;
-        }
-        let ins = bootstrap.Alert.getOrCreateInstance(alert);
-        ins.close();
-    }, 10000);
+function toastWarning(msg) {
+    mytoast.classList.remove('text-bg-secondary');
+    mytoast.classList.remove('text-bg-primary');
+    mytoast.classList.add('text-bg-danger');
+    toastCommon(msg);
+}
+function toastSuccess(msg) {
+    mytoast.classList.remove('text-bg-secondary');
+    mytoast.classList.add('text-bg-primary');
+    mytoast.classList.remove('text-bg-danger');
+    toastCommon(msg);
+}
+function toastCommon(msg) {
+    mytoast.querySelector('.toast-body').textContent = msg;
+    console.log('Making Toast');
+    myToaster.show();
 }

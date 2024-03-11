@@ -113,15 +113,15 @@ Config service
 */
 document.getElementById('config_segment').addEventListener('change', (e) => {
     if (e.target.value == 'global') {
-        document.getElementById('config_broadcaster_id').setAttribute('readonly', 'readonly');
-        document.getElementById('config_version').setAttribute('readonly', 'readonly');
+        document.getElementById('config_broadcaster_id').setAttribute('disabled', 'disabled');
+        document.getElementById('config_version').setAttribute('disabled', 'disabled');
     } else {
-        document.getElementById('config_broadcaster_id').removeAttribute('readonly');
-        document.getElementById('config_version').removeAttribute('readonly');
+        document.getElementById('config_broadcaster_id').removeAttribute('disabled');
+        document.getElementById('config_version').removeAttribute('disabled');
     }
 });
-document.getElementById('config_broadcaster_id').setAttribute('readonly', 'readonly');
-document.getElementById('config_version').setAttribute('readonly', 'readonly');
+document.getElementById('config_broadcaster_id').setAttribute('disabled', 'disabled');
+document.getElementById('config_version').setAttribute('disabled', 'disabled');
 
 document.getElementById('extension_config_service_form').addEventListener('submit', (e) => {
     e.preventDefault();
