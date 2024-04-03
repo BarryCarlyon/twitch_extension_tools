@@ -118,12 +118,12 @@
     "node": ">=12"
   },
   "optionalDependencies": {
-    "@electron/osx-sign": "^1.0.5",
+    "@electron/osx-sign": "^1.1.0",
     "dmg-license": "^1.0.11",
-    "electron-builder-notarize": "^1.5.1"
+    "electron-builder-notarize": "^1.5.2"
   },
   "devDependencies": {
-    "electron": "^29.1.1",
+    "electron": "^29.1.6",
     "electron-builder": "^24.13.3",
     "uglifycss": "^0.0.29"
   }
